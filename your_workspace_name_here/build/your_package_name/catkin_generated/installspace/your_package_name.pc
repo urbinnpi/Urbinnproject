@@ -1,0 +1,8 @@
+prefix=/home/pi/your_workspace_name_here/install
+
+Name: your_package_name
+Description: Description of your_package_name
+Version: 0.0.0
+Cflags: 
+Libs: -L/home/pi/your_workspace_name_here/install/lib 
+Requires: 

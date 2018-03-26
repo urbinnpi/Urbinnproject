@@ -1,0 +1,2 @@
+.
+-DCATKIN_DEVEL_PREFIX=/home/pi/your_workspace_name_here/devel -DCMAKE_INSTALL_PREFIX=/home/pi/your_workspace_name_here/install -G Unix Makefiles
