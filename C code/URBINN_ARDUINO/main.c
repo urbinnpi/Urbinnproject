@@ -3,16 +3,15 @@
  *
  * Created: 25-4-2018 14:46:07
  * Author : lucan
- */ 
+ */
+#define F_CPU 16000000 //16Mhz
 
-#include <avr/io.h>
+#include "lib/Canbus.h"
 
 
-int main(void)
-{
-    /* Replace with your application code */
-    while (1) 
-    {
-    }
+int main() {
+	while (1) { // our main event loop
+
+	}
 }
 
