@@ -22,10 +22,10 @@ void loop() {
 }
 
 tCAN* receive(){
-  tCAN message = null;
+  tCAN message;
   
-  if(cmp2515_check_message()) {
-    if(mcp_get_message(&message)) {
+  if(mcp2515_check_message()) {
+    if(mcp2515_get_message(&message)) {
       return &message;
     }
   }
@@ -33,21 +33,19 @@ tCAN* receive(){
 }
 
 void send(tCAN* message){
-  tCAN message;
-
-  message.id = 0x631; //formatted in HEX
-  message.header.rtr = 0;
-  message.header.length = 8; //formatted in DEC
-  message.data[0] = 0xFF;
-  message.data[1] = 0xFF;
-  message.data[2] = 0xFF;
-  message.data[3] = 0xFF;
-  message.data[4] = 0xFF;
-  message.data[5] = 0xFF;
-  message.data[6] = 0xFF;
-  message.data[7] = 0xFF;
+  message->id = 0x631; //formatted in HEX
+  message->header.rtr = 0;
+  message->header.length = 8; //formatted in DEC
+  message->data[0] = 0xFF;
+  message->data[1] = 0xFF;
+  message->data[2] = 0xFF;
+  message->data[3] = 0xFF;
+  message->data[4] = 0xFF;
+  message->data[5] = 0xFF;
+  message->data[6] = 0xFF;
+  message->data[7] = 0xFF;
 
   mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
-  mcp2515_send_message(&message);
+  mcp2515_send_message(message);
 }
 
