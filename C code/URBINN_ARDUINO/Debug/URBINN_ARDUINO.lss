@@ -3,58 +3,60 @@ URBINN_ARDUINO.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .data         00000000  00800100  00800100  000000da  2**0
+  0 .data         00000024  00800100  0000026c  000002e0  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  1 .text         00000086  00000000  00000000  00000054  2**1
+  1 .text         0000026c  00000000  00000000  00000074  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  2 .comment      00000030  00000000  00000000  000000da  2**0
+  2 .comment      00000030  00000000  00000000  00000304  2**0
                   CONTENTS, READONLY
-  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  0000010c  2**2
+  3 .note.gnu.avr.deviceinfo 00000040  00000000  00000000  00000334  2**2
                   CONTENTS, READONLY
-  4 .debug_aranges 00000020  00000000  00000000  0000014c  2**0
+  4 .debug_aranges 00000120  00000000  00000000  00000374  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .debug_info   0000063f  00000000  00000000  0000016c  2**0
+  5 .debug_info   000016e0  00000000  00000000  00000494  2**0
                   CONTENTS, READONLY, DEBUGGING
-  6 .debug_abbrev 000005de  00000000  00000000  000007ab  2**0
+  6 .debug_abbrev 00000beb  00000000  00000000  00001b74  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_line   0000016c  00000000  00000000  00000d89  2**0
+  7 .debug_line   00000aae  00000000  00000000  0000275f  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_frame  00000024  00000000  00000000  00000ef8  2**2
+  8 .debug_frame  00000328  00000000  00000000  00003210  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000305  00000000  00000000  00000f1c  2**0
+  9 .debug_str    000005e7  00000000  00000000  00003538  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_ranges 00000010  00000000  00000000  00001221  2**0
+ 10 .debug_loc    00000bac  00000000  00000000  00003b1f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 000000e0  00000000  00000000  000046cb  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
 
 00000000 <__vectors>:
    0:	0c 94 34 00 	jmp	0x68	; 0x68 <__ctors_end>
-   4:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-   8:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-   c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  10:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  14:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  18:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  1c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  20:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  24:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  28:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  2c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  30:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  34:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  38:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  3c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  40:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  44:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  48:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  4c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  50:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  54:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  58:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  5c:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  60:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
-  64:	0c 94 3e 00 	jmp	0x7c	; 0x7c <__bad_interrupt>
+   4:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+   8:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+   c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  10:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  14:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  18:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  1c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  20:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  24:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  28:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  2c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  30:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  34:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  38:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  3c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  40:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  44:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  48:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  4c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  50:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  54:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  58:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  5c:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  60:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
+  64:	0c 94 49 00 	jmp	0x92	; 0x92 <__bad_interrupt>
 
 00000068 <__ctors_end>:
   68:	11 24       	eor	r1, r1
@@ -63,23 +65,403 @@ Disassembly of section .text:
   6e:	d8 e0       	ldi	r29, 0x08	; 8
   70:	de bf       	out	0x3e, r29	; 62
   72:	cd bf       	out	0x3d, r28	; 61
-  74:	0e 94 40 00 	call	0x80	; 0x80 <main>
-  78:	0c 94 41 00 	jmp	0x82	; 0x82 <_exit>
 
-0000007c <__bad_interrupt>:
-  7c:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+00000074 <__do_copy_data>:
+  74:	11 e0       	ldi	r17, 0x01	; 1
+  76:	a0 e0       	ldi	r26, 0x00	; 0
+  78:	b1 e0       	ldi	r27, 0x01	; 1
+  7a:	ec e6       	ldi	r30, 0x6C	; 108
+  7c:	f2 e0       	ldi	r31, 0x02	; 2
+  7e:	02 c0       	rjmp	.+4      	; 0x84 <__do_copy_data+0x10>
+  80:	05 90       	lpm	r0, Z+
+  82:	0d 92       	st	X+, r0
+  84:	a4 32       	cpi	r26, 0x24	; 36
+  86:	b1 07       	cpc	r27, r17
+  88:	d9 f7       	brne	.-10     	; 0x80 <__do_copy_data+0xc>
+  8a:	0e 94 04 01 	call	0x208	; 0x208 <main>
+  8e:	0c 94 34 01 	jmp	0x268	; 0x268 <_exit>
 
-00000080 <main>:
-#define F_CPU 16000000 //16Mhz
+00000092 <__bad_interrupt>:
+  92:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
 
-#include "lib/Canbus.h"
+00000096 <CAN_INIT>:
+				}
+
+}
+
+char CAN_INIT(unsigned char speed) {
+  return mcp2515_init(speed);
+  96:	0e 94 75 00 	call	0xea	; 0xea <mcp2515_init>
+}
+  9a:	08 95       	ret
+
+0000009c <spi_putc>:
+	data = spi_putc(0xff);
+
+	SET(MCP2515_CS);
+
+	return data;
+}
+  9c:	8e bd       	out	0x2e, r24	; 46
+  9e:	0d b4       	in	r0, 0x2d	; 45
+  a0:	07 fe       	sbrs	r0, 7
+  a2:	fd cf       	rjmp	.-6      	; 0x9e <spi_putc+0x2>
+  a4:	8e b5       	in	r24, 0x2e	; 46
+  a6:	08 95       	ret
+
+000000a8 <mcp2515_write_register>:
+  a8:	cf 93       	push	r28
+  aa:	df 93       	push	r29
+  ac:	d8 2f       	mov	r29, r24
+  ae:	c6 2f       	mov	r28, r22
+  b0:	2a 98       	cbi	0x05, 2	; 5
+  b2:	82 e0       	ldi	r24, 0x02	; 2
+  b4:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  b8:	8d 2f       	mov	r24, r29
+  ba:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  be:	8c 2f       	mov	r24, r28
+  c0:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  c4:	2a 9a       	sbi	0x05, 2	; 5
+  c6:	df 91       	pop	r29
+  c8:	cf 91       	pop	r28
+  ca:	08 95       	ret
+
+000000cc <mcp2515_read_register>:
+  cc:	cf 93       	push	r28
+  ce:	c8 2f       	mov	r28, r24
+  d0:	2a 98       	cbi	0x05, 2	; 5
+  d2:	83 e0       	ldi	r24, 0x03	; 3
+  d4:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  d8:	8c 2f       	mov	r24, r28
+  da:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  de:	8f ef       	ldi	r24, 0xFF	; 255
+  e0:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+  e4:	2a 9a       	sbi	0x05, 2	; 5
+  e6:	cf 91       	pop	r28
+  e8:	08 95       	ret
+
+000000ea <mcp2515_init>:
+
+// -------------------------------------------------------------------------
+uint8_t mcp2515_init(uint8_t speed)
+{
+  ea:	cf 93       	push	r28
+  ec:	c8 2f       	mov	r28, r24
+
+
+	SET(MCP2515_CS);
+  ee:	2a 9a       	sbi	0x05, 2	; 5
+	SET_OUTPUT(MCP2515_CS);
+  f0:	22 9a       	sbi	0x04, 2	; 4
+
+	RESET(P_SCK);
+  f2:	2d 98       	cbi	0x05, 5	; 5
+	RESET(P_MOSI);
+  f4:	2b 98       	cbi	0x05, 3	; 5
+	RESET(P_MISO);
+  f6:	2c 98       	cbi	0x05, 4	; 5
+
+	SET_OUTPUT(P_SCK);
+  f8:	25 9a       	sbi	0x04, 5	; 4
+	SET_OUTPUT(P_MOSI);
+  fa:	23 9a       	sbi	0x04, 3	; 4
+	SET_INPUT(P_MISO);
+  fc:	24 98       	cbi	0x04, 4	; 4
+
+	SET_INPUT(MCP2515_INT);
+  fe:	52 98       	cbi	0x0a, 2	; 10
+	SET(MCP2515_INT);
+ 100:	5a 9a       	sbi	0x0b, 2	; 11
+
+	// active SPI master interface
+	SPCR = (1<<SPE)|(1<<MSTR) | (0<<SPR1)|(1<<SPR0);
+ 102:	81 e5       	ldi	r24, 0x51	; 81
+ 104:	8c bd       	out	0x2c, r24	; 44
+	SPSR = 0;
+ 106:	1d bc       	out	0x2d, r1	; 45
+
+	// reset MCP2515 by software reset.
+	// After this he is in configuration mode.
+	RESET(MCP2515_CS);
+ 108:	2a 98       	cbi	0x05, 2	; 5
+	spi_putc(SPI_RESET);
+ 10a:	80 ec       	ldi	r24, 0xC0	; 192
+ 10c:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+	SET(MCP2515_CS);
+ 110:	2a 9a       	sbi	0x05, 2	; 5
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 112:	83 e0       	ldi	r24, 0x03	; 3
+ 114:	8a 95       	dec	r24
+ 116:	f1 f7       	brne	.-4      	; 0x114 <mcp2515_init+0x2a>
+ 118:	00 00       	nop
+
+	// wait a little bit until the MCP2515 has restarted
+	_delay_us(10);
+
+	// load CNF1..3 Register
+	RESET(MCP2515_CS);
+ 11a:	2a 98       	cbi	0x05, 2	; 5
+	spi_putc(SPI_WRITE);
+ 11c:	82 e0       	ldi	r24, 0x02	; 2
+ 11e:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+	spi_putc(CNF3);
+ 122:	88 e2       	ldi	r24, 0x28	; 40
+ 124:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+/*
+	spi_putc((1<<PHSEG21));		// Bitrate 250 kbps at 16 MHz
+	spi_putc((1<<BTLMODE)|(1<<PHSEG11));
+	spi_putc((1<<BRP1)|(1<<BRP0));
+*/
+	spi_putc((1<<PHSEG21));		// Bitrate 250 kbps at 16 MHz
+ 128:	82 e0       	ldi	r24, 0x02	; 2
+ 12a:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+	spi_putc((1<<BTLMODE)|(1<<PHSEG11));
+ 12e:	80 e9       	ldi	r24, 0x90	; 144
+ 130:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+	//spi_putc(1<<BRP0);
+    spi_putc(speed);
+ 134:	8c 2f       	mov	r24, r28
+ 136:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+
+	// activate interrupts
+	spi_putc((1<<RX1IE)|(1<<RX0IE));
+ 13a:	83 e0       	ldi	r24, 0x03	; 3
+ 13c:	0e 94 4e 00 	call	0x9c	; 0x9c <spi_putc>
+	SET(MCP2515_CS);
+ 140:	2a 9a       	sbi	0x05, 2	; 5
+
+	// test if we could read back the value => is the chip accessible?
+	if (mcp2515_read_register(CNF1) != speed) {
+ 142:	8a e2       	ldi	r24, 0x2A	; 42
+ 144:	0e 94 66 00 	call	0xcc	; 0xcc <mcp2515_read_register>
+ 148:	c8 17       	cp	r28, r24
+ 14a:	19 f0       	breq	.+6      	; 0x152 <mcp2515_init+0x68>
+		SET(LED2_HIGH);
+ 14c:	28 9a       	sbi	0x05, 0	; 5
+
+		return false;
+ 14e:	80 e0       	ldi	r24, 0x00	; 0
+ 150:	15 c0       	rjmp	.+42     	; 0x17c <mcp2515_init+0x92>
+	}
+
+	// deactivate the RXnBF Pins (High Impedance State)
+	mcp2515_write_register(BFPCTRL, 0);
+ 152:	60 e0       	ldi	r22, 0x00	; 0
+ 154:	8c e0       	ldi	r24, 0x0C	; 12
+ 156:	0e 94 54 00 	call	0xa8	; 0xa8 <mcp2515_write_register>
+
+	// set TXnRTS as inputs
+	mcp2515_write_register(TXRTSCTRL, 0);
+ 15a:	60 e0       	ldi	r22, 0x00	; 0
+ 15c:	8d e0       	ldi	r24, 0x0D	; 13
+ 15e:	0e 94 54 00 	call	0xa8	; 0xa8 <mcp2515_write_register>
+
+	// turn off filters => receive any message
+	mcp2515_write_register(RXB0CTRL, (1<<RXM1)|(1<<RXM0));
+ 162:	60 e6       	ldi	r22, 0x60	; 96
+ 164:	80 e6       	ldi	r24, 0x60	; 96
+ 166:	0e 94 54 00 	call	0xa8	; 0xa8 <mcp2515_write_register>
+	mcp2515_write_register(RXB1CTRL, (1<<RXM1)|(1<<RXM0));
+ 16a:	60 e6       	ldi	r22, 0x60	; 96
+ 16c:	80 e7       	ldi	r24, 0x70	; 112
+ 16e:	0e 94 54 00 	call	0xa8	; 0xa8 <mcp2515_write_register>
+
+	// reset device to normal mode
+	mcp2515_write_register(CANCTRL, 0);
+ 172:	60 e0       	ldi	r22, 0x00	; 0
+ 174:	8f e0       	ldi	r24, 0x0F	; 15
+ 176:	0e 94 54 00 	call	0xa8	; 0xa8 <mcp2515_write_register>
+	return true;
+ 17a:	81 e0       	ldi	r24, 0x01	; 1
+}
+ 17c:	cf 91       	pop	r28
+ 17e:	08 95       	ret
+
+00000180 <USART_transmit>:
+}
+
+void print_int_new_line(int32_t data) {
+	print_int(data);
+
+	print_new_line();
+ 180:	dc 01       	movw	r26, r24
+ 182:	e0 ec       	ldi	r30, 0xC0	; 192
+ 184:	f0 e0       	ldi	r31, 0x00	; 0
+ 186:	90 81       	ld	r25, Z
+ 188:	95 ff       	sbrs	r25, 5
+ 18a:	fd cf       	rjmp	.-6      	; 0x186 <USART_transmit+0x6>
+ 18c:	8c 91       	ld	r24, X
+ 18e:	80 93 c6 00 	sts	0x00C6, r24	; 0x8000c6 <__TEXT_REGION_LENGTH__+0x7e00c6>
+ 192:	08 95       	ret
+
+00000194 <print_string>:
+ 194:	cf 93       	push	r28
+ 196:	df 93       	push	r29
+ 198:	ec 01       	movw	r28, r24
+ 19a:	88 81       	ld	r24, Y
+ 19c:	88 23       	and	r24, r24
+ 19e:	39 f0       	breq	.+14     	; 0x1ae <print_string+0x1a>
+ 1a0:	ce 01       	movw	r24, r28
+ 1a2:	0e 94 c0 00 	call	0x180	; 0x180 <USART_transmit>
+ 1a6:	21 96       	adiw	r28, 0x01	; 1
+ 1a8:	88 81       	ld	r24, Y
+ 1aa:	81 11       	cpse	r24, r1
+ 1ac:	f9 cf       	rjmp	.-14     	; 0x1a0 <print_string+0xc>
+ 1ae:	df 91       	pop	r29
+ 1b0:	cf 91       	pop	r28
+ 1b2:	08 95       	ret
+
+000001b4 <print_new_line>:
+ 1b4:	80 e0       	ldi	r24, 0x00	; 0
+ 1b6:	91 e0       	ldi	r25, 0x01	; 1
+ 1b8:	0e 94 ca 00 	call	0x194	; 0x194 <print_string>
+ 1bc:	08 95       	ret
+
+000001be <print_string_new_line>:
+		USART_transmit(data);
+	}
+}
+
+void print_string_new_line(char * data) {
+	print_string(data);
+ 1be:	0e 94 ca 00 	call	0x194	; 0x194 <print_string>
+
+	print_new_line();
+ 1c2:	0e 94 da 00 	call	0x1b4	; 0x1b4 <print_new_line>
+ 1c6:	08 95       	ret
+
+000001c8 <USART_init>:
+ *
+ * \param baudrate the baudrate the USART will run on
+ *
+ * \return void
+ */
+void USART_init(uint32_t baudrate){
+ 1c8:	9b 01       	movw	r18, r22
+ 1ca:	ac 01       	movw	r20, r24
+
+	#ifdef __AVR_ATmega328P__
+
+	// calculate the baudrate, see the datasheet for more information
+	uint16_t baud_setting = (F_CPU / 8 / baudrate - 1) ;
+ 1cc:	60 e8       	ldi	r22, 0x80	; 128
+ 1ce:	74 e8       	ldi	r23, 0x84	; 132
+ 1d0:	8e e1       	ldi	r24, 0x1E	; 30
+ 1d2:	90 e0       	ldi	r25, 0x00	; 0
+ 1d4:	0e 94 12 01 	call	0x224	; 0x224 <__udivmodsi4>
+ 1d8:	21 50       	subi	r18, 0x01	; 1
+ 1da:	31 09       	sbc	r19, r1
+
+	// assign the baud_setting
+	UBRR0H = baud_setting >> 8;
+ 1dc:	30 93 c5 00 	sts	0x00C5, r19	; 0x8000c5 <__TEXT_REGION_LENGTH__+0x7e00c5>
+	UBRR0L = baud_setting;
+ 1e0:	20 93 c4 00 	sts	0x00C4, r18	; 0x8000c4 <__TEXT_REGION_LENGTH__+0x7e00c4>
+
+	// set double data speed
+	UCSR0A = (1<<U2X0);
+ 1e4:	82 e0       	ldi	r24, 0x02	; 2
+ 1e6:	80 93 c0 00 	sts	0x00C0, r24	; 0x8000c0 <__TEXT_REGION_LENGTH__+0x7e00c0>
+
+	// enable TX and RX (RX is not necessary)
+	UCSR0B |= _BV(RXEN0) | _BV(TXEN0);
+ 1ea:	e1 ec       	ldi	r30, 0xC1	; 193
+ 1ec:	f0 e0       	ldi	r31, 0x00	; 0
+ 1ee:	80 81       	ld	r24, Z
+ 1f0:	88 61       	ori	r24, 0x18	; 24
+ 1f2:	80 83       	st	Z, r24
+
+	// 8 bit data, 1 stop, no parity
+	UCSR0C |= _BV(UCSZ01) | _BV(UCSZ00);
+ 1f4:	e2 ec       	ldi	r30, 0xC2	; 194
+ 1f6:	f0 e0       	ldi	r31, 0x00	; 0
+ 1f8:	80 81       	ld	r24, Z
+ 1fa:	86 60       	ori	r24, 0x06	; 6
+ 1fc:	80 83       	st	Z, r24
+
+
+	// confirm the init
+	print_string_new_line("USART INIT DONE");
+ 1fe:	84 e0       	ldi	r24, 0x04	; 4
+ 200:	91 e0       	ldi	r25, 0x01	; 1
+ 202:	0e 94 df 00 	call	0x1be	; 0x1be <print_string_new_line>
+ 206:	08 95       	ret
+
+00000208 <main>:
+#include "lib/CAN/Canbus.h"
 
 
 int main() {
-  80:	ff cf       	rjmp	.-2      	; 0x80 <main>
+	// start the serial connection with the PC
+	USART_init(USART_BAUDRATE);
+ 208:	60 e0       	ldi	r22, 0x00	; 0
+ 20a:	76 e9       	ldi	r23, 0x96	; 150
+ 20c:	80 e0       	ldi	r24, 0x00	; 0
+ 20e:	90 e0       	ldi	r25, 0x00	; 0
+ 210:	0e 94 e4 00 	call	0x1c8	; 0x1c8 <USART_init>
 
-00000082 <_exit>:
-  82:	f8 94       	cli
+	// start the CAN connection
+	if (CAN_INIT(CANSPEED_500)){
+ 214:	81 e0       	ldi	r24, 0x01	; 1
+ 216:	0e 94 4b 00 	call	0x96	; 0x96 <CAN_INIT>
+		//DEBUG_USART("CAN init failed");
+	}
 
-00000084 <__stop_program>:
-  84:	ff cf       	rjmp	.-2      	; 0x84 <__stop_program>
+	while (1) { // our main event loop
+		//DEBUG_USART("test12345");
+		print_string_new_line("test12345");
+ 21a:	8a e1       	ldi	r24, 0x1A	; 26
+ 21c:	91 e0       	ldi	r25, 0x01	; 1
+ 21e:	0e 94 df 00 	call	0x1be	; 0x1be <print_string_new_line>
+ 222:	fb cf       	rjmp	.-10     	; 0x21a <main+0x12>
+
+00000224 <__udivmodsi4>:
+ 224:	a1 e2       	ldi	r26, 0x21	; 33
+ 226:	1a 2e       	mov	r1, r26
+ 228:	aa 1b       	sub	r26, r26
+ 22a:	bb 1b       	sub	r27, r27
+ 22c:	fd 01       	movw	r30, r26
+ 22e:	0d c0       	rjmp	.+26     	; 0x24a <__udivmodsi4_ep>
+
+00000230 <__udivmodsi4_loop>:
+ 230:	aa 1f       	adc	r26, r26
+ 232:	bb 1f       	adc	r27, r27
+ 234:	ee 1f       	adc	r30, r30
+ 236:	ff 1f       	adc	r31, r31
+ 238:	a2 17       	cp	r26, r18
+ 23a:	b3 07       	cpc	r27, r19
+ 23c:	e4 07       	cpc	r30, r20
+ 23e:	f5 07       	cpc	r31, r21
+ 240:	20 f0       	brcs	.+8      	; 0x24a <__udivmodsi4_ep>
+ 242:	a2 1b       	sub	r26, r18
+ 244:	b3 0b       	sbc	r27, r19
+ 246:	e4 0b       	sbc	r30, r20
+ 248:	f5 0b       	sbc	r31, r21
+
+0000024a <__udivmodsi4_ep>:
+ 24a:	66 1f       	adc	r22, r22
+ 24c:	77 1f       	adc	r23, r23
+ 24e:	88 1f       	adc	r24, r24
+ 250:	99 1f       	adc	r25, r25
+ 252:	1a 94       	dec	r1
+ 254:	69 f7       	brne	.-38     	; 0x230 <__udivmodsi4_loop>
+ 256:	60 95       	com	r22
+ 258:	70 95       	com	r23
+ 25a:	80 95       	com	r24
+ 25c:	90 95       	com	r25
+ 25e:	9b 01       	movw	r18, r22
+ 260:	ac 01       	movw	r20, r24
+ 262:	bd 01       	movw	r22, r26
+ 264:	cf 01       	movw	r24, r30
+ 266:	08 95       	ret
+
+00000268 <_exit>:
+ 268:	f8 94       	cli
+
+0000026a <__stop_program>:
+ 26a:	ff cf       	rjmp	.-2      	; 0x26a <__stop_program>
