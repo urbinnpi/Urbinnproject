@@ -28,8 +28,14 @@ int main() {
 	}
 
 	DEBUG_USART("Starting main loop...");
+	tCAN message;
 	while (1) { // our main event loop
-		;
+		message.id = 0x001;
+		message.header.rtr = 0;
+		message.header.length = 4;
+		*message.data = 0xAABBCCDD;
+		message_tx(&message);
+		_delay_ms(100);
 	}
 }
 
