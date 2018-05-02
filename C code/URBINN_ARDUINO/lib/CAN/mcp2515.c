@@ -31,7 +31,7 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
-#include "lib/SPI/SPI.h"
+#include "..\SPI\SPI.h"
 
 
 #include "global.h"
