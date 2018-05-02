@@ -17,8 +17,6 @@
  */
 void USART_init(uint32_t baudrate){
 
-	#ifdef __AVR_ATmega328P__
-
 	// calculate the baudrate, see the datasheet for more information
 	uint16_t baud_setting = (F_CPU / 8 / baudrate - 1) ;
 
@@ -39,7 +37,6 @@ void USART_init(uint32_t baudrate){
 	// confirm the init
 	print_string_new_line("USART INIT DONE");
 
-	#endif
 }
 
 
@@ -52,8 +49,6 @@ void USART_init(uint32_t baudrate){
  */
 void USART_transmit(const char * data){
 
-	#ifdef __AVR_ATmega328P__
-
 	/* Wait for empty transmit buffer */
 	while ( !( UCSR0A & (1<<UDRE0)) )
 	;
@@ -61,7 +56,6 @@ void USART_transmit(const char * data){
 	/* Put data into buffer, sends the data */
 	UDR0 = *data;
 
-	#endif
 }
 
 void print_int(int32_t data) {

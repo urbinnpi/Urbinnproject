@@ -16,7 +16,9 @@ main.d main.o: .././main.c .././lib/UART/USART.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\util\delay_basic.h \
  c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\math.h \
  .././lib/CAN/Canbus.h .././lib/CAN/defaults.h .././lib/CAN/global.h \
- .././lib/CAN/mcp2515.h .././lib/CAN/mcp2515_defs.h .././lib/CAN/global.h
+ .././lib/CAN/mcp2515.h .././lib/CAN/mcp2515_defs.h .././lib/CAN/global.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h \
+ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h
 
 .././lib/UART/USART.h:
 
@@ -63,3 +65,7 @@ c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\
 .././lib/CAN/mcp2515_defs.h:
 
 .././lib/CAN/global.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\avr\include\stdio.h:
+
+c:\program\ files\ (x86)\atmel\studio\7.0\toolchain\avr8\avr8-gnu-toolchain\lib\gcc\avr\5.4.0\include\stdarg.h:

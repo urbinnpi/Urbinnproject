@@ -12,6 +12,8 @@
 #include "lib/CAN/global.h"
 #include "lib/CAN/mcp2515.h"
 
+#include <stdio.h>
+
 int main() {
 	// start the serial connection with the PC
 	USART_init(USART_BAUDRATE);
@@ -24,21 +26,35 @@ int main() {
 	}
 
 	DEBUG_USART("Starting main loop...");
+	tCAN message;	// create an empty message
 	while (1) { // our main event loop
-		tCAN message;
+		//  check if there is an message
 		if (mcp2515_check_message()) {
+			// Get the message from the MCP2515
 			if (mcp2515_get_message(&message)) {
+				char hexbuffer[4];		// temp buffer for converting to string
 
-				DEBUG_USART("ID: ");
-				DEBUG_USART(message.id);
-				DEBUG_USART(", ");
-				DEBUG_USART("Data: ");
-				DEBUG_USART(message.header.length);
+				// print to ID, convert the uint16 to string in HEX format
+				print_string("ID: ");
+				snprintf(hexbuffer,4,"%02X"PRIu16,message.id);
+				print_string(hexbuffer);
+
+				print_string(", ");
+
+				// print the datalength, convert the uint16 to string in HEX format
+				print_string("Datalength: ");
+				snprintf(hexbuffer,2,"%02X"PRIu16,message.id);
+				print_string(hexbuffer);
+
+				// loop and print all the data
+				// convert uint8 to string in HEX format
+				print_string(", Data: ");
 				for(int i=0;i<message.header.length;i++) {
-					DEBUG_USART(message.data[i]);
-					DEBUG_USART(" ");
+					snprintf(hexbuffer,3,"%02X"PRIu8,message.data[i]);
+					print_string(hexbuffer);
 				}
-				DEBUG_USART("");
+				// print a new line
+				print_string_new_line("");
 			}
 
 		}
