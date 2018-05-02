@@ -23,8 +23,8 @@
 #define PID_REPLY			0x7E8
 
 char CAN_INIT(unsigned char);
-char message_tx(void);
-char message_rx(unsigned char *buffer);
+char message_tx();
+char message_rx();
 char ecu_req(unsigned char pid,  char *buffer);
 
 #endif

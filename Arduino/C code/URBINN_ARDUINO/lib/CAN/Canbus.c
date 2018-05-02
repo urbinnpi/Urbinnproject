@@ -12,33 +12,50 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include <inttypes.h>
+
 #include "global.h"
 #include "mcp2515.h"
 #include "defaults.h"
 #include "Canbus.h"
+#include "../UART/USART.h"
 
-
-
-
-char message_rx(unsigned char *buffer) {
-		tCAN message;
-
-		if (mcp2515_check_message()) {				// check if there is a message
-			if (mcp2515_get_message(&message)) {	// get the message
-				buffer[0] = message.data[0];
-				buffer[1] = message.data[1];
-				buffer[2] = message.data[2];
-				buffer[3] = message.data[3];
-				buffer[4] = message.data[4];
-				buffer[5] = message.data[5];
-				buffer[6] = message.data[6];
-				buffer[7] = message.data[7];
-			}
-		}
-
+// PD2 (message received interrupt)
+ISR(INT0_vect) {
+	message_rx();
 }
 
-char message_tx(void) {
+
+char message_rx() {
+	tCAN message;
+
+	if (mcp2515_get_message(&message)) {
+		char hexbuffer[4];		// temp buffer for converting to string
+
+		// print to ID, convert the uint16 to string in HEX format
+		print_string("ID: ");
+		snprintf(hexbuffer,4,"%02X"PRIu16,message.id);
+		print_string(hexbuffer);
+
+		print_string(", ");
+
+		// print the datalength, convert the uint16 to string in HEX format
+		print_string("Datalength: ");
+		snprintf(hexbuffer,2,"%02X"PRIu16,message.id);
+		print_string(hexbuffer);
+
+		// loop and print all the data
+		// convert uint8 to string in HEX format
+		print_string(", Data: ");
+		for(int i=0;i<message.header.length;i++) {
+			snprintf(hexbuffer,3,"%02X"PRIu8,message.data[i]);
+			print_string(hexbuffer);
+		}
+		// print a new line
+		print_string_new_line("");
+	}
+}
+
+char message_tx() {
 	tCAN message;
 
 
@@ -135,5 +152,20 @@ char ecu_req(unsigned char pid,  char *buffer)
 }
 
 char CAN_INIT(unsigned char speed) {
-  return mcp2515_init(speed);
+	cli(); // disable interrupts
+
+	// Set PD2 as input
+	DDRD &= ~(1<<DDD3);
+	PORTD |= (1<<PORTD3);
+
+	// enable interrupt on PD2 (INT0) on the rising edge
+	EICRA |= (1 << ISC10) | (1 << ISC11); // any logic
+
+	// enable INT0
+	EIMSK |= (1 << INT0);
+
+	sei(); // enable interrupts
+
+	// init the MCP2515
+	return mcp2515_init(speed);
 }
