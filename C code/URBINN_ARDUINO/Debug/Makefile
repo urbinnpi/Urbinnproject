@@ -35,6 +35,7 @@ LINKER_SCRIPT_DEP:=
 SUBDIRS :=  \
 ../lib \
 ../lib/CAN \
+../lib/SPI \
 ../lib/UART
 
 
@@ -42,6 +43,7 @@ SUBDIRS :=  \
 C_SRCS +=  \
 ../lib/CAN/Canbus.c \
 ../lib/CAN/mcp2515.c \
+../lib/SPI/SPI.c \
 ../lib/UART/USART.c \
 ../main.c
 
@@ -55,24 +57,28 @@ ASM_SRCS +=
 OBJS +=  \
 lib/CAN/Canbus.o \
 lib/CAN/mcp2515.o \
+lib/SPI/SPI.o \
 lib/UART/USART.o \
 main.o
 
 OBJS_AS_ARGS +=  \
 lib/CAN/Canbus.o \
 lib/CAN/mcp2515.o \
+lib/SPI/SPI.o \
 lib/UART/USART.o \
 main.o
 
 C_DEPS +=  \
 lib/CAN/Canbus.d \
 lib/CAN/mcp2515.d \
+lib/SPI/SPI.d \
 lib/UART/USART.d \
 main.d
 
 C_DEPS_AS_ARGS +=  \
 lib/CAN/Canbus.d \
 lib/CAN/mcp2515.d \
+lib/SPI/SPI.d \
 lib/UART/USART.d \
 main.d
 
@@ -99,7 +105,16 @@ LINKER_SCRIPT_DEP+=
 
 
 
+
+
 lib/CAN/%.o: ../lib/CAN/%.c
+	@echo Building file: $<
+	@echo Invoking: AVR/GNU C Compiler : 5.4.0
+	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -Wextra -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 
+	@echo Finished building: $<
+	
+
+lib/SPI/%.o: ../lib/SPI/%.c
 	@echo Building file: $<
 	@echo Invoking: AVR/GNU C Compiler : 5.4.0
 	$(QUOTE)C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avr8-gnu-toolchain\bin\avr-gcc.exe$(QUOTE)  -x c -funsigned-char -funsigned-bitfields -DDEBUG  -I"C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\include"  -O1 -ffunction-sections -fdata-sections -fpack-struct -fshort-enums -g2 -Wall -Wextra -mmcu=atmega328p -B "C:\Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.2.132\gcc\dev\atmega328p" -c -std=gnu99 -MD -MP -MF "$(@:%.o=%.d)" -MT"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)"   -o "$@" "$<" 

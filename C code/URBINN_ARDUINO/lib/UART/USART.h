@@ -13,7 +13,7 @@
 #include <stdlib.h> // for itoa
 #include <util/delay.h>
 
-
+#define DEBUG_USART(message) print_string_new_line(message)
 #define USART_BAUDRATE 38400	// define the baudrate of the serial communication
 
 void USART_init(uint32_t);				// initialize the USART

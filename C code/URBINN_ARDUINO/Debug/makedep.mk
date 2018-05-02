@@ -6,6 +6,8 @@ lib\CAN\Canbus.c
 
 lib\CAN\mcp2515.c
 
+lib\SPI\SPI.c
+
 lib\UART\USART.c
 
 main.c

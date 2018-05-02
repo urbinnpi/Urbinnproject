@@ -31,6 +31,9 @@
 #include <stdint.h>
 #include <avr/pgmspace.h>
 
+#include "lib/SPI/SPI.h"
+
+
 #include "global.h"
 #include "mcp2515.h"
 #include "mcp2515_defs.h"
@@ -38,24 +41,10 @@
 
 #include "defaults.h"
 
-// -------------------------------------------------------------------------
-// Schreibt/liest ein Byte ueber den Hardware SPI Bus
 
-uint8_t spi_putc( uint8_t data )
-{
-	// put byte in send-buffer
-	SPDR = data;
-
-	// wait until byte was send
-	while( !( SPSR & (1<<SPIF) ) )
-		;
-
-	return SPDR;
-}
 
 // -------------------------------------------------------------------------
-void mcp2515_write_register( uint8_t adress, uint8_t data )
-{
+void mcp2515_write_register( uint8_t adress, uint8_t data ){
 	RESET(MCP2515_CS);
 
 	spi_putc(SPI_WRITE);
@@ -66,8 +55,7 @@ void mcp2515_write_register( uint8_t adress, uint8_t data )
 }
 
 // -------------------------------------------------------------------------
-uint8_t mcp2515_read_register(uint8_t adress)
-{
+uint8_t mcp2515_read_register(uint8_t adress){
 	uint8_t data;
 
 	RESET(MCP2515_CS);
@@ -83,8 +71,7 @@ uint8_t mcp2515_read_register(uint8_t adress)
 }
 
 // -------------------------------------------------------------------------
-void mcp2515_bit_modify(uint8_t adress, uint8_t mask, uint8_t data)
-{
+void mcp2515_bit_modify(uint8_t adress, uint8_t mask, uint8_t data) {
 	RESET(MCP2515_CS);
 
 	spi_putc(SPI_BIT_MODIFY);
@@ -96,8 +83,7 @@ void mcp2515_bit_modify(uint8_t adress, uint8_t mask, uint8_t data)
 }
 
 // ----------------------------------------------------------------------------
-uint8_t mcp2515_read_status(uint8_t type)
-{
+uint8_t mcp2515_read_status(uint8_t type) {
 	uint8_t data;
 
 	RESET(MCP2515_CS);
@@ -111,8 +97,7 @@ uint8_t mcp2515_read_status(uint8_t type)
 }
 
 // -------------------------------------------------------------------------
-uint8_t mcp2515_init(uint8_t speed)
-{
+uint8_t mcp2515_init(uint8_t speed) {
 
 
 	SET(MCP2515_CS);
@@ -130,8 +115,7 @@ uint8_t mcp2515_init(uint8_t speed)
 	SET(MCP2515_INT);
 
 	// active SPI master interface
-	SPCR = (1<<SPE)|(1<<MSTR) | (0<<SPR1)|(1<<SPR0);
-	SPSR = 0;
+	spi_init_master();
 
 	// reset MCP2515 by software reset.
 	// After this he is in configuration mode.
@@ -140,25 +124,14 @@ uint8_t mcp2515_init(uint8_t speed)
 	SET(MCP2515_CS);
 
 	// wait a little bit until the MCP2515 has restarted
-	_delay_us(10);
+	_delay_ms(10);
 
 	// load CNF1..3 Register
 	RESET(MCP2515_CS);
 	spi_putc(SPI_WRITE);
 	spi_putc(CNF3);
-
-/*	spi_putc((1<<PHSEG21));		// Bitrate 125 kbps at 16 MHz
+	spi_putc((1<<PHSEG21));
 	spi_putc((1<<BTLMODE)|(1<<PHSEG11));
-	spi_putc((1<<BRP2)|(1<<BRP1)|(1<<BRP0));
-*/
-/*
-	spi_putc((1<<PHSEG21));		// Bitrate 250 kbps at 16 MHz
-	spi_putc((1<<BTLMODE)|(1<<PHSEG11));
-	spi_putc((1<<BRP1)|(1<<BRP0));
-*/
-	spi_putc((1<<PHSEG21));		// Bitrate 250 kbps at 16 MHz
-	spi_putc((1<<BTLMODE)|(1<<PHSEG11));
-	//spi_putc(1<<BRP0);
     spi_putc(speed);
 
 	// activate interrupts

@@ -18,6 +18,7 @@ void setup() {
 
 void loop() {
   tCAN message;
+  Serial.println("waiting for message");
   if (mcp2515_check_message()) {
     if (mcp2515_get_message(&message)) {    
      Serial.print("ID: ");
@@ -33,4 +34,5 @@ void loop() {
      Serial.println("");
     }
   }
+  delay(500);
 }

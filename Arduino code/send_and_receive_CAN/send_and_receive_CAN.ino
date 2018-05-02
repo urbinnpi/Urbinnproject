@@ -4,6 +4,7 @@
 #include <mcp2515.h>
 #include <mcp2515_defs.h>
 
+void send();
 
 void setup() {
   // put your setup code here, to run once:
@@ -17,8 +18,9 @@ void setup() {
 }
 
 void loop() {
+  tCAN* message;
   // put your main code here, to run repeatedly:
-
+  send(message);
 }
 
 tCAN* receive(){
