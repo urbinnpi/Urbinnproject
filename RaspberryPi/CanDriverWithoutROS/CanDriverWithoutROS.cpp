@@ -26,6 +26,13 @@ void send(struct can_frame *frame, int socket){
 	
 }
 
+void receive(struct can_frame *frame, int socket){
+	recvbytes = read(socket, frame, sizeof(struct can_frame));
+	if(recvbytes) {
+		printf(“dlc = %d, data = %s\n”, frame->can_dlc, frame->data);
+	}
+}
+
 int main(void) {
 	int s;
 	struct sockaddr_can addr;
@@ -56,7 +63,11 @@ int main(void) {
 		return -2;
 	}
 
-	send(&frame, s);
+	while (true) {
+		send(&frame, s);
+		receive();
+	}
+	
 	
 	return 0;
 }
