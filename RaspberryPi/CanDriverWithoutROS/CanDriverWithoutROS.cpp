@@ -67,8 +67,8 @@ int main(void) {
 		printf("sending frame");
 		send(&frame, s);
 		printf("receiving frame");
-		receive();
-		print("starting again");
+		receive(&frame, s);
+		printf("starting again");
 	}
 	
 	printf("Exit1!");
