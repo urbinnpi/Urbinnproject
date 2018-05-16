@@ -8,7 +8,7 @@ public:
     ~Driver(){}
         virtual void readinput() =0;
         virtual void receivemsg()=0;
-        virtual void transmitMsg(messageStruct)=0;
+        virtual void transmitMsg()=0;
   private:
 
 }
