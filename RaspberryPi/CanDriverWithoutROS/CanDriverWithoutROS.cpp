@@ -11,6 +11,8 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+#include <stdint.h>
+
 
 void send(struct can_frame *frame, int socket){
 	int nbytes;
