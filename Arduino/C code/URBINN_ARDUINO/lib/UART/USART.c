@@ -44,7 +44,7 @@ void USART_init(uint32_t baudrate){
 	sei(); // enable interrupt
 }
 
-ISR(USART0_RX_vect) {
+ISR(USART_RX_vect) {
 	receiveBuffer[receiveBufferCounter] = UDR0;
 
 	// prevent buffer overflow
@@ -57,29 +57,7 @@ ISR(USART0_RX_vect) {
 }
 
 void receive () {
-	// wait for full string
-	if(receiveBuffer[receiveBufferCounter-1] != '\r') {
-		return;
-	}
-
-	// TODO: does not work
-	// check if LED
-	if (receiveBuffer[0] == 'L') {
-		// send the string back
-		//print_string_new_line((char*)receiveBuffer);
-		print_string_new_line((char*)receiveBuffer);
-		blinkSpeed = (uint8_t)strtol((char*)receiveBuffer, NULL, 10);
-		print_int_new_line(blinkSpeed);
-
-		// clear the buffer
-		clearBuffer();
-		return;
-	}
-
-	// check if Servo
-	if (receiveBuffer[0] == 'S') {
-
-	}
+	
 }
 
 

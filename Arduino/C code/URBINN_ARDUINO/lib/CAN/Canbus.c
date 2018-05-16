@@ -53,13 +53,14 @@ char message_rx() {
 		// print a new line
 		print_string_new_line("");
 	}
+	return 0;
 }
 
 char message_tx(tCAN *message) {
 
 	mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
 
-	if (mcp2515_send_message(&message)) {
+	if (mcp2515_send_message(message)) {
 		//	SET(LED2_HIGH);
 		return 1;
 	} else {
