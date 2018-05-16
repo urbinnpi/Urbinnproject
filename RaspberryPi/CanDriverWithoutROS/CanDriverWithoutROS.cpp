@@ -12,7 +12,9 @@
 #include <linux/can/raw.h>
 
 
-void send(struct can_frame frame){
+void send(struct can_frame frame, int s){
+	int nbytes;
+	
 	// create frame
 	frame.can_id  = 0x123;
 	frame.can_dlc = 2;
@@ -26,7 +28,6 @@ void send(struct can_frame frame){
 
 int main(void) {
 	int s;
-	int nbytes;
 	struct sockaddr_can addr;
 	struct can_frame frame;
 	struct ifreq ifr;
@@ -55,7 +56,7 @@ int main(void) {
 		return -2;
 	}
 
-	send(frame);
+	send(frame, s);
 	
 	return 0;
 }
