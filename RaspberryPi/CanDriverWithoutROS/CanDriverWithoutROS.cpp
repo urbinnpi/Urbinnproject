@@ -64,10 +64,13 @@ int main(void) {
 	}
 
 	while (true) {
+		printf("sending frame");
 		send(&frame, s);
+		printf("receiving frame");
 		receive();
+		print("starting again");
 	}
 	
-	
+	printf("Exit1!");
 	return 0;
 }
