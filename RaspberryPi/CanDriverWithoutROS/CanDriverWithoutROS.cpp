@@ -35,7 +35,7 @@ void receive(struct can_frame *frame, int socket){
 		
 		// loop trough the data
 		for(uint8_t i = 0; frame->can_dlc > i; i++) {
-			std::cout << " " << frame->data[i]);
+			std::cout << " " << frame->data[i];
 		}
 		
 		// end of frame
