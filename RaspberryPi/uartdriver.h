@@ -4,6 +4,8 @@
 #include <linux-can-utils>
 class UARTdriver{
 public:
+         UARTdriver();
+         ~UARTdriver(){}
     void readinput();
     void receiveMsg();
     void transmit(messageStruct);
