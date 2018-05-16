@@ -15,6 +15,10 @@
 #include <iostream>
 #include <thread>
 
+/******************************************************************************************************
+*		Compile with g++ CanDriverWithoutROS.cpp -o CanDriverWithoutROS -std=c++11 -pthread
+*/
+
 void send(struct can_frame *frame, int socket){
 	int nbytes;
 	
