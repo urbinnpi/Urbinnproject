@@ -46,6 +46,19 @@ static void version(void)
     puts(PROGNAME " " VERSION "\n");
 }
 
+void print_can_frame(const struct can_frame * const frame)
+{
+    const unsigned char *data = frame->data;
+    const unsigned int dlc = frame->can_dlc;
+    unsigned int i;
+
+    printf("%03X  [%u] ", frame->can_id, dlc);
+    for (i = 0; i < dlc; ++i)
+    {
+        printf(" %02X", data[i]);
+    }
+}
+
 int main(int argc, char **argv)
 {
     int flags, opt;
