@@ -27,9 +27,9 @@ void send(struct can_frame *frame, int socket){
 }
 
 void receive(struct can_frame *frame, int socket){
-	recvbytes = read(socket, frame, sizeof(struct can_frame));
+	int recvbytes = read(socket, frame, sizeof(struct can_frame));
 	if(recvbytes) {
-		printf(“dlc = %d, data = %s\n”, frame->can_dlc, frame->data);
+		printf("dlc = %d, data = %s\n", frame->can_dlc, frame->data);
 	}
 }
 
