@@ -30,7 +30,7 @@ void receive(struct can_frame *frame, int socket){
 	int recvbytes = read(socket, frame, sizeof(struct can_frame));
 	if(recvbytes) {
 		printf("Frame received: ");
-		printf("ID: %d"frame->can_id);
+		printf("ID: %d", frame->can_id);
 	}
 }
 
