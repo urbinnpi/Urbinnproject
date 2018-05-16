@@ -74,8 +74,8 @@ int main(void) {
 		return -2;
 	}
 	
-	std::thread t1 (receive(&frame, s));
-	std::thread t2 (send(&frame, s));
+	std::thread t1 (receive, &frame, s);
+	std::thread t2 (send, &frame, s);
 	
 	while (true) {
 		//send(&frame, s);
