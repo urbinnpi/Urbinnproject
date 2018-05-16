@@ -56,7 +56,7 @@ int main(void) {
 		return -2;
 	}
 
-	send(frame, s);
+	send(&frame, s);
 	
 	return 0;
 }
