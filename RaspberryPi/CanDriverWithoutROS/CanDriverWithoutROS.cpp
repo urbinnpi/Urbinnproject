@@ -30,7 +30,15 @@ void receive(struct can_frame *frame, int socket){
 	int recvbytes = read(socket, frame, sizeof(struct can_frame));
 	if(recvbytes) {
 		printf("Frame received: ");
-		printf("ID: %d", frame->can_id);
+		printf("ID: %d  ", frame->can_id);
+		printf("Length: %d bytes  ", frame->can_dlc);
+		// loop trough the data
+		for(uint8_t i = 0; frame->can_dlc > i; i++) {
+			printf("Data: %d", frame->data[i]);
+		}
+		
+		// end of frame
+		printf("\n");
 	}
 }
 
