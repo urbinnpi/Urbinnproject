@@ -29,7 +29,8 @@ void send(struct can_frame *frame, int socket){
 void receive(struct can_frame *frame, int socket){
 	int recvbytes = read(socket, frame, sizeof(struct can_frame));
 	if(recvbytes) {
-		printf("dlc = %d, data = %s\n", frame->can_dlc, frame->data);
+		printf("Frame received: ");
+		printf("ID: %d"frame->can_id);
 	}
 }
 
@@ -64,11 +65,11 @@ int main(void) {
 	}
 
 	while (true) {
-		printf("sending frame");
+		printf("sending frame\n");
 		send(&frame, s);
-		printf("receiving frame");
+		printf("receiving frame\n");
 		receive(&frame, s);
-		printf("starting again");
+		printf("starting again\n");
 	}
 	
 	printf("Exit1!");
