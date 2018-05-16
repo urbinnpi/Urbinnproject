@@ -11,41 +11,51 @@
 #include <linux/can.h>
 #include <linux/can/raw.h>
 
+
+void send(struct can_frame frame){
+	// create frame
+	frame.can_id  = 0x123;
+	frame.can_dlc = 2;
+	frame.data[0] = 0x11;
+	frame.data[1] = 0x22;
+	
+	// write the frame
+	nbytes = write(s, &frame, sizeof(struct can_frame));
+	
+}
+
 int main(void) {
 	int s;
 	int nbytes;
 	struct sockaddr_can addr;
 	struct can_frame frame;
 	struct ifreq ifr;
-
+	
+	
+	// our CAN interface
 	const char *ifname = "can0";
-
+	
+	// open socket
 	if((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
 		perror("Error while opening socket");
 		return -1;
 	}
-
+	
+	// copy the interface
 	strcpy(ifr.ifr_name, ifname);
 	ioctl(s, SIOCGIFINDEX, &ifr);
 	
+	// add settings
 	addr.can_family  = AF_CAN;
 	addr.can_ifindex = ifr.ifr_ifindex;
-
-	printf("%s at index %d\n", ifname, ifr.ifr_ifindex);
-
+	
+	// bind socket
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
 		return -2;
 	}
 
-	frame.can_id  = 0x123;
-	frame.can_dlc = 2;
-	frame.data[0] = 0x11;
-	frame.data[1] = 0x22;
-
-	nbytes = write(s, &frame, sizeof(struct can_frame));
-
-	printf("Wrote %d bytes\n", nbytes);
+	send(frame);
 	
 	return 0;
 }
