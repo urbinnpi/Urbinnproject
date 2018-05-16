@@ -6,11 +6,12 @@
 */
 
 #include "USART.h"
+#include "../CAN/Canbus.h"
 #include <avr/interrupt.h>
+#include <string.h> // for memset
 
 volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE] = {0};		// receive buffer
 volatile uint8_t receiveBufferCounter = 0;						// counter
-//volatile uint8_t blinkSpeed = 10;
 
 /**
  * \brief initialize the USART
@@ -52,12 +53,46 @@ ISR(USART_RX_vect) {
 		receiveBufferCounter = 0;
 	}
 
-	receiveBufferCounter++;
 	receive();
+	receiveBufferCounter++;
+}
+
+void clearBuffer() {
+	receiveBufferCounter = 0;
+	memset((char*)receiveBuffer, 0 , RECEIVE_BUFFER_MAX_SIZE);
 }
 
 void receive () {
-	
+	// check for full message
+	if (receiveBuffer[receiveBufferCounter] != '\r') {
+		return;
+	}
+
+	tCAN frame;
+	frame.id = 0x631;
+	frame.header.rtr = 0;
+	frame.header.length = receiveBufferCounter;
+
+	// format the received message into CAN frames
+	for (uint8_t i = 0, j = 0; receiveBufferCounter >= i; j++, i++) {
+		frame.data[j] = receiveBuffer[i];
+		USART_transmit((char*)&frame.data[j]);
+
+		// check if the message is full
+		if (j == CAN_MAX_LENGTH-1 || receiveBuffer[i] == '\r') {
+			message_tx(&frame);
+			j = 0;
+			print_string_new_line("  frame send");
+
+			// clean data again
+			for (uint8_t x = 0; x == CAN_MAX_LENGTH-1; x++) {
+				frame.data[x] = 0x00;
+			}
+		}
+	}
+
+
+	clearBuffer();
 }
 
 

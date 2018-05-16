@@ -46,7 +46,7 @@ int main() {
 		message.data[6] = 0x00;
 		message.data[7] = 0x00;
 
-		message_tx(&message);
+		//message_tx(&message);
 		_delay_ms(100);
 	}
 }
