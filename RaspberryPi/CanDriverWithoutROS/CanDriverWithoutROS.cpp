@@ -49,6 +49,7 @@ int main(void) {
 	int s;
 	struct sockaddr_can addr;
 	struct can_frame frame;
+	struct can_frame frame2;
 	struct ifreq ifr;
 	
 	
@@ -76,10 +77,10 @@ int main(void) {
 	}
 	
 	std::thread t1 (receive, &frame, s);
-	std::thread t2 (send, &frame, s);
+	//std::thread t2 (send, &frame2, s);
 	
 	while (true) {
-		//send(&frame, s);
+		send(&frame2, s);
 		//receive(&frame, s);
 	}
 	
