@@ -13,13 +13,14 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <thread>
 
 void send(struct can_frame *frame, int socket){
 	int nbytes;
 	
 	// create frame
 	frame->can_id  = 0x123;
-	frame->can_dlc = 2;
+	frame->can_dlc = 2; // data length
 	frame->data[0] = 0x11;
 	frame->data[1] = 0x22;
 	
@@ -72,10 +73,13 @@ int main(void) {
 		perror("Error in socket bind");
 		return -2;
 	}
-
+	
+	std::thread t1 (receive(&frame, s));
+	std::thread t2 (send(&frame, s));
+	
 	while (true) {
-		send(&frame, s);
-		receive(&frame, s);
+		//send(&frame, s);
+		//receive(&frame, s);
 	}
 	
 	printf("Exit!");
