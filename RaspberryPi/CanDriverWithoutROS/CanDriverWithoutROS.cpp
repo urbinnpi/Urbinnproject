@@ -1,5 +1,3 @@
-#include "util.h"
-
 #include <errno.h>
 #include <signal.h>
 #include <stdio.h>
