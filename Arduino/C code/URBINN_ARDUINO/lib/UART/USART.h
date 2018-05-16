@@ -14,6 +14,7 @@
 #include <util/delay.h>
 
 #define DEBUG_USART(message) print_string_new_line(message)
+#define RECEIVE_BUFFER_MAX_SIZE 40
 #define USART_BAUDRATE 38400	// define the baudrate of the serial communication
 
 void USART_init(uint32_t);				// initialize the USART
@@ -31,5 +32,12 @@ void plot2(uint32_t, uint32_t);			// plot two values in SerialPortPlotter
 
 void print_new_line();					// print a new line
 
+void clearBuffer();
+
+void receive();
+
+extern volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];	// receive buffer
+extern volatile uint8_t receiveBufferCounter;					// counter
+extern volatile uint8_t blinkSpeed;								// speed to blink the led at
 
 #endif /* USART_H_ */

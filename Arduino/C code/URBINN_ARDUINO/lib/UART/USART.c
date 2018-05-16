@@ -6,7 +6,11 @@
 */
 
 #include "USART.h"
+#include <avr/interrupt.h>
 
+volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE] = {0};		// receive buffer
+volatile uint8_t receiveBufferCounter = 0;						// counter
+//volatile uint8_t blinkSpeed = 10;
 
 /**
  * \brief initialize the USART
@@ -28,7 +32,7 @@ void USART_init(uint32_t baudrate){
 	UCSR0A = (1<<U2X0);
 
 	// enable TX and RX (RX is not necessary)
-	UCSR0B |= _BV(RXEN0) | _BV(TXEN0);
+	UCSR0B |= _BV(RXEN0) | _BV(TXEN0) | _BV(RXCIE0);
 
 	// 8 bit data, 1 stop, no parity
 	UCSR0C |= _BV(UCSZ01) | _BV(UCSZ00);
@@ -37,6 +41,45 @@ void USART_init(uint32_t baudrate){
 	// confirm the init
 	print_string_new_line("USART INIT DONE");
 
+	sei(); // enable interrupt
+}
+
+ISR(USART0_RX_vect) {
+	receiveBuffer[receiveBufferCounter] = UDR0;
+
+	// prevent buffer overflow
+	if (receiveBufferCounter > RECEIVE_BUFFER_MAX_SIZE) {
+		receiveBufferCounter = 0;
+	}
+
+	receiveBufferCounter++;
+	receive();
+}
+
+void receive () {
+	// wait for full string
+	if(receiveBuffer[receiveBufferCounter-1] != '\r') {
+		return;
+	}
+
+	// TODO: does not work
+	// check if LED
+	if (receiveBuffer[0] == 'L') {
+		// send the string back
+		//print_string_new_line((char*)receiveBuffer);
+		print_string_new_line((char*)receiveBuffer);
+		blinkSpeed = (uint8_t)strtol((char*)receiveBuffer, NULL, 10);
+		print_int_new_line(blinkSpeed);
+
+		// clear the buffer
+		clearBuffer();
+		return;
+	}
+
+	// check if Servo
+	if (receiveBuffer[0] == 'S') {
+
+	}
 }
 
 

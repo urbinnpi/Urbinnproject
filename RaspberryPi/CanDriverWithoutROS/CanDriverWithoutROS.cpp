@@ -12,17 +12,17 @@
 #include <linux/can/raw.h>
 
 
-void send(struct can_frame frame, int s){
+void send(struct can_frame *frame, int socket){
 	int nbytes;
 	
 	// create frame
-	frame.can_id  = 0x123;
-	frame.can_dlc = 2;
-	frame.data[0] = 0x11;
-	frame.data[1] = 0x22;
+	frame->can_id  = 0x123;
+	frame->can_dlc = 2;
+	frame->data[0] = 0x11;
+	frame->data[1] = 0x22;
 	
 	// write the frame
-	nbytes = write(s, &frame, sizeof(struct can_frame));
+	nbytes = write(socket, frame, sizeof(struct can_frame));
 	
 }
 
