@@ -31,7 +31,7 @@ void send(struct can_frame *frame, int socket){
 void receive(struct can_frame *frame, int socket){
 	int recvbytes = read(socket, frame, sizeof(struct can_frame));
 	if(recvbytes) {
-		std::cout << "ID: " << std::uppercase << std::hex << frame->can_id << "Length: " << frame->can_dlc << "Data: ";
+		std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
 		
 		// loop trough the data
 		for(uint8_t i = 0; frame->can_dlc > i; i++) {
