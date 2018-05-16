@@ -1,32 +1,54 @@
+#include "util.h"
+
+#include <errno.h>
+#include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <unistd.h>
 #include <string.h>
-#include <signal.h>
-#include <ctype.h>
-#include <libgen.h>
-#include <time.h>
 
-#include <sys/time.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <net/if.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <sys/uio.h>
-#include <net/if.h>
 
 #include <linux/can.h>
-#include <linux/can/raw.h>
+#include <linux/can/bcm.h>
 
-#include "terminal.h"
-#include "lib.h"
+#define PROGNAME "socketcan-bcm-demo"
+#define VERSION  "1.0.0"
 
-#define CAN_INTERFACE can0
+#define MSGID   (0x0BC)
+#define NFRAMES (1)
 
+#define DELAY (10000)
 
-int main(void) {
-	printf("CanDriverWithoutROS\n");
-	
-	int flags, opt;
+static sig_atomic_t sigval;
+
+static void onsig(int val)
+{
+    sigval = (sig_atomic_t)val;
+}
+
+static void usage(void)
+{
+    puts("Usage: " PROGNAME "[OPTIONS] IFACE\n"
+         "Where:\n"
+         "  IFACE    CAN network interface\n"
+         "Options:\n"
+         "  -h       Display this help then exit\n"
+         "  -v       Display version info then exit\n");
+}
+
+static void version(void)
+{
+    puts(PROGNAME " " VERSION "\n");
+}
+
+int main(int argc, char **argv)
+{
+    int flags, opt;
     int s;
     char *iface;
     struct sockaddr_can addr;
@@ -37,8 +59,45 @@ int main(void) {
         struct bcm_msg_head msg_head;
         struct can_frame frame[NFRAMES];
     } msg;
-	
-	/* Register signal handlers */
+
+    /* Check if at least one argument was specified */
+    if (argc < 2)
+    {
+        fputs("Too few arguments!\n", stderr);
+        usage();
+        return EXIT_FAILURE;
+    }
+
+    /* Parse command line options */
+    while ((opt = getopt(argc, argv, "hv")) != -1)
+    {
+        switch (opt)
+        {
+        case 'h':
+            usage();
+            return EXIT_SUCCESS;
+        case 'v':
+            version();
+            return EXIT_SUCCESS;
+        default:
+            usage();
+            return EXIT_FAILURE;
+        }
+    }
+
+    /* Exactly one command line argument must remain; the interface to use */
+    if (optind == (argc - 1))
+    {
+        iface = argv[optind];
+    }
+    else
+    {
+        fputs("Only one interface may be used!\n", stderr);
+        usage();
+        return EXIT_FAILURE;
+    }
+
+    /* Register signal handlers */
     if (signal(SIGINT, onsig)    == SIG_ERR ||
         signal(SIGTERM, onsig)   == SIG_ERR ||
         signal(SIGCHLD, SIG_IGN) == SIG_ERR)
@@ -46,20 +105,23 @@ int main(void) {
         perror(PROGNAME);
         return errno;
     }
-	
-	if ((s = socket(PF_CAN, SOCK_DGRAM, CAN_BCM)) < 0) {
-		printf("Error opening socket");
-		return 1;
-	}
-	
-	strncpy(ifr.ifr_name, iface, IFNAMSIZ);
+
+    /* Open the CAN interface */
+    s = socket(PF_CAN, SOCK_DGRAM, CAN_BCM);
+    if (s < 0)
+    {
+        perror(PROGNAME ": socket");
+        return errno;
+    }
+
+    strncpy(ifr.ifr_name, iface, IFNAMSIZ);
     if (ioctl(s, SIOCGIFINDEX, &ifr) < 0)
     {
         perror(PROGNAME ": ioctl");
         return errno;
     }
-	
-	addr.can_family = AF_CAN;
+
+    addr.can_family = AF_CAN;
     addr.can_ifindex = ifr.ifr_ifindex;
     if (connect(s, (struct sockaddr *)&addr, sizeof(addr)) < 0)
     {
@@ -93,59 +155,83 @@ int main(void) {
         perror(PROGNAME ": write: RX_SETUP");
         return errno;
     }
-	
-	while (true) {
-		ssize_t nbytes;
-		
-		nbytes = read(s, &msg, sizeof(msg));
-		struct can_frame * const frame = msg.frame;
-		unsigned char * const data = frame->data;
-		const unsigned int dlc = frame->can_dlc;
-		unsigned int i;
 
-		/* Print the received CAN frame */
-		printf("RX:  ");
-		print_can_frame(frame);
-		printf("\n");
+    /* Main loop */
+    while (0 == sigval)
+    {
+        ssize_t nbytes;
 
-		/* Modify the CAN frame to use our message ID */
-		frame->can_id = MSGID;
-		
-		/* Increment the value of each byte in the CAN frame */
-		for (i = 0; i < dlc; ++i) {
-			data[i] += 1;
-		}
+        /* Read from the CAN interface */
+        nbytes = read(s, &msg, sizeof(msg));
+        if (nbytes < 0)
+        {
+            if (errno != EAGAIN)
+            {
+                perror(PROGNAME ": read");
+            }
 
-		/* Set a TX message for sending this frame once */
-		msg.msg_head.opcode  = TX_SEND;
-		msg.msg_head.can_id  = 0;
-		msg.msg_head.flags   = 0;
-		msg.msg_head.nframes = 1;
+            usleep(DELAY);
+        }
+        else if (nbytes < (ssize_t)sizeof(msg))
+        {
+            fputs(PROGNAME ": read: incomplete BCM message\n", stderr);
+            usleep(DELAY);
+        }
+        else
+        {
+            struct can_frame * const frame = msg.frame;
+            unsigned char * const data = frame->data;
+            const unsigned int dlc = frame->can_dlc;
+            unsigned int i;
 
-		/* Write the message out to the bus */
-		nbytes = write(s, &msg, sizeof(msg));
-		if (nbytes < 0) {
-			perror(PROGNAME ": write: TX_SEND");
-		}
-		else if (nbytes < (ssize_t)sizeof(msg))	{
-			fputs(PROGNAME ": write: incomplete BCM message\n", stderr);
-		}
-		else {
-			/* Print the transmitted CAN frame */
-			printf("TX:  ");
-			print_can_frame(frame);
-			printf("\n");
-		}
-		
-	}
-	
-	/* Close the CAN interface */
+            /* Print the received CAN frame */
+            printf("RX:  ");
+            print_can_frame(frame);
+            printf("\n");
+
+            /* Modify the CAN frame to use our message ID */
+            frame->can_id = MSGID;
+            
+            /* Increment the value of each byte in the CAN frame */
+            for (i = 0; i < dlc; ++i)
+            {
+                data[i] += 1;
+            }
+
+            /* Set a TX message for sending this frame once */
+            msg.msg_head.opcode  = TX_SEND;
+            msg.msg_head.can_id  = 0;
+            msg.msg_head.flags   = 0;
+            msg.msg_head.nframes = 1;
+
+            /* Write the message out to the bus */
+            nbytes = write(s, &msg, sizeof(msg));
+            if (nbytes < 0)
+            {
+                perror(PROGNAME ": write: TX_SEND");
+            }
+            else if (nbytes < (ssize_t)sizeof(msg))
+            {
+                fputs(PROGNAME ": write: incomplete BCM message\n", stderr);
+            }
+            else
+            {
+                /* Print the transmitted CAN frame */
+                printf("TX:  ");
+                print_can_frame(frame);
+                printf("\n");
+            }
+        }
+    }
+
+    puts("\nGoodbye!");
+
+    /* Close the CAN interface */
     if (close(s) < 0)
     {
         perror(PROGNAME ": close");
         return errno;
     }
-	
-	
-	return 0;
+
+    return EXIT_SUCCESS;
 }
