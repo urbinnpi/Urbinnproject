@@ -1,7 +1,17 @@
 #ifndef UARTDRIVER_H
 #define UARTDRIVER_H
 
+#include <unistd.h>
+#include <string.h>
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
+#include <iostream>
+#include "socketcan/can.h"
 #include "driver.h"
+
+class UARTparser;
 
 class UARTdriver : public Driver
 {
