@@ -26,7 +26,8 @@ UARTdriver::UARTdriver(): p(new UARTparser), c(new Controller) {
 	}
 }
 
-void UARTdriver::readInput(struct can_frame *frame) {
+void UARTdriver::readInput() {//struct can_frame *frame) {
+	struct can_frame frame;
 	while(1) {
 		int recvbytes = read(s, frame, sizeof(struct can_frame));
 
@@ -49,9 +50,10 @@ void UARTdriver::receiveMsg() {
 
 }
 
-void UARTdriver::transmit(struct can_frame *frame){
+void UARTdriver::transmit() {//struct can_frame *frame){
 	int nbytes;
 	int transmitBuffer;
+	struct can_frame frame;
 
 	while(1) {
 		// Create the frame

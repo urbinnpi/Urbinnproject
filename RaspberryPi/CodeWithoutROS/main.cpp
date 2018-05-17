@@ -21,13 +21,13 @@
 using namespace std;
 
 int main(void) {
-	struct can_frame frame;
-	struct can_frame frame2;
+	//struct can_frame frame;
+	//struct can_frame frame2;
 
 	UARTdriver ud1;
 	
-	std::thread t1(ud1.readInput, &frame);
-	std::thread t2(ud1.transmit, &frame2);
+	std::thread t1(ud1.readInput);//, &frame);
+	std::thread t2(ud1.transmit);//, &frame2);
 	
 	/*while (true) {
 		ud1.transmit(&frame2);
