@@ -47,10 +47,12 @@ void UARTdriver::receiveMsg() {
 }
 
 void UARTdriver::transmit(struct can_frame *frame){
-	int nbytes;
+	int nbytes, id;
+	std::cin >> id;
 
 	// Create the frame
-	frame->can_id  = 0x123;
+	//frame->can_id  = 0x123;
+	frame->can_id = id;
 	frame->can_dlc = 2;
 	frame->data[0] = 0x11;
 	frame->data[1] = 0x22;
