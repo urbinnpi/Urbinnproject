@@ -11,6 +11,8 @@
 #include "socketcan/can.h"
 #include "driver.h"
 
+class UARTparser;
+
 class UARTdriver : public Driver
 {
 public:
