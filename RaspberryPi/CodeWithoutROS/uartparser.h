@@ -16,7 +16,7 @@ public:
 	void removePair(uint8_t);
 private:
 	void transmitInfo(); // Publisht op topic ParserController1
-	map<uint8_t, Parser*> IDmap;
+	std::map<uint8_t, Parser*> IDmap;
 };
 
 #endif // UARTPARSER_H

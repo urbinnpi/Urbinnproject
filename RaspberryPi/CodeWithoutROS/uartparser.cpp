@@ -19,7 +19,7 @@ void UARTparser::receiveMsg(struct can_frame *frame)
 
 void UARTparser::addPair(uint8_t n, Parser* p)
 {
-	IDmap.insert(pair<uint8_t,Parser*>(n, p));
+	IDmap.insert(std::pair<uint8_t,Parser*>(n, p));
 }
 
 void UARTparser::removePair(uint8_t n)
