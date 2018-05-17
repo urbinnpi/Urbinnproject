@@ -15,8 +15,8 @@
 #include <iostream>
 #include <thread>
 
-#include "controller.h"
-#include "parser.h"
+//#include "controller.h"
+//#include "parser.h"
 #include "uartdriver.h"
 
 /******************************************************************************************************
@@ -35,8 +35,8 @@ int main(void) {
 	//std::thread t2 (send, &frame2, s);
 	
 	while (true) {
-		ud1.transmit(&frame2, s);
-		ud1.readInput(&frame, s);
+		ud1.transmit(&frame2);
+		ud1.readInput(&frame);
 	}
 	
 	printf("Exit!");

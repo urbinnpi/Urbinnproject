@@ -59,6 +59,4 @@ void UARTdriver::transmit(struct can_frame *frame){
 
     // write the frame
     nbytes = write(s, frame, sizeof(struct can_frame));
-}
-
-struct 
+} 

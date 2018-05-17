@@ -2,17 +2,16 @@
 #define UARTDRIVER_H
 
 #include "driver.h"
-#include <linux-can-utils>
 
 class UARTdriver : public Driver
 {
 public:
     UARTdriver();
-    void readInput(struct can_frame *frame, int socket);
+    void readInput(struct can_frame *frame);
     void receiveMsg();
-    void transmit(struct can_frame *frame, int socket);
+    void transmit(struct can_frame *frame);
 private:
 	int s;
-}
+};
 
 #endif // UARTDRIVER_H
