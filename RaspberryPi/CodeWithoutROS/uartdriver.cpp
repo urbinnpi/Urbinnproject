@@ -2,7 +2,7 @@
 #include "uartparser.h"
 #include "controller.h"
 
-UARTdriver::UARTdriver(): p(new UARTparser), c(new Controller) {
+UARTdriver::UARTdriver(): p(new UARTparser) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -64,14 +64,11 @@ void UARTdriver::transmit() {//struct can_frame *frame){
 
 		nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame*/
 
-		transmitBuffer = c->transmitMsg();
-		if(transmitBuffer) {
-			frame->can_id  = transmitBuffer;
-			frame->can_dlc = 2;
-			frame->data[0] = 0x11;
-			frame->data[1] = 0x22;
+		std::cin >> frame->can_id;
+		frame->can_dlc = 2;
+		frame->data[0] = 0x11;
+		frame->data[1] = 0x22;
 
-			nbytes = write(s, frame, sizeof(struct can_frame));
-		}
+		nbytes = write(s, frame, sizeof(struct can_frame));
 	}
 }

@@ -5,9 +5,8 @@ class Controller
 {
 public:
 	void receiveInfo(); // Callback van topic ParserController1
-	// Returntype bij gebruik ROS is void! Functie is ook private
-	int transmitMsg(/* messageStruct */); // Publish op topic ControllerDriver1
 private:
+	void transmitMsg(/* messageStruct */); // Publish op topic ControllerDriver1
 	// void steer, enz.
 };
 
