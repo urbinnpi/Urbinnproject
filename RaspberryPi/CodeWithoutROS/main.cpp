@@ -9,6 +9,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include <iostream>
+#include <thread>
 #include "socketcan/can.h"
 //#include "controller.h"
 //#include "parser.h"
