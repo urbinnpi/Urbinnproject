@@ -14,9 +14,10 @@
 #include <stdint.h>
 #include <iostream>
 #include <thread>
+#include <chrono>
 
 /******************************************************************************************************
-*		Compile with g++ CanDriverWithoutROS.cpp -o CanDriverWithoutROS -std=c++11 -pthread
+*		Compile with: g++ CanDriverWithoutROS.cpp -o CanDriverWithoutROS -std=c++11 -pthread
 */
 
 void send(struct can_frame *frame, int socket){
@@ -30,7 +31,7 @@ void send(struct can_frame *frame, int socket){
 	
 	// write the frame
 	nbytes = write(socket, frame, sizeof(struct can_frame));
-	
+	std::this_thread::sleep_for(1s);
 }
 
 void receive(struct can_frame *frame, int socket){
