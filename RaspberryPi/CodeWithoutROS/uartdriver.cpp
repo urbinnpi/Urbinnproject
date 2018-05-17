@@ -1,31 +1,24 @@
-//#include <functional>
-//#include <fstream>
-//#include <sys/socket.h>
 #include "uartdriver.h"
 
-//using namespace std;
-
-UARTdriver::UARTdriver() { //Initialisatie later in aparte functie
+UARTdriver::UARTdriver() {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
+	const char *ifname = "can0"; // CAN interface name
 	
-	// our CAN interface
-	const char *ifname = "can0";
-	
-	// open socket
+	// Open socket
 	if((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
 		perror("Error while opening socket");
 	}
 	
-	// copy the interface
+	// Copy the interface
 	strcpy(ifr.ifr_name, ifname);
 	ioctl(s, SIOCGIFINDEX, &ifr);
 	
-	// add settings
+	// Add settings
 	addr.can_family  = AF_CAN;
 	addr.can_ifindex = ifr.ifr_ifindex;
 	
-	// bind socket
+	// Bind socket
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
 	}
@@ -33,17 +26,17 @@ UARTdriver::UARTdriver() { //Initialisatie later in aparte functie
 
 void UARTdriver::readInput(struct can_frame *frame) {
 	int recvbytes = read(s, frame, sizeof(struct can_frame));
+
 	if(recvbytes) {
 		std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
 		
-		// loop trough the data
+		// Loop trough the data
 		for(uint8_t i = 0; frame->can_dlc > i; i++) {
 			//std::cout << " " << std::uppercase << std::hex << (unsigned int)frame->data[i];
 			std::cout << " " << (char)frame->data[i];
 		}
 		
-		// end of frame
-		std::cout << std::endl;
+		std::cout << std::endl; // End of frame
 	}
 }
 
@@ -52,14 +45,13 @@ void UARTdriver::receiveMsg() {
 }
 
 void UARTdriver::transmit(struct can_frame *frame){
-    int nbytes;
+	int nbytes;
 
-    // create frame
-    frame->can_id  = 0x123;
-    frame->can_dlc = 2;
-    frame->data[0] = 0x11;
-    frame->data[1] = 0x22;
+	// Create the frame
+	frame->can_id  = 0x123;
+	frame->can_dlc = 2;
+	frame->data[0] = 0x11;
+	frame->data[1] = 0x22;
 
-    // write the frame
-    nbytes = write(s, frame, sizeof(struct can_frame));
+	nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
 } 

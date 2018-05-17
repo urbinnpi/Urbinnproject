@@ -13,6 +13,8 @@
 //#include "controller.h"
 //#include "parser.h"
 //#include "uartdriver.h"
+#include "controller.cpp"
+#include "uartparser.cpp"
 #include "uartdriver.cpp"
 
 using namespace std;
@@ -31,6 +33,5 @@ int main(void) {
 		ud1.readInput(&frame);
 	}
 	
-	printf("Exit!");
 	return 0;
 }
