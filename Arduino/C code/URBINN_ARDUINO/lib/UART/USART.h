@@ -12,9 +12,11 @@
 #include <avr/io.h>
 #include <stdlib.h> // for itoa
 #include <util/delay.h>
+#include "../CAN/Canbus.h"
 
 #define DEBUG_USART(message) print_string_new_line(message)
 #define RECEIVE_BUFFER_MAX_SIZE 40
+#define SEND_BUFFER_MAX_MESSAGES 5
 #define USART_BAUDRATE 38400	// define the baudrate of the serial communication
 
 void USART_init(uint32_t);				// initialize the USART
@@ -36,8 +38,8 @@ void clearBuffer();
 
 void receive();
 
-extern volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];	// receive buffer
+extern volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];	// receive buffer				// send buffer
 extern volatile uint8_t receiveBufferCounter;					// counter
-extern volatile uint8_t blinkSpeed;								// speed to blink the led at
+extern volatile uint8_t messageReceived;
 
 #endif /* USART_H_ */

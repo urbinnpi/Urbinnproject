@@ -32,22 +32,11 @@ int main() {
 	}
 
 	DEBUG_USART("Starting main loop...");
-	tCAN message;
 	while (1) { // our main event loop
-		message.id = 0x631; //formatted in HEX
-		message.header.rtr = 0;
-		message.header.length = 8; //formatted in DEC
-		message.data[0] = 0x40;
-		message.data[1] = 0x05;
-		message.data[2] = 0x30;
-		message.data[3] = 0xFF; //formatted in HEX
-		message.data[4] = 0x00;
-		message.data[5] = 0x40;
-		message.data[6] = 0x00;
-		message.data[7] = 0x00;
-
-		//message_tx(&message);
-		_delay_ms(100);
+		if (messageReceived) {
+			receive();
+			messageReceived = False;
+		}
 	}
 }
 

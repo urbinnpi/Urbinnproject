@@ -10,8 +10,9 @@
 #include <avr/interrupt.h>
 #include <string.h> // for memset
 
-volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE] = {0};		// receive buffer
-volatile uint8_t receiveBufferCounter = 0;						// counter
+volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
+volatile uint8_t receiveBufferCounter;						// counter
+volatile uint8_t messageReceived;
 
 /**
  * \brief initialize the USART
@@ -47,14 +48,12 @@ void USART_init(uint32_t baudrate){
 
 ISR(USART_RX_vect) {
 	receiveBuffer[receiveBufferCounter] = UDR0;
-
-	// prevent buffer overflow
-	if (receiveBufferCounter > RECEIVE_BUFFER_MAX_SIZE) {
-		receiveBufferCounter = 0;
-	}
-
-	receive();
 	receiveBufferCounter++;
+
+	// check for full message or max Can size
+	if (receiveBuffer[receiveBufferCounter-1] != '\r') {
+		messageReceived = True;
+	}
 }
 
 void clearBuffer() {
@@ -63,35 +62,45 @@ void clearBuffer() {
 }
 
 void receive () {
-	// check for full message
-	if (receiveBuffer[receiveBufferCounter] != '\r') {
-		return;
-	}
+	print_string("Received data: ");
+	print_string_new_line((char*)receiveBuffer);
+	print_string("Counter: ");
+	print_int_new_line(receiveBufferCounter);
 
 	tCAN frame;
-	frame.id = 0x631;
 	frame.header.rtr = 0;
-	frame.header.length = receiveBufferCounter;
+	frame.id = 0x631;
 
-	// format the received message into CAN frames
-	for (uint8_t i = 0, j = 0; receiveBufferCounter >= i; j++, i++) {
-		frame.data[j] = receiveBuffer[i];
-		USART_transmit((char*)&frame.data[j]);
+	// loop for every full message
+	uint8_t i = 0;
+	for (i = 0; i + CAN_MAX_LENGTH <= receiveBufferCounter; i += CAN_MAX_LENGTH) {
+		// copy one frame into the frame
+		memcpy(frame.data, &receiveBuffer[i], CAN_MAX_LENGTH);
 
-		// check if the message is full
-		if (j == CAN_MAX_LENGTH-1 || receiveBuffer[i] == '\r') {
-			message_tx(&frame);
-			j = 0;
-			print_string_new_line("  frame send");
+		// set the length
+		frame.header.length = CAN_MAX_LENGTH;
 
-			// clean data again
-			for (uint8_t x = 0; x == CAN_MAX_LENGTH-1; x++) {
-				frame.data[x] = 0x00;
-			}
-		}
+		// send the frame
+		message_tx(&frame);
+		print_string_new_line((char*)frame.data);
 	}
 
+	// clean the dataframe
+	memset(frame.data, 0, (size_t)CAN_MAX_LENGTH);
 
+	// put the leftovers in the last frame
+	uint8_t j = 0;
+	for (; receiveBuffer[i] != '\r'; i++) {
+		frame.data[j] = receiveBuffer[i];
+		j++;
+	}
+
+	// set the correct length and send the frame;
+	frame.header.length = j;
+	message_tx(&frame);
+	print_string_new_line((char*)frame.data);
+
+	// clean the receive buffer
 	clearBuffer();
 }
 
