@@ -22,12 +22,12 @@ using namespace std;
 
 void readInput(UARTdriver ud1) {
 	while(1)
-		ud1.readInput;
+		ud1.readInput();
 }
 
 void transmit(UARTdriver ud1) {
 	while(1)
-		ud1.transmit;
+		ud1.transmit();
 }
 
 int main(void) {
