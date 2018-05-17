@@ -27,7 +27,7 @@ void UARTparser::removePair(uint8_t n)
 	IDmap.erase(n);
 }
 
-void transmitInfo()
+void UARTparser::transmitInfo()
 {
 	// Zie .h-bestand
 }
