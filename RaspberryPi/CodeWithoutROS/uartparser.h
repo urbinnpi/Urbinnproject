@@ -1,9 +1,14 @@
 #ifndef UARTPARSER_H
 #define UARTPARSER_H
 
-#include <map>
-#include <stdint.h> // Voor uint8_t
+#include <unistd.h>
+#include <string.h>
+#include <net/if.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/ioctl.h>
 #include <iostream>
+#include "socketcan/can.h"
 #include "parser.h"
 
 class UARTparser : public Parser
