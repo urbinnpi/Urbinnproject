@@ -2,6 +2,8 @@
 
 void UARTparser::parseData(struct can_frame *frame)
 {
+	//IDmap.find((uint8_t)frame->can_id)->second->parseData(frame);
+
 	std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
 
 	// Loop trough the data

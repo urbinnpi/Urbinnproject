@@ -25,13 +25,13 @@ int main(void) {
 
 	UARTdriver ud1;
 	
-	//std::thread t1 (receive, &frame, s);
-	//std::thread t2 (send, &frame2, s);
+	std::thread t1(ud1.readInput, &frame);
+	std::thread t2(ud1.transmit, &frame2);
 	
-	while (true) {
+	/*while (true) {
 		ud1.transmit(&frame2);
 		ud1.readInput(&frame);
-	}
+	}*/
 	
 	return 0;
 }

@@ -23,6 +23,7 @@ public:
 private:
 	int s; // Socket
 	UARTparser* p; // Tijdelijk! Niet nodig met ROS!
+	Controller* c; // Tijdelijk! Niet nodig met ROS!
 };
 
 #endif // UARTDRIVER_H
