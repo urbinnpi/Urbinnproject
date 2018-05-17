@@ -1,4 +1,9 @@
+//#include <functional>
+//#include <fstream>
+//#include <sys/socket.h>
 #include "uartdriver.h"
+
+//using namespace std;
 
 UARTdriver::UARTdriver() { //Initialisatie later in aparte functie
 	struct sockaddr_can addr;
