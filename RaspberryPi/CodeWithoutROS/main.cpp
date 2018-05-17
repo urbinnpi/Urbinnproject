@@ -26,8 +26,8 @@ int main(void) {
 
 	UARTdriver ud1;
 	
-	std::thread t1(ud1.readInput);//, &frame);
-	std::thread t2(ud1.transmit);//, &frame2);
+	std::thread t1(UARTdriver::readInput);//, &frame);
+	std::thread t2(UARTdriver::transmit);//, &frame2);
 	
 	/*while (true) {
 		ud1.transmit(&frame2);
