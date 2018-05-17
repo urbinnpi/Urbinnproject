@@ -1,6 +1,7 @@
 #include "uartdriver.h"
+#include "uartparser.h"
 
-UARTdriver::UARTdriver() {
+UARTdriver::UARTdriver(): p(new UARTparser) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -27,7 +28,7 @@ UARTdriver::UARTdriver() {
 void UARTdriver::readInput(struct can_frame *frame) {
 	int recvbytes = read(s, frame, sizeof(struct can_frame));
 
-	if(recvbytes) {
+	/*if(recvbytes) {
 		std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
 		
 		// Loop trough the data
@@ -37,7 +38,8 @@ void UARTdriver::readInput(struct can_frame *frame) {
 		}
 		
 		std::cout << std::endl; // End of frame
-	}
+	}*/
+	if(recvbytes) p->receiveMsg(frame); // Tijdelijk gebruik van parser callback
 }
 
 void UARTdriver::receiveMsg() {
