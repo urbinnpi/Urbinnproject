@@ -1,5 +1,5 @@
 #include "uartdriver.h"
-//#include "uartparser.cpp"
+#include "uartparser.h"
 
 UARTdriver::UARTdriver(): p(new UARTparser) {
 	struct sockaddr_can addr;

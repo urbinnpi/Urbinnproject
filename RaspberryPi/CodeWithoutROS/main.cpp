@@ -13,9 +13,9 @@
 //#include "controller.h"
 //#include "parser.h"
 //#include "uartdriver.h"
-#include "controller.cpp"
-#include "uartparser.cpp"
-#include "uartdriver.cpp"
+#include "controller.h"
+#include "uartparser.h"
+#include "uartdriver.h"
 
 using namespace std;
 

@@ -10,8 +10,7 @@
 #include <iostream>
 #include "socketcan/can.h"
 #include "driver.h"
-
-class UARTparser;
+#include "uartparser.h"
 
 class UARTdriver : public Driver
 {
