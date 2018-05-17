@@ -1,6 +1,6 @@
 #include "uartdriver.h"
 
-UARTdriver::UARTdriver() {
+UARTdriver::UARTdriver() { //Initialisatie later in aparte functie
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	
@@ -10,7 +10,6 @@ UARTdriver::UARTdriver() {
 	// open socket
 	if((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
 		perror("Error while opening socket");
-		return -1;
 	}
 	
 	// copy the interface
@@ -24,7 +23,6 @@ UARTdriver::UARTdriver() {
 	// bind socket
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
-		return -2;
 	}
 }
 
@@ -44,7 +42,7 @@ void UARTdriver::readInput(struct can_frame *frame) {
 	}
 }
 
-void UARTdriver::readMsg() {
+void UARTdriver::receiveMsg() {
 
 }
 

@@ -8,8 +8,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 
-#include <socketcan/can.h>
-#include <socketcan/can/raw.h>
+#include "socketcan/can.h"
 
 #include <stdint.h>
 #include <iostream>
@@ -17,7 +16,8 @@
 
 //#include "controller.h"
 //#include "parser.h"
-#include "uartdriver.h"
+//#include "uartdriver.h"
+#include "uartdriver.cpp"
 
 /******************************************************************************************************
 *		Compile with g++ CanDriverWithoutROS.cpp -o CanDriverWithoutROS -std=c++11 -pthread
