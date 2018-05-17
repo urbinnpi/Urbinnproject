@@ -13,8 +13,8 @@
 
 #include <stdint.h>
 #include <iostream>
+#include <chrono>
 #include <thread>
-#include <unistd.h>
 
 /******************************************************************************************************
 *		Compile with: g++ CanDriverWithoutROS.cpp -o CanDriverWithoutROS -std=c++11 -pthread
@@ -31,7 +31,7 @@ void send(struct can_frame *frame, int socket){
 	
 	// write the frame
 	nbytes = write(socket, frame, sizeof(struct can_frame));
-	usleep(100000UL);
+	std::this_thread::sleep_for(std::chrono::milliseconds(100));
 }
 
 void receive(struct can_frame *frame, int socket){
