@@ -1,4 +1,5 @@
 //#include <iostream>
+#include <string>
 #include "controller.h"
 #include "uartdriver.h"
 
@@ -15,13 +16,13 @@ void Controller::receiveInfo(struct can_frame *frame) {
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
 	if(frame->can_id == 0x631) {
-		std::string input;
+		std::string input = "";
 		for(uint8_t i = 0; frame->can_dlc > i; i++) {
 			input.append((char)frame->data[i]);
 		}
 		if(input == "aan") {
 			//stuur aangezet
-			frame->data = "aangezet";
+			frame->data << std::stoi("aangezt", nullptr);
 		}
 	}
 
