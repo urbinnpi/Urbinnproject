@@ -18,19 +18,38 @@
 #include "defaults.h"
 #include "Canbus.h"
 #include "../UART/USART.h"
-#include "../common.h"
+#include "../stateMachine.h"
+
+volatile tCAN CANReceiveBuffer[CAN_RECEIVE_BUFFER_MAX_SIZE];
+volatile uint8_t CANReceiveBufferCounter;
+
 
 // PD2 (message received interrupt)
 ISR(INT0_vect) {
-	//message_rx();
-	addState(ST_READ_CAN);
+	// check edge
+	if(~(PIND & (1 << PIND2))) {
+		// set the received frame in the buffer
+		mcp2515_get_message((tCAN*)&CANReceiveBuffer[CANReceiveBufferCounter]);
+		CANReceiveBufferCounter++;
+
+		// set the state to parse the message
+		//CANReceiveMessage();
+		addState(ST_READ_CAN);
+	} else {
+		// do nothing
+	}
 }
 
 
-char message_rx() {
+char CANReceiveMessage() {
+	cli();
+
 	tCAN message;
 
-	if (mcp2515_get_message(&message)) {
+	// print all the messages in the buffer
+	for (; CANReceiveBufferCounter > 0; CANReceiveBufferCounter--) {
+		message = CANReceiveBuffer[CANReceiveBufferCounter-1];
+
 		char hexbuffer[4];		// temp buffer for converting to string
 
 		// print to ID, convert the uint16 to string in HEX format
@@ -55,10 +74,13 @@ char message_rx() {
 		// print a new line
 		print_string_new_line("");
 	}
+
+	sei();
+
 	return 0;
 }
 
-char message_tx(tCAN *message) {
+char CANTransmitMessage(tCAN *message) {
 
 	mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
 

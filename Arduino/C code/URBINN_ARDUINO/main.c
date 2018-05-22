@@ -9,45 +9,43 @@
 #include <util/delay.h>
 #include <stdio.h>
 
-#include "lib/common.h"
+#include "lib/stateMachine.h"
 #include "lib/CAN/Canbus.h"
 #include "lib/SPI/SPI.h"
 #include "lib/UART/USART.h"
 
 
 // start in the init state
-volatile state state_queue[STATE_QUEUE_SIZE] = {0};
+volatile state_t state_queue[STATE_QUEUE_SIZE] = {0};
 
 int main() {
 	init_system();
 
+	clearQueue();
+
 	while(1) {
 		// get the latest state
-		state current_state = state_queue[0];
-
-		print_string_new_line((char*)&state_queue);
+		state_t current_state = state_queue[0];
 
 		// state machine off all the possible states
-		switch(current_state){
+		switch(current_state) {
 
 			case ST_READ_UART:
-				// received data from the CAN
-				message_rx();
+				// received data from the UART
+				receive();
 				done();
-				DEBUG_USART("Read UART state done!");
-			break;
+				break;
 
 			case ST_READ_CAN:
 				// received data from the CAN
-				receive();
+				CANReceiveMessage();
 				done();
-				DEBUG_USART("Read CAN state done!");
-			break;
+				break;
 
 			default:
 				// Nothing to do!
-				DEBUG_USART("Nothing to do!");
-			break;
+				// Maybe poll sensors that don't interrupt
+				break;
 		}
 	}
 }

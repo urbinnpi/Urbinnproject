@@ -140,10 +140,10 @@
     <Compile Include="lib\CAN\mcp2515_defs.h">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\common.c">
+    <Compile Include="lib\stateMachine.c">
       <SubType>compile</SubType>
     </Compile>
-    <Compile Include="lib\common.h">
+    <Compile Include="lib\stateMachine.h">
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="lib\SPI\SPI.c">
