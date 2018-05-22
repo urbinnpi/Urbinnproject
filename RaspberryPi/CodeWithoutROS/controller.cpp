@@ -1,18 +1,16 @@
+//#include <iostream>
 #include "controller.h"
 #include "uartdriver.h"
 
-/*Controller::Controller() : ud1(new UARTdriver())
-{
+Controller::Controller() : ud1(new UARTdriver()) {
 	
 }
 
-Controller::~Controller()
-{
+Controller::~Controller() {
 	delete ud1;
-}*/
+}
 
-void Controller::receiveInfo(struct can_frame *frame)
-{
+void Controller::receiveInfo(struct can_frame *frame) {
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 	frame->can_id += 1;
@@ -30,9 +28,7 @@ void Controller::receiveInfo(struct can_frame *frame)
 	*/
 }
 
-void Controller::transmitMsg(struct can_frame *frame)
-{
+void Controller::transmitMsg(struct can_frame *frame) {
 	// Bij gebruik ROS hier msgStruct publishen op topic ControllerDriver1
-	//ud1->receiveMsg(frame); // Tijdelijk gebruik van driver callback
-	UARTdriver::receiveMsg(frame);
+	ud1->receiveMsg(frame); // Tijdelijk gebruik van driver callback
 }
