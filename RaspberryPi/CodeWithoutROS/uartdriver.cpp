@@ -1,6 +1,8 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 
+int UARTdriver::s;
+
 UARTdriver::UARTdriver(): up1(new UARTparser()) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
