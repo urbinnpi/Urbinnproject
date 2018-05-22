@@ -9,10 +9,10 @@
 #include "../CAN/Canbus.h"
 #include <avr/interrupt.h>
 #include <string.h> // for memset
+#include "../stateMachine.h"
 
 volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
 volatile uint8_t receiveBufferCounter;						// counter
-volatile uint8_t messageReceived;
 
 /**
  * \brief initialize the USART
@@ -47,12 +47,13 @@ void USART_init(uint32_t baudrate){
 }
 
 ISR(USART_RX_vect) {
+	// set the received byte in the buffer
 	receiveBuffer[receiveBufferCounter] = UDR0;
 	receiveBufferCounter++;
 
-	// check for full message or max Can size
-	if (receiveBuffer[receiveBufferCounter-1] != '\r') {
-		messageReceived = True;
+	// check for full message
+	if (receiveBuffer[receiveBufferCounter-1] == '\r') {
+		addState(ST_READ_UART);
 	}
 }
 
@@ -81,7 +82,7 @@ void receive () {
 		frame.header.length = CAN_MAX_LENGTH;
 
 		// send the frame
-		message_tx(&frame);
+		CANTransmitMessage(&frame);
 		print_string_new_line((char*)frame.data);
 	}
 
@@ -97,7 +98,7 @@ void receive () {
 
 	// set the correct length and send the frame;
 	frame.header.length = j;
-	message_tx(&frame);
+	CANTransmitMessage(&frame);
 	print_string_new_line((char*)frame.data);
 
 	// clean the receive buffer

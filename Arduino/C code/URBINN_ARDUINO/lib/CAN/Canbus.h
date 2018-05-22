@@ -3,6 +3,8 @@
 
 #include "mcp2515.h"
 
+#define CAN_RECEIVE_BUFFER_MAX_SIZE 10 // max can frames in buffer
+
 #define CANSPEED_125 	7		// CAN speed at 125 kbps
 #define CANSPEED_250  	3		// CAN speed at 250 kbps
 #define CANSPEED_500	1		// CAN speed at 500 kbps
@@ -20,7 +22,10 @@
 #define PID_REPLY			0x7E8
 
 char CAN_INIT(unsigned char);
-char message_tx(tCAN*);
-char message_rx();
+char CANTransmitMessage(tCAN*);
+char CANReceiveMessage();
+
+extern volatile tCAN CANReceiveBuffer[CAN_RECEIVE_BUFFER_MAX_SIZE];
+extern volatile uint8_t CANReceiveBufferCounter;
 
 #endif
