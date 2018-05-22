@@ -7,21 +7,25 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <iostream>
 #include <map>
 #include "socketcan/can.h"
 #include "parser.h"
 
+class Controller;
+
 class UARTparser : public Parser
 {
 public:
+	UARTparser();
+	~UARTparser();
 	void parseData(struct can_frame *frame); // Wordt aangeroepen door receiveMsg()
-	void receiveMsg(struct can_frame *frame); // Callback of topic DriverParser1
-	void addPair(uint8_t, Parser*);
-	void removePair(uint8_t);
+	void receiveMsg(struct can_frame *frame); // Callback van topic DriverParser1
+	void addPair(uint16_t, Parser*);
+	void removePair(uint16_t);
 private:
-	void transmitInfo(); // Publisht op topic ParserController1
-	std::map<uint8_t, Parser*> IDmap;
+	void transmitInfo(struct can_frame *frame); // Publisht op topic ParserController1
+	std::map<uint16_t, Parser*> IDmap;
+	Controller* c;
 };
 
 #endif // UARTPARSER_H

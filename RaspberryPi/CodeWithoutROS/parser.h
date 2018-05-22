@@ -7,16 +7,15 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <iostream>
 #include "socketcan/can.h"
 
 class Parser
 {
 public:
 	virtual ~Parser() {}
-	virtual void parseData(struct can_frame*) = 0;
+	virtual void parseData(struct can_frame *frame) = 0;
 private:
-	virtual void transmitInfo() = 0;
+	virtual void transmitInfo(struct can_frame *frame) = 0;
 };
 
 #endif // PARSER_H
