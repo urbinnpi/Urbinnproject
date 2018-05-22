@@ -30,8 +30,10 @@ int main(void) {
 	//std::thread t1(ud1.readInput);//, &frame);
 	//std::thread t2(ud1.transmit);//, &frame2);
 	std::thread t1(&UARTdriver::readInput, ud1, &frame);
-	std::thread t2(&UARTdriver::transmit, ud1, &frame2);
-	
+	//std::thread t2(&UARTdriver::transmit, ud1, &frame2);
+	t1.join();
+	//t2.join();
+
 	//while(1) {
 	//	ud1.transmit(&frame2);
 	//	ud1.readInput(&frame);

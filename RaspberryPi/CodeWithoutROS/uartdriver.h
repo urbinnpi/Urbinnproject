@@ -18,11 +18,11 @@ public:
 	UARTdriver();
 	~UARTdriver() { delete p; } // Tijdelijk!
 	void readInput(struct can_frame *frame); // Reads input of CAN shield
-	void receiveMsg(); // Callback of ROS topic ControllerDriver1
+	void receiveMsg(struct can_frame *frame); // Callback of ROS topic ControllerDriver1
 	void transmit(struct can_frame *frame); // Writes to CAN shield
 private:
 	int s; // Socket
-	UARTparser* p; // Tijdelijk! Niet nodig met ROS!
+	UARTparser* up1; // Tijdelijk! Niet nodig met ROS!
 };
 
 #endif // UARTDRIVER_H

@@ -1,7 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 
-UARTdriver::UARTdriver(): p(new UARTparser) {
+UARTdriver::UARTdriver(): up1(new UARTparser) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -29,26 +29,18 @@ void UARTdriver::readInput(struct can_frame *frame) {
 	while(1) {
 		int recvbytes = read(s, frame, sizeof(struct can_frame));
 
-		/*if(recvbytes) {
-			std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
-		
-			// Loop trough the data
-			for(uint8_t i = 0; frame->can_dlc > i; i++) {
-				//std::cout << " " << std::uppercase << std::hex << (unsigned int)frame->data[i];
-				std::cout << " " << (char)frame->data[i];
-			}
-		
-			std::cout << std::endl; // End of frame
-		}*/
-		if(recvbytes) p->receiveMsg(frame); // Tijdelijk gebruik van parser callback
+		// Bij gebruik ROS hier frame publishen op topic DriverParser1
+		if(recvbytes) up1->receiveMsg(frame); // Tijdelijk gebruik van parser callback
 	}
 }
 
-void UARTdriver::receiveMsg() {
-
+void UARTdriver::receiveMsg(struct can_frame *frame) { // Callback van topic ControllerDriver1
+	this->transmit(frame);
 }
 
 void UARTdriver::transmit(struct can_frame *frame){
+	nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
+	/*
 	int nbytes, id;
 	while(1) {
 		std::cin >> id;
@@ -62,4 +54,5 @@ void UARTdriver::transmit(struct can_frame *frame){
 
 		nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
 	}
+	*/
 }
