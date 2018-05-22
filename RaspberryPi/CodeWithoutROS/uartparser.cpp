@@ -1,12 +1,15 @@
+#include <iostream>
 #include "uartparser.h"
 #include "controller.h"
 #include "sensorxparser.h"
 
 UARTparser::UARTparser() : c(new Controller()) {
+	std::cout << "Constructor UARTparser" << endl;
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 
 UARTparser::~UARTparser() {
+	std::cout << "Destructor UARTparser" << endl;
 	delete c;
 	std::map<uint16_t, Parser*>::iterator i;
 	for(i = IDmap.begin(); i != IDmap.end(); i++)

@@ -7,7 +7,6 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/ioctl.h>
-#include <iostream>
 #include <map>
 #include "socketcan/can.h"
 #include "parser.h"
