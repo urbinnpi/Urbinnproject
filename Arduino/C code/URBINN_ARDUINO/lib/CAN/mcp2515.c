@@ -188,7 +188,7 @@ uint8_t mcp2515_get_message(tCAN *message) {
 	uint8_t status = mcp2515_read_status(SPI_RX_STATUS);
 	uint8_t addr;
 	uint8_t t;
-	
+
 	// clear interrupt flag
 	if (bit_is_set(status, 6)) {
 		mcp2515_bit_modify(CANINTF, (1<<RX0IF), 0);
@@ -196,7 +196,7 @@ uint8_t mcp2515_get_message(tCAN *message) {
 	else {
 		mcp2515_bit_modify(CANINTF, (1<<RX1IF), 0);
 	}
-	
+
 	if (bit_is_set(status,6)) {
 		// message in buffer 0
 		addr = SPI_READ_RX;
@@ -249,7 +249,7 @@ uint8_t mcp2515_send_message(tCAN *message)
 	 */
 	uint8_t address;
 	uint8_t t;
-//	SET(LED2_HIGH);
+
 	if (bit_is_clear(status, 2)) {
 		address = 0x00;
 	}
