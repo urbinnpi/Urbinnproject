@@ -39,8 +39,7 @@ void UARTdriver::readInput(struct can_frame *frame) {
 }
 
 void UARTdriver::receiveMsg(struct can_frame *frame) { // Callback van topic ControllerDriver1
-	//this->transmit(frame);
-	transmit(frame);
+	this->transmit(frame);
 }
 
 void UARTdriver::transmit(struct can_frame *frame) {

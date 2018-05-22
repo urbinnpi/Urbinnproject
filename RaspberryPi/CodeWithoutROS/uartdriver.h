@@ -18,7 +18,7 @@ public:
 	UARTdriver();
 	~UARTdriver();
 	void readInput(struct can_frame *frame); // Reads input of CAN shield
-	static void receiveMsg(struct can_frame *frame); // Callback of ROS topic ControllerDriver1
+	void receiveMsg(struct can_frame *frame); // Callback of ROS topic ControllerDriver1
 	void transmit(struct can_frame *frame); // Writes to CAN shield
 private:
 	int s; // Socket
