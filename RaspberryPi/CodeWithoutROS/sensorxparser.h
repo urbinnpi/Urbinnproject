@@ -15,12 +15,11 @@ class Controller;
 class SensorXparser : public Parser
 {
 public:
-	SensorXparser();
-	~SensorXparser();
+	SensorXparser(Controller* c1);
 	void parseData(struct can_frame *frame); // Wordt aangeroepen door receiveMsg()
 private:
 	void transmitInfo(struct can_frame *frame); // Publisht infostructs op topic ParserController1
-	Controller* c;
+	Controller* c1;
 };
 
 #endif // SENSORXPARSER_H

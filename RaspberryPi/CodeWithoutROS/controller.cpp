@@ -1,15 +1,13 @@
-#include <iostream>
 #include "controller.h"
 #include "uartdriver.h"
 
 Controller::Controller() : ud1(new UARTdriver())
 {
-	std::cout << "Constructor Controller" << std::endl;
+	
 }
 
 Controller::~Controller()
 {
-	std::cout << "Destructor Controller" << std::endl;
 	delete ud1;
 }
 

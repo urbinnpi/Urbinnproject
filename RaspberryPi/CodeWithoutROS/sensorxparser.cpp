@@ -1,14 +1,8 @@
-#include <iostream>
 #include "sensorxparser.h"
 #include "controller.h"
 
-SensorXparser::SensorXparser() : c(new Controller()) {
-	std::cout << "Constructor SensorXparser" << std::endl;
-}
-
-SensorXparser::~SensorXparser() {
-	std::cout << "Destructor SensorXparser" << std::endl;
-	delete c;
+SensorXparser::SensorXparser(Controller* c1) : c1(c1) {
+	
 }
 
 void SensorXparser::parseData(struct can_frame *frame)
