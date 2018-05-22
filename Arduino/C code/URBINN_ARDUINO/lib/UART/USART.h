@@ -15,7 +15,7 @@
 
 #define DEBUG_USART(message) print_string_new_line(message)
 #define UART_RECEIVE_BUFFER_MAX_SIZE 40
-#define UART_BAUDRATE 38400	// define the baudrate of the serial communication
+#define UART_BAUDRATE 115200	// define the baudrate of the serial communication
 
 void UART_init(uint32_t);				// initialize the USART
 
