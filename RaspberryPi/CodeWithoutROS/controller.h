@@ -9,18 +9,18 @@
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
 
-class UARTdriver;
+//class UARTdriver;
 
 class Controller
 {
 public:
-	Controller();
-	~Controller();
+	//Controller();
+	//~Controller();
 	void receiveInfo(struct can_frame *frame); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(struct can_frame *frame); // Publish een infoStruct op topic ControllerDriver1
 	// void steer, enz.
-	UARTdriver* ud1;
+	//UARTdriver* ud1;
 };
 
 #endif // CONTROLLER_H

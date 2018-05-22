@@ -1,7 +1,7 @@
 #include "controller.h"
 #include "uartdriver.h"
 
-Controller::Controller() : ud1(new UARTdriver())
+/*Controller::Controller() : ud1(new UARTdriver())
 {
 	
 }
@@ -9,7 +9,7 @@ Controller::Controller() : ud1(new UARTdriver())
 Controller::~Controller()
 {
 	delete ud1;
-}
+}*/
 
 void Controller::receiveInfo(struct can_frame *frame)
 {
@@ -33,5 +33,6 @@ void Controller::receiveInfo(struct can_frame *frame)
 void Controller::transmitMsg(struct can_frame *frame)
 {
 	// Bij gebruik ROS hier msgStruct publishen op topic ControllerDriver1
-	ud1->receiveMsg(frame); // Tijdelijk gebruik van driver callback
+	//ud1->receiveMsg(frame); // Tijdelijk gebruik van driver callback
+	UARTdriver::receiveMsg(frame);
 }
