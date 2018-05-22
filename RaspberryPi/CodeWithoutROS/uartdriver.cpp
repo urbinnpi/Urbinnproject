@@ -58,6 +58,7 @@ void UARTdriver::transmit(struct can_frame *frame) {
 		frame->can_dlc = 2;
 		frame->data[0] = 0x11;
 		frame->data[1] = 0x22;
+		std::cout << (char*)frame->data << std::endl;
 
 		nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
 	}
