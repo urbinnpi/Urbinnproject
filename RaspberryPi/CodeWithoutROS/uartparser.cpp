@@ -10,7 +10,8 @@ UARTparser::~UARTparser() {
 	delete c;
 	std::map<uint16_t, Parser*>::iterator i;
 	for(i = IDmap.begin(); i != IDmap.end(); i++)
-		delete i->second;
+		//delete i->second;
+		IDmap.erase(i);
 }
 
 void UARTparser::parseData(struct can_frame *frame)
