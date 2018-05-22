@@ -6,7 +6,7 @@ class Driver
 public:
 	virtual ~Driver() {}
     virtual void readInput(struct can_frame *frame) = 0;
-    virtual static void receiveMsg(struct can_frame *frame) = 0;
+    virtual void receiveMsg(struct can_frame *frame) = 0;
     virtual void transmit(struct can_frame *frame) = 0;
 };
 
