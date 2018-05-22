@@ -21,11 +21,8 @@ void Controller::receiveInfo(struct can_frame *frame) {
 			input.append((char)frame->data[i]);
 		}
 		if(input == "aan") {
-			//stuur aangezet
-			std::string output = "aangezt";
-			for(uint8_t i = 0; i < output.length(); i++) {
-				frame->data[i] = output[i];
-			}
+			// Stuur iets
+			frame->can_id += 1;
 		}
 	}
 
