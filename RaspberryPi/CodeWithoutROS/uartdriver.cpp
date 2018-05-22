@@ -25,6 +25,10 @@ UARTdriver::UARTdriver(): up1(new UARTparser) {
 	}
 }
 
+UARTdriver::~UARTdriver() {
+	delete up1;
+}
+
 void UARTdriver::readInput(struct can_frame *frame) {
 	while(1) {
 		int recvbytes = read(s, frame, sizeof(struct can_frame));
@@ -38,7 +42,7 @@ void UARTdriver::receiveMsg(struct can_frame *frame) { // Callback van topic Con
 	this->transmit(frame);
 }
 
-void UARTdriver::transmit(struct can_frame *frame){
+void UARTdriver::transmit(struct can_frame *frame) {
 	nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
 	/*
 	int nbytes, id;
