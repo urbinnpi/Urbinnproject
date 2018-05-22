@@ -3,7 +3,7 @@
 #include "uartparser.h"
 
 UARTdriver::UARTdriver(): up1(new UARTparser()) {
-	std::cout << "Constructor UARTdriver" << endl;
+	std::cout << "Constructor UARTdriver" << std::endl;
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -28,7 +28,7 @@ UARTdriver::UARTdriver(): up1(new UARTparser()) {
 }
 
 UARTdriver::~UARTdriver() {
-	std::cout << "Destructor UARTdriver" << endl;
+	std::cout << "Destructor UARTdriver" << std::endl;
 	delete up1;
 }
 

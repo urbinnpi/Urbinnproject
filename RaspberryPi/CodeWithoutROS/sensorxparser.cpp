@@ -3,11 +3,11 @@
 #include "controller.h"
 
 SensorXparser::SensorXparser() : c(new Controller()) {
-	std::cout << "Constructor SensorXparser" << endl;
+	std::cout << "Constructor SensorXparser" << std::endl;
 }
 
 SensorXparser::~SensorXparser() {
-	std::cout << "Destructor SensorXparser" << endl;
+	std::cout << "Destructor SensorXparser" << std::endl;
 	delete c;
 }
 

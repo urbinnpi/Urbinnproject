@@ -4,12 +4,12 @@
 
 Controller::Controller() : ud1(new UARTdriver())
 {
-	std::cout << "Constructor Controller" << endl;
+	std::cout << "Constructor Controller" << std::endl;
 }
 
 Controller::~Controller()
 {
-	std::cout << "Destructor Controller" << endl;
+	std::cout << "Destructor Controller" << std::endl;
 	delete ud1;
 }
 

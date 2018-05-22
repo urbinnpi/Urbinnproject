@@ -4,12 +4,12 @@
 #include "sensorxparser.h"
 
 UARTparser::UARTparser() : c(new Controller()) {
-	std::cout << "Constructor UARTparser" << endl;
+	std::cout << "Constructor UARTparser" << std::endl;
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 
 UARTparser::~UARTparser() {
-	std::cout << "Destructor UARTparser" << endl;
+	std::cout << "Destructor UARTparser" << std::endl;
 	delete c;
 	std::map<uint16_t, Parser*>::iterator i;
 	for(i = IDmap.begin(); i != IDmap.end(); i++)
