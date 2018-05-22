@@ -1,7 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 
-UARTdriver::UARTdriver(UARTparser* up1): up1(up1) {
+UARTdriver::UARTdriver(): up1(new UARTparser()) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -23,6 +23,10 @@ UARTdriver::UARTdriver(UARTparser* up1): up1(up1) {
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
 	}
+}
+
+UARTdriver::~UARTdriver() {
+	delete up1;
 }
 
 void UARTdriver::readInput(struct can_frame *frame) {

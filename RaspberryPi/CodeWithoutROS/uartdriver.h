@@ -9,14 +9,14 @@
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
 #include "driver.h"
-//#include "uartparser.h"
 
 class UARTparser;
 
 class UARTdriver : public Driver
 {
 public:
-	UARTdriver(UARTparser* up1);
+	UARTdriver();
+	~UARTdriver();
 	void readInput(struct can_frame *frame); // Reads input of CAN shield
 	void receiveMsg(struct can_frame *frame); // Callback of ROS topic ControllerDriver1
 	void transmit(struct can_frame *frame); // Writes to CAN shield

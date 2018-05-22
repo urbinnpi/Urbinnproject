@@ -1,8 +1,12 @@
 #include "sensorxparser.h"
 #include "controller.h"
 
-SensorXparser::SensorXparser(Controller* c1) : c1(c1) {
-	
+SensorXparser::SensorXparser() : c1(new Controller()) {
+
+}
+
+SensorXparser::~SensorXparser() {
+	delete c1;
 }
 
 void SensorXparser::parseData(struct can_frame *frame)
@@ -15,5 +19,5 @@ void SensorXparser::parseData(struct can_frame *frame)
 void SensorXparser::transmitInfo(struct can_frame *frame)
 {
 	// Bij gebruik ROS hier infostruct publishen op topic ParserController1
-	c->receiveInfo(frame); // Tijdelijk gebruik van controller callback
+	c1->receiveInfo(frame); // Tijdelijk gebruik van controller callback
 }
