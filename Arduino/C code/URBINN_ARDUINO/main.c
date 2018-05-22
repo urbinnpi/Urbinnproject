@@ -7,35 +7,47 @@
 #define F_CPU 16000000UL //16Mhz
 
 #include <util/delay.h>
-
-#include "lib/SPI/SPI.h"
-#include "lib/UART/USART.h"
-#include "lib/CAN/Canbus.h"
-#include "lib/CAN/defaults.h"
-#include "lib/CAN/global.h"
-#include "lib/CAN/mcp2515.h"
-
 #include <stdio.h>
 
+#include "lib/common.h"
+#include "lib/CAN/Canbus.h"
+#include "lib/SPI/SPI.h"
+#include "lib/UART/USART.h"
+
+
+// start in the init state
+volatile state state_queue[STATE_QUEUE_SIZE] = {0};
+
 int main() {
-	// start the serial connection with the PC
-	USART_init(USART_BAUDRATE);
+	init_system();
 
-	spi_init_master();
+	while(1) {
+		// get the latest state
+		state current_state = state_queue[0];
 
-	// start the CAN connection
-	if (CAN_INIT(CANSPEED_500)){
-		DEBUG_USART("CAN init succes");
-	} else {
-		DEBUG_USART("CAN init failed");
-		return 1;
-	}
+		print_string_new_line((char*)&state_queue);
 
-	DEBUG_USART("Starting main loop...");
-	while (1) { // our main event loop
-		if (messageReceived) {
-			receive();
-			messageReceived = False;
+		// state machine off all the possible states
+		switch(current_state){
+
+			case ST_READ_UART:
+				// received data from the CAN
+				message_rx();
+				done();
+				DEBUG_USART("Read UART state done!");
+			break;
+
+			case ST_READ_CAN:
+				// received data from the CAN
+				receive();
+				done();
+				DEBUG_USART("Read CAN state done!");
+			break;
+
+			default:
+				// Nothing to do!
+				DEBUG_USART("Nothing to do!");
+			break;
 		}
 	}
 }

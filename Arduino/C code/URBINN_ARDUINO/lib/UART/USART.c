@@ -9,6 +9,7 @@
 #include "../CAN/Canbus.h"
 #include <avr/interrupt.h>
 #include <string.h> // for memset
+#include "../common.h"
 
 volatile char receiveBuffer[RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
 volatile uint8_t receiveBufferCounter;						// counter
@@ -52,7 +53,7 @@ ISR(USART_RX_vect) {
 
 	// check for full message or max Can size
 	if (receiveBuffer[receiveBufferCounter-1] != '\r') {
-		messageReceived = True;
+		addState(ST_READ_UART);
 	}
 }
 

@@ -18,10 +18,12 @@
 #include "defaults.h"
 #include "Canbus.h"
 #include "../UART/USART.h"
+#include "../common.h"
 
 // PD2 (message received interrupt)
 ISR(INT0_vect) {
-	message_rx();
+	//message_rx();
+	addState(ST_READ_CAN);
 }
 
 
