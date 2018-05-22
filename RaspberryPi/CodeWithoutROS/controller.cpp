@@ -17,7 +17,7 @@ void Controller::receiveInfo(struct can_frame *frame) {
 	frame->data[1] += 1;
 	//this->transmitMsg(frame);
 	int nbytes;
-	nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
+	nbytes = write(UARTdriver::s, frame, sizeof(struct can_frame)); // Write the frame
 
 	/*
 	std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
