@@ -16,19 +16,10 @@ void Controller::receiveInfo(struct can_frame *frame) {
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
 	if(frame->can_id == 0x631) {
-		std::string input;
-		uint8_t i;
-		for(i = 0; frame->can_dlc > i; i++) {
-			input[i] = (char)frame->data[i];
-		}
-		input[i+1] = '\0';
-		if(input == "aan") {
-			// Stuur iets
-			frame->can_id += 1;
-		}
+		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
 	}
 
-	//frame->can_id += 1;
+	frame->can_id += 1;
 	//this->transmitMsg(frame);
 	int nbytes;
 	nbytes = write(UARTdriver::s, frame, sizeof(struct can_frame)); // Tijdelijk
