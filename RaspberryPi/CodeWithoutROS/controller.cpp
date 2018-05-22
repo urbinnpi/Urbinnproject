@@ -22,7 +22,7 @@ void Controller::receiveInfo(struct can_frame *frame) {
 		}
 		if(input == "aan") {
 			//stuur aangezet
-			strcpy(frame->data, "aangezt");
+			frame->data << std::stoi("aangezt", nullptr);
 		}
 	}
 
