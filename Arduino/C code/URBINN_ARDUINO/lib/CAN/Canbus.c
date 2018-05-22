@@ -20,8 +20,8 @@
 #include "../UART/USART.h"
 #include "../stateMachine.h"
 
-volatile tCAN CANReceiveBuffer[CAN_RECEIVE_BUFFER_MAX_SIZE];
-volatile uint8_t CANReceiveBufferCounter;
+volatile tCAN CANUARTReceiveBuffer[CAN_UART_RECEIVE_BUFFER_MAX_SIZE];
+volatile uint8_t CANUARTReceiveBufferCounter;
 
 
 // PD2 (message received interrupt)
@@ -29,8 +29,8 @@ ISR(INT0_vect) {
 	// check edge
 	if(~(PIND & (1 << PIND2))) {
 		// set the received frame in the buffer
-		mcp2515_get_message((tCAN*)&CANReceiveBuffer[CANReceiveBufferCounter]);
-		CANReceiveBufferCounter++;
+		mcp2515_get_message((tCAN*)&CANUARTReceiveBuffer[CANUARTReceiveBufferCounter]);
+		CANUARTReceiveBufferCounter++;
 
 		// set the state to parse the message
 		//CANReceiveMessage();
@@ -41,14 +41,14 @@ ISR(INT0_vect) {
 }
 
 
-char CANReceiveMessage() {
+void CANReceiveMessage() {
 	cli();
 
 	tCAN message;
 
 	// print all the messages in the buffer
-	for (; CANReceiveBufferCounter > 0; CANReceiveBufferCounter--) {
-		message = CANReceiveBuffer[CANReceiveBufferCounter-1];
+	for (; CANUARTReceiveBufferCounter > 0; CANUARTReceiveBufferCounter--) {
+		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
 
 		char hexbuffer[4];		// temp buffer for converting to string
 
@@ -76,24 +76,16 @@ char CANReceiveMessage() {
 	}
 
 	sei();
-
-	return 0;
 }
 
-char CANTransmitMessage(tCAN *message) {
+void CANTransmitMessage(tCAN *message) {
 
 	mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
 
-	if (mcp2515_send_message(message)) {
-		//	SET(LED2_HIGH);
-		return 1;
-	} else {
-		return 0;
-	}
-	return 1;
+	mcp2515_send_message(message);
 }
 
-char CAN_INIT(unsigned char speed) {
+uint8_t CAN_INIT(unsigned char speed) {
 	cli(); // disable interrupts
 
 	// Set PD2 as input

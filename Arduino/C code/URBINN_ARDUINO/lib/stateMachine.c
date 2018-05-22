@@ -16,7 +16,7 @@ static volatile uint8_t state_index = 0;
 
 void init_system() {
 	// start the serial connection with the PC
-	USART_init(USART_BAUDRATE);
+	UART_init(UART_BAUDRATE);
 
 	// start the spi connection with the MCP2515
 	spi_init_master();

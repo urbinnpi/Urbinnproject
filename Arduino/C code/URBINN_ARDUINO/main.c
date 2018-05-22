@@ -4,8 +4,6 @@
  * Created: 25-4-2018 14:46:07
  * Author : Lucan de Groot
  */
-#define F_CPU 16000000UL //16Mhz
-
 #include <util/delay.h>
 #include <stdio.h>
 
@@ -15,13 +13,11 @@
 #include "lib/UART/USART.h"
 
 
-// start in the init state
+// declare the state_queue and make sure it's all zero
 volatile state_t state_queue[STATE_QUEUE_SIZE] = {0};
 
 int main() {
 	init_system();
-
-	clearQueue();
 
 	while(1) {
 		// get the latest state
@@ -32,7 +28,7 @@ int main() {
 
 			case ST_READ_UART:
 				// received data from the UART
-				receive();
+				UARTReceiveMessage();
 				done();
 				break;
 
