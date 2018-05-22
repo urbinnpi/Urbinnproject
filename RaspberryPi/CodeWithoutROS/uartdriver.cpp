@@ -1,7 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 
-UARTdriver::UARTdriver(): up1(new UARTparser) {
+UARTdriver::UARTdriver(): up1(new UARTparser()) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name

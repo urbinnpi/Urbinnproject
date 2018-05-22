@@ -1,7 +1,7 @@
 #include "sensorxparser.h"
 #include "controller.h"
 
-SensorXparser::SensorXparser() : c(new Controller) {
+SensorXparser::SensorXparser() : c(new Controller()) {
 
 }
 

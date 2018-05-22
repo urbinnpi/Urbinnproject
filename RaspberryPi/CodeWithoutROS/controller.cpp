@@ -2,7 +2,7 @@
 #include "controller.h"
 #include "uartdriver.h"
 
-Controller::Controller() : ud1(new UARTdriver)
+Controller::Controller() : ud1(new UARTdriver())
 {
 
 }
