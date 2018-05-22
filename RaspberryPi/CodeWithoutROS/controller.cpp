@@ -18,7 +18,7 @@ void Controller::receiveInfo(struct can_frame *frame) {
 	if(frame->can_id == 0x631) {
 		std::string input;
 		for(uint8_t i = 0; frame->can_dlc > i; i++) {
-			input.append((char)frame->data[i]);
+			input[i] = (char)frame->data[i];
 		}
 		if(input == "aan") {
 			// Stuur iets
