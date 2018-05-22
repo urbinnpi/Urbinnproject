@@ -17,7 +17,8 @@ void Controller::receiveInfo(struct can_frame *frame) {
 
 	if(frame->can_id == 0x631) {
 		std::string input;
-		for(uint8_t i = 0; frame->can_dlc > i; i++) {
+		uint8_t i;
+		for(i = 0; frame->can_dlc > i; i++) {
 			input[i] = (char)frame->data[i];
 		}
 		input[i+1] = '\0'
