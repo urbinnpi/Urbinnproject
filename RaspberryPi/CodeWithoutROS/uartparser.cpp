@@ -3,7 +3,7 @@
 #include "sensorxparser.h"
 
 UARTparser::UARTparser() : c(new Controller()) {
-	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser));
+	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 
 UARTparser::~UARTparser() {
