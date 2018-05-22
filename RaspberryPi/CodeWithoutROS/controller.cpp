@@ -21,7 +21,7 @@ void Controller::receiveInfo(struct can_frame *frame) {
 		for(i = 0; frame->can_dlc > i; i++) {
 			input[i] = (char)frame->data[i];
 		}
-		input[i+1] = '\0'
+		input[i+1] = '\0';
 		if(input == "aan") {
 			// Stuur iets
 			frame->can_id += 1;
