@@ -16,13 +16,15 @@ void Controller::receiveInfo(struct can_frame *frame) {
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
 	if(frame->can_id == 0x631) {
-		std::string input = "";
-		for(uint8_t i = 0; frame->can_dlc > i; i++) {
-			input.append((char)frame->data[i]);
+		std::string input;
+		uint8_t i;
+		for(i = 0; frame->can_dlc > i; i++) {
+			input[i] = (char)frame->data[i];
 		}
+		input[i+1] = '\0';
 		if(input == "aan") {
-			//stuur aangezet
-			frame->data << std::stoi("aangezt", nullptr);
+			// Stuur iets
+			frame->can_id += 1;
 		}
 	}
 
