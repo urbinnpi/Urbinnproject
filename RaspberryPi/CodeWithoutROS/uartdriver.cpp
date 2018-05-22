@@ -43,6 +43,7 @@ void UARTdriver::receiveMsg(struct can_frame *frame) { // Callback van topic Con
 }
 
 void UARTdriver::transmit(struct can_frame *frame) {
+	int nbytes;
 	nbytes = write(s, frame, sizeof(struct can_frame)); // Write the frame
 	/*
 	int nbytes, id;

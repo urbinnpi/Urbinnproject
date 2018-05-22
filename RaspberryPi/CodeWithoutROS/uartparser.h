@@ -17,6 +17,8 @@ class Controller;
 class UARTparser : public Parser
 {
 public:
+	UARTparser();
+	~UARTparser();
 	void parseData(struct can_frame *frame); // Wordt aangeroepen door receiveMsg()
 	void receiveMsg(struct can_frame *frame); // Callback van topic DriverParser1
 	void addPair(uint16_t, Parser*);
