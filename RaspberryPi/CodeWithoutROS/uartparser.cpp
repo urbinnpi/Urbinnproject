@@ -51,5 +51,5 @@ void UARTparser::removePair(uint16_t n)
 void UARTparser::transmitInfo(struct can_frame *frame)
 {
 	// Bij gebruik ROS hier infostruct publishen op topic ParserController1
-	c->receiveInfo(frame); // Tijdelijk gebruik van controller callback
+	//c->receiveInfo(frame); // Tijdelijk gebruik van controller callback
 }

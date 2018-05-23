@@ -13,12 +13,12 @@ void SensorXparser::parseData(struct can_frame *frame)
 {
 	// Haal nuttige info uit frame
 	struct infoStruct infoFrame;
-	infoFrame->id = frame->can_id;
-	infoFrame->dl = frame->can_dlc;
-	infoFrame->data = frame->data;
+	infoFrame.id = frame->can_id;
+	infoFrame.dl = frame->can_dlc;
+	infoFrame.data = frame->data;
 	// voer transmitInfo uit met nuttige info in infostruct
 	//this->transmitInfo(frame);
-	this->transmitInfo(infoFrame);
+	this->transmitInfo(&infoFrame);
 }
 
 void SensorXparser::transmitInfo(struct infoStruct *infoFrame)//can_frame *frame)
