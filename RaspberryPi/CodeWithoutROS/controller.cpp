@@ -20,7 +20,7 @@ void Controller::receiveInfo(struct infoStruct *infoFrame)
 	{
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
 		for(uint8_t i = 0; infoFrame->dl > i; i++) {
-			std::cout << (char)infoFrame->data[i];
+			//std::cout << (char)infoFrame->data[i];
 		}
 	}
 
