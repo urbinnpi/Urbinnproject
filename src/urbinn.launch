@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="urbinn" type="parser" name="parser"/>
+        <node pkg="urbinn" type="driver" name="driver"/>
+        <node pkg="urbinn" type="controller" name="controller"/>
+</launch>
