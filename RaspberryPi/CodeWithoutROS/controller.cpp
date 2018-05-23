@@ -12,9 +12,10 @@ void Controller::receiveInfo(struct can_frame *frame)
 	{
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
 		//infoFrame->data[0] += 1; // Test
-		frame->can_id += 1;
+		//frame->can_id += 1;
 	}
 
+	frame->can_id += 1;
 	// Stel msgFrame samen om bijv. motor aan te sturen
 	/*struct can_frame frame;
 	frame.can_id = infoFrame->id;
