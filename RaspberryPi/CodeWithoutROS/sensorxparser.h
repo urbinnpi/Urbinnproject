@@ -21,7 +21,7 @@ public:
 	~SensorXparser();
 	void parseData(struct can_frame *frame);
 private:
-	void transmitInfo(struct infoStruct *infoFrame); // Publisht infostructs op topic ParserController1
+	void transmitInfo(struct can_frame *frame); // Publisht infostructs op topic ParserController1
 	Controller* c1;
 };
 

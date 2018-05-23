@@ -15,13 +15,10 @@ class UARTdriver;
 class Controller
 {
 public:
-	//Controller();
-	//~Controller();
-	void receiveInfo(struct infoStruct *infoFrame); // Callback met infoStruct van topic ParserController1
+	void receiveInfo(struct can_frame *frame); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(struct can_frame *frame); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.
-	//UARTdriver* ud1;
 };
 
 #endif // CONTROLLER_H
