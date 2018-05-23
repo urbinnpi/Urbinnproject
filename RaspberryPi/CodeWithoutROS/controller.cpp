@@ -32,7 +32,7 @@ void Controller::receiveInfo(struct infoStruct *infoFrame)//can_frame *frame)
 
 	//this->transmitMsg(frame);
 	int nbytes;
-	nbytes = write(UARTdriver::s, frame, sizeof(struct can_frame)); // Tijdelijke vervanging voor transmitMsg
+	nbytes = write(UARTdriver::s, &frame, sizeof(struct can_frame)); // Tijdelijke vervanging voor transmitMsg
 }
 
 void Controller::transmitMsg(struct can_frame *frame) {
