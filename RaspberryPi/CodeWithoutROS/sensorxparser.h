@@ -19,9 +19,9 @@ class SensorXparser : public Parser
 public:
 	SensorXparser();
 	~SensorXparser();
-	void parseData(struct can_frame *frame); // Wordt aangeroepen door receiveMsg()
+	void parseData(struct can_frame *frame);
 private:
-	void transmitInfo(struct infoStruct *infoFrame);//can_frame *frame); // Publisht infostructs op topic ParserController1
+	void transmitInfo(struct infoStruct *infoFrame); // Publisht infostructs op topic ParserController1
 	Controller* c1;
 };
 
