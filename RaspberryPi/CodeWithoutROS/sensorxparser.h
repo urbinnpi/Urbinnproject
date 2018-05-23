@@ -10,6 +10,7 @@
 #include <map>
 #include "socketcan/can.h"
 #include "parser.h"
+#include "definitions.h"
 
 class Controller;
 
@@ -18,7 +19,7 @@ class SensorXparser : public Parser
 public:
 	SensorXparser();
 	~SensorXparser();
-	void parseData(struct can_frame *frame); // Wordt aangeroepen door receiveMsg()
+	void parseData(struct can_frame *frame);
 private:
 	void transmitInfo(struct can_frame *frame); // Publisht infostructs op topic ParserController1
 	Controller* c1;

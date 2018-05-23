@@ -11,13 +11,19 @@ SensorXparser::~SensorXparser() {
 
 void SensorXparser::parseData(struct can_frame *frame)
 {
-	// Haal nuttige info uit frame
-	// voer transmitInfo uit met nuttige info in infostruct
+	// Vertaal data van msgStruct naar bruikbare data in een infoStruct
+	/*struct infoStruct infoFrame;
+	infoFrame.id = frame->can_id;
+	infoFrame.dl = frame->can_dlc;
+	for(uint8_t i = 0; frame->can_dlc > i; i++) {
+		infoFrame.data[i] = frame->data[i];
+	}
+	this->transmitInfo(&infoFrame);*/
 	this->transmitInfo(frame);
 }
 
 void SensorXparser::transmitInfo(struct can_frame *frame)
 {
-	// Bij gebruik ROS hier infostruct publishen op topic ParserController1
+	// Bij gebruik ROS hier infoStruct publishen op topic ParserController1
 	c1->receiveInfo(frame); // Tijdelijk gebruik van controller callback
 }

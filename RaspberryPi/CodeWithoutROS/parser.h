@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
+#include "definitions.h"
 
 class Parser
 {
