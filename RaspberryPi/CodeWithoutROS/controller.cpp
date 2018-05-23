@@ -11,18 +11,21 @@ Controller::~Controller() {
 	delete ud1;
 }*/
 
-void Controller::receiveInfo(struct can_frame *frame) {
+void Controller::receiveInfo(struct infoStruct *infoFrame)//can_frame *frame)
+{
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
-	if(frame->can_id == 0x631) {
+	if(infoFrame->id == 0x631)//frame->can_id == 0x631)
+	{
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
 	}
 
-	frame->can_id += 1;
+	//frame->can_id += 1;
+	infoFrame->id += 1;
 	//this->transmitMsg(frame);
 	int nbytes;
-	nbytes = write(UARTdriver::s, frame, sizeof(struct can_frame)); // Tijdelijk
+	nbytes = write(UARTdriver::s, infoFrame, sizeof(struct infoStruct));//frame, sizeof(struct can_frame)); // Tijdelijk
 
 	/*
 	std::cout << "ID: " << std::uppercase << std::hex << (unsigned int)frame->can_id << " Length: " << (unsigned int)frame->can_dlc << " Data: ";
