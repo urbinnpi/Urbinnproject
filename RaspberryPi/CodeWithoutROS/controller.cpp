@@ -16,24 +16,24 @@ void Controller::receiveInfo(struct infoStruct *infoFrame)//can_frame *frame)
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
-	if(infoFrame->id == 0x631)
+	/*if(infoFrame->id == 0x631)
 	{
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
-	}
+	}*/
 
 	infoFrame->id += 1;
 
 	// Stel msgFrame samen om bijv. motor aan te sturen
-	struct can_frame frame;
+	/*struct can_frame frame;
 	frame.can_id = infoFrame->id;
 	frame.can_dlc = infoFrame->dl;
 	for(uint8_t i = 0; infoFrame->dl > i; i++) {
 		frame.data[i] = infoFrame->data[i];
-	}
+	}*/
 
 	//this->transmitMsg(frame);
 	int nbytes;
-	nbytes = write(UARTdriver::s, &frame, sizeof(struct can_frame)); // Tijdelijke vervanging voor transmitMsg
+	nbytes = write(UARTdriver::s, infoFrame, sizeof(struct infoStruct)); // Tijdelijke vervanging voor transmitMsg
 }
 
 void Controller::transmitMsg(struct can_frame *frame) {
