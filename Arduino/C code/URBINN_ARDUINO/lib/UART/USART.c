@@ -13,6 +13,8 @@
 
 volatile char UARTReceiveBuffer[UART_RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
 volatile uint8_t UARTReceiveBufferCounter;						// counter
+volatile int framearray[2];
+volatile int computed;
 
 static void USART_transmit(const char*);		// Function to send one char over the USART
 static void print_new_line();					// print a new line
@@ -71,11 +73,23 @@ void UARTReceiveMessage() {
 
 	print_string("Received data: ");
 	print_string_new_line((char*)UARTReceiveBuffer);
-
+	computed = atoi((char*)UARTReceiveBuffer);
+	print_int_new_line(computed);
+	framearray[0] = computed;
+    
 	tCAN frame;
 	frame.header.rtr = 0;
-	frame.id = 0x631;
-
+	if(framearray[0] == 631){
+	 frame.id = 0x631;
+	 }
+	 
+	if(framearray[0] == 531){
+	 frame.id = 0x531;
+	}
+	 
+	if(framearray[0] == 431){
+     frame.id = 0x431;
+	}
 	// loop for every full message
 	uint8_t i = 0;
 	for (i = 0; i + CAN_MAX_LENGTH <= UARTReceiveBufferCounter; i += CAN_MAX_LENGTH) {
@@ -101,8 +115,9 @@ void UARTReceiveMessage() {
 
 	// set the correct length and send the frame;
 	frame.header.length = j;
-	CANTransmitMessage(&frame);
-	print_string_new_line((char*)frame.data);
+	if (framearray[0] != 631 && framearray[0] != 531 && framearray[0] != 431){	
+		CANTransmitMessage(&frame);}
+	//print_string_new_line((char*)frame.data);
 
 	// clean the receive buffer
 	clearBuffer();
