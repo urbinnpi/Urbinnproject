@@ -25,8 +25,8 @@ void Controller::receiveInfo(struct infoStruct *infoFrame)//can_frame *frame)
 
 	// Stel msgFrame samen om bijv. motor aan te sturen
 	struct can_frame frame;
-	can_frame.can_id = infoFrame->id;
-	can_frame.can_dlc = infoFrame->dl;
+	frame.can_id = infoFrame->id;
+	frame.can_dlc = infoFrame->dl;
 	for(uint8_t i = 0; infoFrame->dl > i; i++) {
 		frame.data[i] = infoFrame->data[i];
 	}
