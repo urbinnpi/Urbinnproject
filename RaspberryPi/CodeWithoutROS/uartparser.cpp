@@ -48,7 +48,7 @@ void UARTparser::removePair(uint16_t n)
 	IDmap.erase(n);
 }
 
-void UARTparser::transmitInfo(struct can_frame *frame)
+void UARTparser::transmitInfo(struct infoStruct *infoFrame)//can_frame *frame)
 {
 	// Bij gebruik ROS hier infostruct publishen op topic ParserController1
 	//c->receiveInfo(frame); // Tijdelijk gebruik van controller callback

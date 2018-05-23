@@ -23,7 +23,7 @@ public:
 	void addPair(uint16_t, Parser*);
 	void removePair(uint16_t);
 private:
-	void transmitInfo(struct can_frame *frame); // Publisht op topic ParserController1
+	void transmitInfo(struct infoStruct *infoFrame);//can_frame *frame); // Publisht op topic ParserController1
 	std::map<uint16_t, Parser*> IDmap;
 	Controller* c;
 };
