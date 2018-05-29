@@ -17,15 +17,12 @@ UARTparser::~UARTparser() {
 
 void UARTparser::parseData(struct can_frame *frame) {
 	// Zoek in IDmap naar sensor die bij frame hoort en voer daar deze functie op uit
-	std::cout << "getting parser" << std::endl;
-	std::pair<uint16_t, Parser*>::iterator temp = IDmap.find((uint16_t)frame->can_id);
+	std::map<uint16_t, Parser*>::iterator temp = IDmap.find((uint16_t)frame->can_id);
 	
-	std::cout << "got parser" << std::endl;
-	if(temp != IDmap.end()){
-		std::cout << "in de if" << std::endl;
-		temp.second->parseData(frame);
+	if(temp != IDmap.end()) {
+		std::cout << "Found the ID in the map" << std::endl;
+		(*temp)->second->parseData(frame);
 	}
-	std::cout << "na de if" << std::endl;
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 

@@ -11,7 +11,6 @@ SensorXparser::~SensorXparser() {
 }
 
 void SensorXparser::parseData(struct can_frame *frame) {
-	std::cout << "test5" << std::endl;
 	// Vertaal data van msgStruct naar bruikbare data in een infoStruct
 	/*struct infoStruct infoFrame;
 	infoFrame.id = frame->can_id;
@@ -21,7 +20,6 @@ void SensorXparser::parseData(struct can_frame *frame) {
 	}
 	this->transmitInfo(&infoFrame);*/
 	this->transmitInfo(frame);
-	std::cout << "test6" << std::endl;
 }
 
 void SensorXparser::transmitInfo(struct can_frame *frame)

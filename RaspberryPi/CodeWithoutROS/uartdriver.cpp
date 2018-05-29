@@ -38,7 +38,6 @@ void UARTdriver::readInput(struct can_frame *frame) {
 
 		// Bij gebruik ROS hier frame publishen op topic DriverParser1
 		if(recvbytes) up1->receiveMsg(frame); // Tijdelijk gebruik van parser callback
-		std::cout << "test3" << std::endl;
 	}
 }
 
