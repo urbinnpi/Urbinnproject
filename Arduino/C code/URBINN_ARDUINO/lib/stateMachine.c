@@ -61,6 +61,7 @@ void addState(state_t s) {
 		return;
 	}
 
+	// add the state
 	state_queue[state_index] = s;
 	state_index++;
 
@@ -69,7 +70,9 @@ void addState(state_t s) {
 
 void clearQueue() {
 	cli();
-	memset((state_t*)state_queue, ST_IDLE, STATE_QUEUE_SIZE);
-	state_index = 0;
+
+	memset((state_t*)state_queue, ST_IDLE, STATE_QUEUE_SIZE); // clear the array
+	state_index = 0;	// reset the index
+
 	sei();
 }

@@ -57,14 +57,16 @@ ISR(USART_RX_vect) {
 	UARTReceiveBuffer[UARTReceiveBufferCounter] = UDR0;
 	UARTReceiveBufferCounter++;
 
-	// check for full message
+	// check for complete message
 	if (UARTReceiveBuffer[UARTReceiveBufferCounter-1] == '\r') {
 		addState(ST_READ_UART);
 	}
 }
 
 void clearBuffer() {
+	// set the counter to 0
 	UARTReceiveBufferCounter = 0;
+	// set the array to 0
 	memset((char*)UARTReceiveBuffer, 0 , UART_RECEIVE_BUFFER_MAX_SIZE);
 }
 
@@ -73,27 +75,29 @@ void UARTReceiveMessage() {
 
 	print_string("Received data: ");
 	print_string_new_line((char*)UARTReceiveBuffer);
+
+	// get the ID
 	computed = atoi((char*)UARTReceiveBuffer);
 	print_int_new_line(computed);
 	framearray[0] = computed;
-    
+
+	// create frame and set rtr to 0
 	tCAN frame;
 	frame.header.rtr = 0;
+
+	// check the message ID
 	if(framearray[0] == 631){
-	 frame.id = 0x631;
-	 }
-	 
-	if(framearray[0] == 531){
-	 frame.id = 0x531;
+		frame.id = 0x631;
+	} else if(framearray[0] == 531){
+		frame.id = 0x531;
+	} else if(framearray[0] == 431){
+		frame.id = 0x431;
 	}
-	 
-	if(framearray[0] == 431){
-     frame.id = 0x431;
-	}
-	// loop for every full message
+
+	// loop for every full message and set the data into the message
 	uint8_t i = 0;
 	for (i = 0; i + CAN_MAX_LENGTH <= UARTReceiveBufferCounter; i += CAN_MAX_LENGTH) {
-		// copy one frame into the frame
+		// copy one 8 bytes into the frame
 		memcpy(frame.data, (char*)&UARTReceiveBuffer[i], CAN_MAX_LENGTH);
 
 		// set the length
@@ -115,8 +119,9 @@ void UARTReceiveMessage() {
 
 	// set the correct length and send the frame;
 	frame.header.length = j;
-	if (framearray[0] != 631 && framearray[0] != 531 && framearray[0] != 431){	
-		CANTransmitMessage(&frame);}
+	if (framearray[0] != 631 && framearray[0] != 531 && framearray[0] != 431){
+		CANTransmitMessage(&frame);
+	}
 	//print_string_new_line((char*)frame.data);
 
 	// clean the receive buffer
