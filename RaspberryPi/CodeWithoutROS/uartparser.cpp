@@ -1,6 +1,7 @@
 #include "uartparser.h"
 #include "controller.h"
 #include "sensorxparser.h"
+#include <iostream>
 
 UARTparser::UARTparser() : c(new Controller()) {
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
@@ -14,10 +15,11 @@ UARTparser::~UARTparser() {
 		IDmap.erase(i);
 }
 
-void UARTparser::parseData(struct can_frame *frame)
-{
+void UARTparser::parseData(struct can_frame *frame) {
 	// Zoek in IDmap naar sensor die bij frame hoort en voer daar deze functie op uit
+	std::cout << "test3" << std::endl;
 	IDmap.find((uint16_t)frame->can_id)->second->parseData(frame);
+	std::cout << "test4" << std::endl;
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 
@@ -34,8 +36,9 @@ void UARTparser::parseData(struct can_frame *frame)
 }
 
 void UARTparser::receiveMsg(struct can_frame *frame) // Callback van topic DriverParser1
-{
-	this->parseData(frame);
+{	std::cout << "test1" << std::endl;
+	parseData(frame);
+	std::cout << "test2" << std::endl;
 }
 
 void UARTparser::addPair(uint16_t n, Parser* p)

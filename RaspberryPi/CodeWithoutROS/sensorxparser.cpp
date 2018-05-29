@@ -1,5 +1,6 @@
 #include "sensorxparser.h"
 #include "controller.h"
+#include <iostream>
 
 SensorXparser::SensorXparser() : c1(new Controller()) {
 
@@ -9,8 +10,8 @@ SensorXparser::~SensorXparser() {
 	delete c1;
 }
 
-void SensorXparser::parseData(struct can_frame *frame)
-{
+void SensorXparser::parseData(struct can_frame *frame) {
+	std::cout << "test5" << std::endl;
 	// Vertaal data van msgStruct naar bruikbare data in een infoStruct
 	/*struct infoStruct infoFrame;
 	infoFrame.id = frame->can_id;
@@ -20,10 +21,13 @@ void SensorXparser::parseData(struct can_frame *frame)
 	}
 	this->transmitInfo(&infoFrame);*/
 	this->transmitInfo(frame);
+	std::cout << "test6" << std::endl;
 }
 
 void SensorXparser::transmitInfo(struct can_frame *frame)
 {
 	// Bij gebruik ROS hier infoStruct publishen op topic ParserController1
+	std::cout << "test7" << std::endl;
 	c1->receiveInfo(frame); // Tijdelijk gebruik van controller callback
+	std::cout << "test8" << std::endl;
 }

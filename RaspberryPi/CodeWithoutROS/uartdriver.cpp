@@ -1,5 +1,6 @@
 #include "uartdriver.h"
 #include "uartparser.h"
+#include <iostream>
 
 int UARTdriver::s;
 
@@ -33,9 +34,7 @@ UARTdriver::~UARTdriver() {
 
 void UARTdriver::readInput(struct can_frame *frame) {
 	while(1) {
-		std::cout << "test1" << std::endl;
 		int recvbytes = read(s, frame, sizeof(struct can_frame));
-		std::cout << "test2" << std::endl;
 
 		// Bij gebruik ROS hier frame publishen op topic DriverParser1
 		if(recvbytes) up1->receiveMsg(frame); // Tijdelijk gebruik van parser callback
