@@ -36,9 +36,11 @@ void UARTdriver::readInput() {
 
 	if(recvbytes) {
 		communication::msgStruct msg;
-		msg.id = frame.id;
-		msg.dl = frame.dl;
-		msg.data = frame.data;
+		msg.id = frame.can_id;
+		msg.dl = frame.can_dlc;
+		for(uint8_t i = 0; msg.dl > i; i++) {
+			msg.data[i] = frame.data[i];
+		}
 		pub.publish(msg);
 	}
 }

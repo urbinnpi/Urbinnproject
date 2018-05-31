@@ -24,7 +24,9 @@ public:
 		communication::infoStruct info;
 		info.id = msg.id;
 		info.dl = msg.dl;
-		info.data = msg.data;
+		for(uint8_t i = 0; info.dl > i; i++) {
+			info.data[i] = msg.data[i];
+		}
 		pub->publish(info);
 	}
 private:
