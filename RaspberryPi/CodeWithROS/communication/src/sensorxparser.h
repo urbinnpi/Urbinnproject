@@ -20,7 +20,13 @@ class SensorXparser : public Parser
 {
 public:
 	SensorXparser(ros::Publisher* pub) : pub(pub) { }
-	void parseData(const communication::msgStruct msg) { }
+	void parseData(const communication::msgStruct msg) {
+		communication::infoStruct info;
+		info.id = msg.id;
+		info.dl = msg.dl;
+		info.data = msg.data;
+		pub->publish(info);
+	}
 private:
 	void transmitInfo(communication::infoStruct info) { pub->publish(info); }
 	ros::Publisher* pub;

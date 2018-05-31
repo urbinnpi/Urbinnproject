@@ -26,12 +26,11 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		frame.data[i] = infoFrame->data[i];
 	}*/
 
-	//communication::msgStruct msg;
-	//msg.id = info->id;
-	//msg.dl = info->dl;
-	//msg.data = info->data;
-
-	//this->transmitMsg(&msg);
+	communication::msgStruct msg;
+	msg.id = info.id;
+	msg.dl = info.dl;
+	msg.data = info.data;
+	this->transmitMsg(msg);
 }
 
 void Controller::transmitMsg(communication::msgStruct msg) {

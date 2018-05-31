@@ -3,7 +3,7 @@
 #include <iostream>
 
 int UARTdriver::s;
-//communication::msgStruct msg;
+struct can_frame frame;
 
 UARTdriver::UARTdriver() {
 	pub = nh.advertise<communication::msgStruct>("driverparser1", 1000);
@@ -32,15 +32,15 @@ UARTdriver::UARTdriver() {
 }
 
 void UARTdriver::readInput() {
-	/*int recvbytes = read(s, msg, sizeof(communication::msgStruct));
+	int recvbytes = read(s, frame, sizeof(struct can_frame));
 
 	if(recvbytes) {
-		communication::msgStruct msg2;
-		msg2.id = msg.id;
-		msg2.dl = msg.dl;
-		msg2.data = msg.data;
-		pub.publish(msg2);
-	}*/
+		communication::msgStruct msg;
+		msg.id = frame.id;
+		msg.dl = frame.dl;
+		msg.data = frame.data;
+		pub.publish(msg);
+	}
 }
 
 void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback of topic controllerdriver1
@@ -48,7 +48,11 @@ void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback o
 }
 
 void UARTdriver::transmit(const communication::msgStruct msg) {
-	//write(s, msg, sizeof(communication::msgStruct));
+	struct can_frame frame2;
+	frame2.can_id = msg.id;
+	frame2.can_dlc = msg.dl;
+	frame2.data = msg.data;
+	write(s, frame2, sizeof(struct can_frame));
 }
 
 int main(int argc, char **argv) {
