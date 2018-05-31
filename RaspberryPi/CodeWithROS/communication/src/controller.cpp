@@ -26,11 +26,11 @@ void Controller::receiveInfo(communication::infoStruct* info) { // Callback of t
 	}*/
 
 	communication::msgStruct msg;
-	msg.id = info->id;
-	msg.dl = info->dl;
-	msg.data = info->data;
+	//msg.id = info->id;
+	//msg.dl = info->dl;
+	//msg.data = info->data;
 
-	this->transmitMsg(&msg);
+	//this->transmitMsg(&msg);
 }
 
 void Controller::transmitMsg(communication::msgStruct* msg) {
