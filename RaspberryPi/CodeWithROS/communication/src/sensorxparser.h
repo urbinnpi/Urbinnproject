@@ -19,10 +19,10 @@ class Controller;
 class SensorXparser : public Parser
 {
 public:
-	SensorXparser(ros::Publisher* pub);
-	void parseData(const communication::msgStruct msg);
+	SensorXparser(ros::Publisher* pub) : pub(pub) { }
+	void parseData(const communication::msgStruct msg) { }
 private:
-	void transmitInfo(communication::infoStruct info);
+	void transmitInfo(communication::infoStruct info) { pub->publish(info); }
 	ros::Publisher* pub;
 };
 
