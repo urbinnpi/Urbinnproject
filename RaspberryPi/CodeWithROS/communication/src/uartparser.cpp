@@ -30,7 +30,7 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 			i->second->parseData(msg);
 	}*/
 
-	IDmap[0]->second->parseData(msg);
+	//IDmap[0]->second->parseData(msg);
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
