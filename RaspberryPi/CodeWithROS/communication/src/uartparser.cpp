@@ -41,3 +41,12 @@ void UARTparser::removePair(uint16_t n) {
 void UARTparser::transmitInfo(communication::infoStruct info) {
 	pub.publish(info);
 }
+
+int main(int argc, char **argv) {
+	ros::init(argc, argv, "parser"); // Initialize ROS node with name parser
+	UARTparser up1;
+	
+	ros::spin(); // Loop which calls callback if msgStruct is received on topic driverparser1
+
+	return 0;
+}

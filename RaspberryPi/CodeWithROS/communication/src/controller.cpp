@@ -3,7 +3,7 @@
 
 Controller::Controller() {
 	pub = nh.advertise<communication::msgStruct>("controllerdriver1", 1000);
-	sub = nh.subscriben("parsercontroller1", 1000, &Controller::receiveInfo, this);
+	sub = nh.subscribe("parsercontroller1", 1000, &Controller::receiveInfo, this);
 }
 
 void Controller::receiveInfo(communication::infoStruct& info) { // Callback of topic parsercontroller1
