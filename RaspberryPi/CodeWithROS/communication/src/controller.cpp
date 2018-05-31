@@ -29,7 +29,6 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	communication::msgStruct msg;
 	msg.id = info.id;
 	msg.dl = info.dl;
-	msg.data = info.data;
 	for(uint8_t i = 0; msg.dl > i; i++) {
 		msg.data[i] = info.data[i];
 	}

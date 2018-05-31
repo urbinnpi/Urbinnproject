@@ -53,7 +53,6 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	struct can_frame frame2;
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
-	frame2.data = msg.data;
 	for(uint8_t i = 0; frame2.can_dlc > i; i++) {
 		frame2.data[i] = msg.data[i];
 	}
