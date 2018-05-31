@@ -10,6 +10,7 @@
 #include <map>
 #include "socketcan/can.h"
 #include "parser.h"
+#include "ros/ros.h"
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
@@ -18,9 +19,11 @@ class Controller;
 class SensorXparser : public Parser
 {
 public:
+	SensorXparser(ros::Publisher* pub);
 	void parseData(const communication::msgStruct msg);
 private:
 	void transmitInfo(communication::infoStruct info);
+	ros::Publisher* pub;
 };
 
 #endif // SENSORXPARSER_H
