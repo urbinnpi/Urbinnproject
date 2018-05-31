@@ -36,11 +36,12 @@ void Controller::transmitMsg(communication::msgStruct* msg) {
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "controller"); // Initialize ROS node with name controller
 	ros::NodeHandle n;
-	sub = n.subscribe("parsercontroller1", 1000, Controller::receiveInfo);
+
+	Controller c1;
+
+	sub = n.subscribe("parsercontroller1", 1000, &Controller::receiveInfo, &c1);
 	pub = n.advertise<communication::msgStruct>("controllerdriver1", 1000);
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
-	
-	Controller c1;
 
 	while(ros::ok()) {
 		// Ask user input to simulate signals from the Raspberry Pi to Arduino

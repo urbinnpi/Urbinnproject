@@ -20,7 +20,7 @@ class UARTdriver;
 class Controller
 {
 public:
-	static void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
+	void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(communication::msgStruct* msg); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.

@@ -22,7 +22,7 @@ public:
 	UARTparser();
 	~UARTparser();
 	void parseData(communication::msgStruct* msg); // Wordt aangeroepen door receiveMsg()
-	static void receiveMsg(communication::msgStruct* msg); // Callback van topic DriverParser1
+	void receiveMsg(communication::msgStruct* msg); // Callback van topic DriverParser1
 	void addPair(uint16_t, Parser*);
 	void removePair(uint16_t);
 private:
