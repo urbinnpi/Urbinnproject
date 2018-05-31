@@ -27,7 +27,7 @@ public:
 	void removePair(uint32_t);
 private:
 	void transmitInfo(communication::infoStruct info); // Publisht op topic ParserController1
-	std::map<uint16_t, Parser*> IDmap;
+	std::map<uint32_t, Parser*> IDmap;
 	ros::NodeHandle nh;
 	ros::Publisher pub;
 	ros::Subscriber sub;
