@@ -7,7 +7,7 @@ int main(int argc, char **argv) {
 	sub = n.subscribe("driverparser1", 1000, UARTparser::receiveMsg);
 	pub = n.advertise<communication::infoStruct>("parsercontroller1", 1000);
 
-	UARTparser up1();
+	UARTparser up1;
 	
 	ros::spin(); // Loop which calls callback if msgStruct is received on topic driverparser1
 

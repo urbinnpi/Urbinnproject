@@ -8,6 +8,7 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
+#include "ros/ros.h"
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
@@ -19,7 +20,7 @@ class UARTdriver;
 class Controller
 {
 public:
-	void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
+	static void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(communication::msgStruct* msg); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.

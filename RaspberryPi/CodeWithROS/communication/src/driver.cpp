@@ -8,7 +8,7 @@ int main(int argc, char **argv) {
 	pub = n.advertise<communication::msgStruct>("driverparser1", 1000);
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 
-	UARTdriver ud1();
+	UARTdriver ud1;
 	
 	while(ros::ok()) {
 		ud1.readInput();
