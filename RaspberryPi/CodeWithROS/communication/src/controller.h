@@ -8,9 +8,8 @@
 #include <sys/socket.h>
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
-#include "definitions.h"
-#include <communication/msgstruct.h>
-#include <communication/infostruct.h>
+#include <communication/msgStruct.h>
+#include <communication/infoStruct.h>
 
 static ros::Subscriber sub;
 static ros::Publisher pub;
