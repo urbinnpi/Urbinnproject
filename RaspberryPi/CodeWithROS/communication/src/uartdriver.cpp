@@ -32,7 +32,7 @@ UARTdriver::UARTdriver() {
 }
 
 void UARTdriver::readInput() {
-	int recvbytes = read(s, frame, sizeof(struct can_frame));
+	int recvbytes = read(s, &frame, sizeof(struct can_frame));
 
 	if(recvbytes) {
 		communication::msgStruct msg;
@@ -54,7 +54,10 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
 	frame2.data = msg.data;
-	write(s, frame2, sizeof(struct can_frame));
+	for(uint8_t i = 0; frame2.can_dlc > i; i++) {
+		frame2.data[i] = msg.data[i];
+	}
+	write(s, &frame2, sizeof(struct can_frame));
 }
 
 int main(int argc, char **argv) {
