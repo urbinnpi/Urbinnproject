@@ -17,14 +17,16 @@ class UARTparser;
 class UARTdriver : public Driver
 {
 public:
-	UARTdriver(ros::Publisher pub);
+	UARTdriver();
 	void readInput(); // Reads CAN shield
-	void receiveMsg(communication::msgStruct* msg); // Callback of ROS topic ControllerDriver1
-	void transmit(communication::msgStruct* msg); // Writes to CAN shield
+	void receiveMsg(communication::msgStruct& msg); // Callback of ROS topic ControllerDriver1
+	void transmit(communication::msgStruct msg); // Writes to CAN shield
 	static int s; // Tijdelijk
 private:
 	//int s; // Socket
+	ros::NodeHandle nh;
 	ros::Publisher pub;
+	ros::Subscriber sub;
 };
 
 #endif // UARTDRIVER_H

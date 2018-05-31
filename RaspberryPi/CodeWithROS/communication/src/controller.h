@@ -18,11 +18,13 @@ class Controller
 {
 public:
 	Controller(ros::Publisher pub);
-	void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
+	void receiveInfo(communication::infoStruct& info); // Callback met infoStruct van topic ParserController1
 private:
-	void transmitMsg(communication::msgStruct* msg); // Publish een msgStruct op topic ControllerDriver1
+	void transmitMsg(communication::msgStruct msg); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.
+	ros::NodeHandle nh;
 	ros::Publisher pub;
+	ros::Subscriber sub;
 };
 
 #endif // CONTROLLER_H

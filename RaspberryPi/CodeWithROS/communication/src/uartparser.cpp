@@ -2,7 +2,9 @@
 #include "controller.h"
 #include "sensorxparser.h"
 
-UARTparser::UARTparser(ros::Publisher pub) : pub(pub) {
+UARTparser::UARTparser() {
+	pub = n.advertise<communication::infoStruct>("parsercontroller1", 1000);
+	sub = n.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 
@@ -13,7 +15,7 @@ UARTparser::~UARTparser() {
 		IDmap.erase(i);
 }
 
-void UARTparser::parseData(communication::msgStruct* msg) {
+void UARTparser::parseData(communication::msgStruct msg) {
 	// Zoek in IDmap naar sensor die bij frame hoort en voer daar deze functie op uit
 	std::map<uint16_t, Parser*>::iterator temp = IDmap.find((uint16_t)msg->id);
 	
@@ -24,7 +26,7 @@ void UARTparser::parseData(communication::msgStruct* msg) {
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
 
-void UARTparser::receiveMsg(communication::msgStruct* msg) { // Callback van topic driverparser1
+void UARTparser::receiveMsg(communication::msgStruct& msg) { // Callback van topic driverparser1
 	parseData(msg);
 }
 
@@ -36,6 +38,6 @@ void UARTparser::removePair(uint16_t n) {
 	IDmap.erase(n);
 }
 
-void UARTparser::transmitInfo(communication::infoStruct* info) {
+void UARTparser::transmitInfo(communication::infoStruct info) {
 	pub.publish(info);
 }

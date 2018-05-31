@@ -5,7 +5,9 @@
 int UARTdriver::s;
 communication::msgStruct msg;
 
-UARTdriver::UARTdriver(ros::Publisher pub) : pub(pub) {
+UARTdriver::UARTdriver() {
+	pub = nh.advertise<communication::msgStruct>("driverparser1", 1000);
+	sub = nh.subscribe("controllerdriver1", 1000, &UARTdriver::receiveMsg, this);
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name
@@ -30,7 +32,7 @@ UARTdriver::UARTdriver(ros::Publisher pub) : pub(pub) {
 }
 
 void UARTdriver::readInput() {
-	int recvbytes = read(s, msg, sizeof(communication::msgStruct));
+	/*int recvbytes = read(s, msg, sizeof(communication::msgStruct));
 
 	if(recvbytes) {
 		communication::msgStruct msg2;
@@ -38,13 +40,13 @@ void UARTdriver::readInput() {
 		msg2.dl = msg.dl;
 		msg2.data = msg.data;
 		pub.publish(msg2);
-	}
+	}*/
 }
 
-void UARTdriver::receiveMsg(communication::msgStruct* msg) { // Callback of topic controllerdriver1
+void UARTdriver::receiveMsg(communication::msgStruct& msg) { // Callback of topic controllerdriver1
 	this->transmit(msg);
 }
 
-void UARTdriver::transmit(communication::msgStruct* msg) {
+void UARTdriver::transmit(communication::msgStruct msg) {
 	write(s, msg, sizeof(communication::msgStruct));
 }
