@@ -5,7 +5,7 @@
 UARTparser::UARTparser() {
 	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
 	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
-	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(*pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(&pub)));
 }
 
 UARTparser::~UARTparser() {
