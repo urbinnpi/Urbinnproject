@@ -18,7 +18,7 @@ class Controller;
 class SensorXparser : public Parser
 {
 public:
-	void parseData(communication::msgStruct msg);
+	void parseData(const communication::msgStruct msg);
 private:
 	void transmitInfo(communication::infoStruct info);
 };

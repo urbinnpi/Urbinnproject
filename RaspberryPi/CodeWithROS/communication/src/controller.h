@@ -18,7 +18,7 @@ class Controller
 {
 public:
 	Controller();
-	void receiveInfo(communication::infoStruct& info); // Callback met infoStruct van topic ParserController1
+	void receiveInfo(const communication::infoStruct& info); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(communication::msgStruct msg); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.

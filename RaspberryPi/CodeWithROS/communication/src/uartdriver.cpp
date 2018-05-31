@@ -43,13 +43,13 @@ void UARTdriver::readInput() {
 	}*/
 }
 
-void UARTdriver::receiveMsg(communication::msgStruct& msg) { // Callback of topic controllerdriver1
+void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback of topic controllerdriver1
 	this->transmit(msg);
 }
 
-/*void UARTdriver::transmit(communication::msgStruct msg) {
-	write(s, msg, sizeof(communication::msgStruct));
-}*/
+void UARTdriver::transmit(const communication::msgStruct msg) {
+	//write(s, msg, sizeof(communication::msgStruct));
+}
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "driver"); // Initialize ROS node with name parser

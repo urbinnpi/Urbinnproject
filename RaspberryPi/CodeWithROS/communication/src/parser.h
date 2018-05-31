@@ -15,7 +15,7 @@ class Parser
 {
 public:
 	virtual ~Parser() {}
-	virtual void parseData(communication::msgStruct msg) = 0;
+	virtual void parseData(const communication::msgStruct msg) = 0;
 private:
 	virtual void transmitInfo(communication::infoStruct info) = 0;
 };

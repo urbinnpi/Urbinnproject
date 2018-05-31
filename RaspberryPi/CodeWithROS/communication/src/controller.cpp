@@ -6,7 +6,7 @@ Controller::Controller() {
 	sub = nh.subscribe("parsercontroller1", 1000, &Controller::receiveInfo, this);
 }
 
-void Controller::receiveInfo(communication::infoStruct& info) { // Callback of topic parsercontroller1
+void Controller::receiveInfo(const communication::infoStruct& info) { // Callback of topic parsercontroller1
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 

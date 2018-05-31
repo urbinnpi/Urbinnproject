@@ -21,8 +21,8 @@ class UARTparser : public Parser
 public:
 	UARTparser();
 	~UARTparser();
-	void parseData(communication::msgStruct msg); // Wordt aangeroepen door receiveMsg()
-	void receiveMsg(communication::msgStruct& msg); // Callback van topic DriverParser1
+	void parseData(const communication::msgStruct msg); // Wordt aangeroepen door receiveMsg()
+	void receiveMsg(const communication::msgStruct& msg); // Callback van topic DriverParser1
 	void addPair(uint32_t, Parser*);
 	void removePair(uint32_t);
 private:

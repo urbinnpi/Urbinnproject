@@ -1,7 +1,7 @@
 #include "sensorxparser.h"
 #include "uartparser.h"
 
-void SensorXparser::parseData(communication::msgStruct msg) {
+void SensorXparser::parseData(const communication::msgStruct msg) {
 	// Translate data from msgStruct to usable data in an infoStruct
 	/*struct infoStruct infoFrame;
 	infoFrame.id = frame->can_id;

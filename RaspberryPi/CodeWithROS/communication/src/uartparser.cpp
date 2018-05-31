@@ -15,7 +15,7 @@ UARTparser::~UARTparser() {
 		IDmap.erase(i);
 }
 
-void UARTparser::parseData(communication::msgStruct msg) {
+void UARTparser::parseData(const communication::msgStruct msg) {
 	// Zoek in IDmap naar sensor die bij frame hoort en voer daar deze functie op uit
 	/*std::map<uint32_t, Parser*>::iterator temp = IDmap.find(msg.id);
 	
@@ -26,7 +26,7 @@ void UARTparser::parseData(communication::msgStruct msg) {
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
 
-void UARTparser::receiveMsg(communication::msgStruct& msg) { // Callback van topic driverparser1
+void UARTparser::receiveMsg(const communication::msgStruct& msg) { // Callback van topic driverparser1
 	parseData(msg);
 }
 
