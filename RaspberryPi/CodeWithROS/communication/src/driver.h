@@ -1,7 +1,7 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#include <communication/msgStruct.h>
+#include "communication/msgStruct.h"
 
 class Driver
 {

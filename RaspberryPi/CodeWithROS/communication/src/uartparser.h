@@ -11,8 +11,8 @@
 #include "socketcan/can.h"
 #include "parser.h"
 #include "ros/ros.h"
-#include <communication/msgStruct.h>
-#include <communication/infoStruct.h>
+#include "communication/msgStruct.h"
+#include "communication/infoStruct.h"
 
 class Controller;
 

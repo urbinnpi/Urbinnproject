@@ -10,8 +10,8 @@
 #include <map>
 #include "socketcan/can.h"
 #include "parser.h"
-#include <communication/msgStruct.h>
-#include <communication/infoStruct.h>
+#include "communication/msgStruct.h"
+#include "communication/infoStruct.h"
 
 class Controller;
 
