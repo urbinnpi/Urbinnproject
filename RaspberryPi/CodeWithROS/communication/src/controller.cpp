@@ -34,7 +34,7 @@ void Controller::receiveInfo(communication::infoStruct* info) { // Callback of t
 }
 
 void Controller::transmitMsg(communication::msgStruct* msg) {
-	pub.publish(msg);
+	pub.publish(&msg);
 }
 
 int main(int argc, char **argv) {

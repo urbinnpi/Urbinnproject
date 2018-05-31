@@ -15,7 +15,7 @@ UARTparser::~UARTparser() {
 
 void UARTparser::parseData(communication::msgStruct* msg) {
 	// Zoek in IDmap naar sensor die bij frame hoort en voer daar deze functie op uit
-	std::map<uint16_t, Parser*>::iterator temp = IDmap.find((uint16_t)msg->can_id);
+	std::map<uint16_t, Parser*>::iterator temp = IDmap.find((uint16_t)msg->id);
 	
 	if(temp != IDmap.end()) {
 		(*temp)->second->parseData(msg);

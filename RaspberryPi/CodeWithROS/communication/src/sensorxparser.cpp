@@ -14,5 +14,5 @@ void SensorXparser::parseData(communication::msgStruct* msg) {
 }
 
 void SensorXparser::transmitInfo(communication::infoStruct* info) {
-	pub.publish(info);
+	pub.publish(&info);
 }
