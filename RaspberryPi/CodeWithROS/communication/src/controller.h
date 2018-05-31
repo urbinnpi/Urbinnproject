@@ -17,7 +17,7 @@ class UARTdriver;
 class Controller
 {
 public:
-	Controller(ros::Publisher pub);
+	Controller();
 	void receiveInfo(communication::infoStruct& info); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(communication::msgStruct msg); // Publish een msgStruct op topic ControllerDriver1

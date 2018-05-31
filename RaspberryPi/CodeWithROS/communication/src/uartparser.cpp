@@ -3,8 +3,8 @@
 #include "sensorxparser.h"
 
 UARTparser::UARTparser() {
-	pub = n.advertise<communication::infoStruct>("parsercontroller1", 1000);
-	sub = n.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
+	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
+	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 
