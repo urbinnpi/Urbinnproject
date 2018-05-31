@@ -3,7 +3,7 @@
 #include <iostream>
 
 int UARTdriver::s;
-communication::msgStruct msg;
+//communication::msgStruct msg;
 
 UARTdriver::UARTdriver() {
 	pub = nh.advertise<communication::msgStruct>("driverparser1", 1000);
@@ -47,9 +47,9 @@ void UARTdriver::receiveMsg(communication::msgStruct& msg) { // Callback of topi
 	this->transmit(msg);
 }
 
-void UARTdriver::transmit(communication::msgStruct msg) {
+/*void UARTdriver::transmit(communication::msgStruct msg) {
 	write(s, msg, sizeof(communication::msgStruct));
-}
+}*/
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "driver"); // Initialize ROS node with name parser
