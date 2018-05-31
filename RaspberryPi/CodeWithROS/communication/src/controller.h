@@ -12,18 +12,17 @@
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
-static ros::Subscriber sub;
-static ros::Publisher pub;
-
 class UARTdriver;
 
 class Controller
 {
 public:
+	Controller(ros::Publisher pub);
 	void receiveInfo(communication::infoStruct* info); // Callback met infoStruct van topic ParserController1
 private:
 	void transmitMsg(communication::msgStruct* msg); // Publish een msgStruct op topic ControllerDriver1
 	// void steer, enz.
+	ros::Publisher pub;
 };
 
 #endif // CONTROLLER_H

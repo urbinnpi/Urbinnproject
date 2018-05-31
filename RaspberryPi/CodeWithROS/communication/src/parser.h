@@ -11,9 +11,6 @@
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
-static ros::Subscriber sub;
-static ros::Publisher pub;
-
 class Parser
 {
 public:

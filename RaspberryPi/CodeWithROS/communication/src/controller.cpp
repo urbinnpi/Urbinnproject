@@ -1,6 +1,10 @@
 #include "controller.h"
 #include "uartdriver.h"
 
+Controller::Controller(ros::Publisher pub) : pub(pub) {
+
+}
+
 void Controller::receiveInfo(communication::infoStruct* info) { // Callback of topic parsercontroller1
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
@@ -37,10 +41,9 @@ int main(int argc, char **argv) {
 	ros::init(argc, argv, "controller"); // Initialize ROS node with name controller
 	ros::NodeHandle n;
 
-	Controller c1;
-
-	sub = n.subscribe("parsercontroller1", 1000, &Controller::receiveInfo, &c1);
-	pub = n.advertise<communication::msgStruct>("controllerdriver1", 1000);
+	ros::Publisher pub = n.advertise<communication::msgStruct>("controllerdriver1", 1000);
+	Controller c1(pub);
+	ros::Subscriber sub = n.subscribe("parsercontroller1", 1000, &Controller::receiveInfo, &c1);
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 
 	while(ros::ok()) {

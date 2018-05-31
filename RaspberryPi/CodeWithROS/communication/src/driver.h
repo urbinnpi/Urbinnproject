@@ -1,11 +1,7 @@
 #ifndef DRIVER_H
 #define DRIVER_H
 
-#include "ros/ros.h"
 #include "communication/msgStruct.h"
-
-static ros::Subscriber sub;
-static ros::Publisher pub;
 
 class Driver
 {

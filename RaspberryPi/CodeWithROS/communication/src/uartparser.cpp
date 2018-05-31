@@ -2,7 +2,7 @@
 #include "controller.h"
 #include "sensorxparser.h"
 
-UARTparser::UARTparser() {
+UARTparser::UARTparser(ros::Publisher pub) : pub(pub) {
 	IDmap.insert(std::pair<uint16_t,Parser*>(0x631, new SensorXparser()));
 }
 

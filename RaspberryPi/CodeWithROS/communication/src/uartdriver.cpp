@@ -5,7 +5,7 @@
 int UARTdriver::s;
 communication::msgStruct msg;
 
-UARTdriver::UARTdriver() {
+UARTdriver::UARTdriver(ros::Publisher pub) : pub(pub) {
 	struct sockaddr_can addr;
 	struct ifreq ifr;
 	const char *ifname = "can0"; // CAN interface name

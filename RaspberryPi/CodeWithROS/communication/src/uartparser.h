@@ -19,7 +19,7 @@ class Controller;
 class UARTparser : public Parser
 {
 public:
-	UARTparser();
+	UARTparser(ros::Publisher pub);
 	~UARTparser();
 	void parseData(communication::msgStruct* msg); // Wordt aangeroepen door receiveMsg()
 	void receiveMsg(communication::msgStruct* msg); // Callback van topic DriverParser1
@@ -28,6 +28,7 @@ public:
 private:
 	void transmitInfo(communication::infoStruct* info); // Publisht op topic ParserController1
 	std::map<uint16_t, Parser*> IDmap;
+	ros::Publisher pub;
 };
 
 #endif // UARTPARSER_H
