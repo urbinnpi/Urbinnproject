@@ -10,20 +10,9 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
-	/*if(info->id == 0x631)
-	{
+	/*if(info.id == 0x631) {
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
-		//infoFrame->data[0] += 1; // Test
-		//frame->can_id += 1; // Test
-	}*/
 
-	//info->id += 1; // Test
-	// Stel msgFrame samen om bijv. motor aan te sturen
-	/*struct can_frame frame;
-	frame.can_id = infoFrame->id;
-	frame.can_dlc = infoFrame->dl;
-	for(uint8_t i = 0; infoFrame->dl > i; i++) {
-		frame.data[i] = infoFrame->data[i];
 	}*/
 
 	communication::msgStruct msg;
