@@ -9,14 +9,14 @@ void Controller::receiveInfo(communication::infoStruct* info) { // Callback of t
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 
-	if(info->id == 0x631)
+	/*if(info->id == 0x631)
 	{
 		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
 		//infoFrame->data[0] += 1; // Test
 		//frame->can_id += 1; // Test
-	}
+	}*/
 
-	info->id += 1; // Test
+	//info->id += 1; // Test
 	// Stel msgFrame samen om bijv. motor aan te sturen
 	/*struct can_frame frame;
 	frame.can_id = infoFrame->id;
@@ -25,7 +25,7 @@ void Controller::receiveInfo(communication::infoStruct* info) { // Callback of t
 		frame.data[i] = infoFrame->data[i];
 	}*/
 
-	communication::msgStruct msg;
+	//communication::msgStruct msg;
 	//msg.id = info->id;
 	//msg.dl = info->dl;
 	//msg.data = info->data;
