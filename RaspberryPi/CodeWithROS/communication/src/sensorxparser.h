@@ -11,8 +11,8 @@
 #include "socketcan/can.h"
 #include "parser.h"
 #include "definitions.h"
-#include "communication/msgstruct.h"
-#include "communication/infostruct.h"
+#include <communication/msgstruct.h>
+#include <communication/infostruct.h>
 
 class Controller;
 

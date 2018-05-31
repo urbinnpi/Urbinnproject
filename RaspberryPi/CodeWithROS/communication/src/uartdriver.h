@@ -9,7 +9,7 @@
 #include <sys/ioctl.h>
 #include "socketcan/can.h"
 #include "driver.h"
-#include "communication/msgstruct.h"
+#include <communication/msgstruct.h>
 
 class UARTparser;
 
