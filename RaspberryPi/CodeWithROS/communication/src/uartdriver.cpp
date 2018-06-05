@@ -41,6 +41,7 @@ void UARTdriver::readInput() {
 		for(uint8_t i = 0; msg.dl > i; i++) {
 			msg.data[i] = frame.data[i];
 		}
+		ROS_INFO("Published message");
 		pub.publish(msg);
 	}
 }
