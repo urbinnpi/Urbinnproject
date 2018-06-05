@@ -27,6 +27,7 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 		//std::cout << "ERROR! No ID found" << std::endl;
 		ROS_INFO("ERROR !!");
 	}
+	ROS_INFO("geen error !!");
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
