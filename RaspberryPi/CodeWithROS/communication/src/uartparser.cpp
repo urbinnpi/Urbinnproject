@@ -21,13 +21,15 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 	// Search for sensor in IDmap that belongs to id of msg and parse data in specified function
 	std::map<uint32_t, Parser*>::iterator temp = IDmap.find((uint32_t)msg.id);
 	
+	ROS_INFO("Parsing data, ID: %d", msg.id);
+	
 	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
 	} else {
 		//std::cout << "ERROR! No ID found" << std::endl;
 		ROS_INFO("ERROR !!");
 	}
-	ROS_INFO("geen error !!");
+	
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
