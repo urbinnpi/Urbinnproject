@@ -25,9 +25,10 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 	
 	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
+		ROS_INFO("ID gevonden in map");
 	} else {
 		//std::cout << "ERROR! No ID found" << std::endl;
-		ROS_INFO("ERROR !!");
+		ROS_INFO("ERROR - ID niet gevonden");
 	}
 	
 
