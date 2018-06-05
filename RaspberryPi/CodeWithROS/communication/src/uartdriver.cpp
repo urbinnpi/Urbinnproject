@@ -31,6 +31,7 @@ UARTdriver::UARTdriver() {
 		perror("Error in socket bind");
 	}
 	ROS_INFO("Started CAN driver");
+	std::cout << "Started CAN driver" << std::endl;
 }
 
 void UARTdriver::readInput() {
