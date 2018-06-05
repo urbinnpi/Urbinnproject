@@ -1,6 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 #include <iostream>
+#include "message.h"
 
 int UARTdriver::s;
 struct can_frame frame;
@@ -66,7 +67,9 @@ int main(int argc, char **argv) {
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 	
 	while(ros::ok()) {
-		ROS_INFO("Starting loop");
+		ROS_INFO("Starting loop1");
+		ms::message("Starting loop2");
+		std::cout << "Staring loop3" << std::endl;
 		
 		ud1.readInput();
 
