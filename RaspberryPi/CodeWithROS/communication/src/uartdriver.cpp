@@ -1,7 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 #include <iostream>
-#include "message.h"
+#include "message.cpp"
 
 int UARTdriver::s;
 struct can_frame frame;
