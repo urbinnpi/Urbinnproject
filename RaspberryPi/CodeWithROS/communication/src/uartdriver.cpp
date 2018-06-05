@@ -30,6 +30,7 @@ UARTdriver::UARTdriver() {
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
 	}
+	ROS_INFO("Started CAN driver");
 }
 
 void UARTdriver::readInput() {
