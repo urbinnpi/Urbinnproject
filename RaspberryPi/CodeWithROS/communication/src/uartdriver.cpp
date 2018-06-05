@@ -65,6 +65,10 @@ int main(int argc, char **argv) {
 	ros::init(argc, argv, "driver"); // Initialize ROS node with name parser
 	UARTdriver ud1;
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
+
+	ROS_INFO("Starting loop1");
+	ms::message("Starting loop2");
+	std::cout << "Staring loop3" << std::endl;
 	
 	while(ros::ok()) {
 		ROS_INFO("Starting loop1");
