@@ -33,16 +33,18 @@ UARTdriver::UARTdriver() {
 }
 
 void UARTdriver::readInput() {
+	ROS_INFO("Getting CAN frame");
 	int recvbytes = read(s, &frame, sizeof(struct can_frame));
+	
 
 	if(recvbytes) {
+		ROS_INFO("Got can frame");
 		communication::msgStruct msg;
 		msg.id = frame.can_id;
 		msg.dl = frame.can_dlc;
 		for(uint8_t i = 0; msg.dl > i; i++) {
 			msg.data[i] = frame.data[i];
 		}
-		ROS_INFO("Published message");
 		pub.publish(msg);
 	}
 }
@@ -65,8 +67,6 @@ int main(int argc, char **argv) {
 	ros::init(argc, argv, "driver"); // Initialize ROS node with name parser
 	UARTdriver ud1;
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
-
-	ROS_INFO("Starting loop1");
 	
 	while(ros::ok()) {		
 		ud1.readInput();
