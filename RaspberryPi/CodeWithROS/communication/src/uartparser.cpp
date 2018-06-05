@@ -5,6 +5,8 @@
 UARTparser::UARTparser() {
 	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
 	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
+	
+	// insert subparser
 	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(&pub)));
 }
 
@@ -21,6 +23,8 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 	
 	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
+	} else {
+		std::cout << "ERROR! No ID found" << std::endl;
 	}
 
 	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren

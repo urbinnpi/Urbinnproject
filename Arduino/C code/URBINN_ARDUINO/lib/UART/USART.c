@@ -10,15 +10,15 @@
 #include <avr/interrupt.h>
 #include <string.h> // for memset
 #include "../stateMachine.h"
+#include <stdlib.h>
 
 volatile char UARTReceiveBuffer[UART_RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
 volatile uint8_t UARTReceiveBufferCounter;						// counter
-volatile int framearray[2];
-volatile int computed;
 
 static void USART_transmit(const char*);		// Function to send one char over the USART
 static void print_new_line();					// print a new line
 static void clearBuffer();						// clear the UARTReceiveBuffer
+static uint8_t getLengthInt(uint64_t);				// get the amount of chars of an int
 
 /**
  * \brief initialize the USART
@@ -63,6 +63,13 @@ ISR(USART_RX_vect) {
 	}
 }
 
+static uint8_t getLengthInt(uint64_t x) {
+	if(x>=0x1000) return 6;
+	if(x>=0x100) return 5;
+	if(x>=0x10) return 4;
+	return 3;
+}
+
 void clearBuffer() {
 	// set the counter to 0
 	UARTReceiveBufferCounter = 0;
@@ -73,30 +80,26 @@ void clearBuffer() {
 void UARTReceiveMessage() {
 	cli();
 
-	print_string("Received data: ");
-	print_string_new_line((char*)UARTReceiveBuffer);
-
-	// get the ID
-	computed = atoi((char*)UARTReceiveBuffer);
-	print_int_new_line(computed);
-	framearray[0] = computed;
+	uint8_t dataStart;
 
 	// create frame and set rtr to 0
 	tCAN frame;
 	frame.header.rtr = 0;
 
-	// check the message ID
-	if(framearray[0] == 631){
-		frame.id = 0x631;
-	} else if(framearray[0] == 531){
-		frame.id = 0x531;
-	} else if(framearray[0] == 431){
-		frame.id = 0x431;
-	}
+	print_string("Received data: ");
+	print_string_new_line((char*)UARTReceiveBuffer);
+
+	// get the ID
+	frame.id = strtol(UARTReceiveBuffer, NULL, 16);
+
+	// find the first databyte
+	dataStart = getLengthInt(frame.id) + 1; // +1 for the space
+	print_string("datastart:  ");
+	print_int_new_line(dataStart);
 
 	// loop for every full message and set the data into the message
-	uint8_t i = 0;
-	for (i = 0; i + CAN_MAX_LENGTH <= UARTReceiveBufferCounter; i += CAN_MAX_LENGTH) {
+	uint8_t i = dataStart;
+	while (i + CAN_MAX_LENGTH <= UARTReceiveBufferCounter) {
 		// copy one 8 bytes into the frame
 		memcpy(frame.data, (char*)&UARTReceiveBuffer[i], CAN_MAX_LENGTH);
 
@@ -105,24 +108,40 @@ void UARTReceiveMessage() {
 
 		// send the frame
 		CANTransmitMessage(&frame);
+
+		i += CAN_MAX_LENGTH;
 	}
 
 	// clean the dataframe
 	memset(frame.data, 0, (size_t)CAN_MAX_LENGTH);
 
+	print_string("buffer counter:  ");
+	print_int_new_line(UARTReceiveBufferCounter);
+	print_string("i:  ");
+	print_int_new_line(i);
+
 	// put the leftovers in the last frame
 	uint8_t j = 0;
-	for (; UARTReceiveBuffer[i] != '\r'; i++) {
+	uint8_t delta = UARTReceiveBufferCounter-i;
+	print_int_new_line(delta);
+	while(j <= delta) {
+		if (UARTReceiveBuffer[i] == '\r') {
+			print_string_new_line("breaking from loop.");
+			break;
+		}
+
 		frame.data[j] = UARTReceiveBuffer[i];
 		j++;
+		i++;
+		print_int_new_line(j);
 	}
 
-	// set the correct length and send the frame;
-	frame.header.length = j;
-	if (framearray[0] != 631 && framearray[0] != 531 && framearray[0] != 431){
+	// only send if there is something to send
+	if (j) {
+		// set the correct length and send the frame;
+		frame.header.length = j;
 		CANTransmitMessage(&frame);
 	}
-	//print_string_new_line((char*)frame.data);
 
 	// clean the receive buffer
 	clearBuffer();
