@@ -61,7 +61,7 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	ROS_INFO("Transmitting CAN frame with ID: 0x%X", msg.id);
 	
 	struct can_frame frame2;
-	uint8_t i = 0
+	uint8_t i = 0;
 	
 	
 	frame2.can_id = msg.id;
