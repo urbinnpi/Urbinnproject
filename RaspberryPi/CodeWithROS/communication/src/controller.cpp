@@ -20,7 +20,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	ROS_INFO("Controller Got info, sending the data back");
 	ROS_INFO("Controller old ID: %x", info.id);
 	ROS_INFO("Controller new ID: %x", info.id+1);
-	ROS_INFO("Controller Data %s", info.data);
+	ROS_INFO("Controller Data %s", (char*)&info.data);
 	
 	
 	communication::msgStruct msg;
