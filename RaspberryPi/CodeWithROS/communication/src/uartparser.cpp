@@ -11,7 +11,7 @@ UARTparser::UARTparser() {
 	ROS_INFO("inserting subparsers in map");
 	// insert subparser
 	IDmap.insert(std::pair<uint32_t,Parser*>(SensorXID, new SensorXparser(&pub)));
-	IDmap.insert(std::pair<uint32_t,Parser*>(SensoryID, new SensorYparser(&pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(SensorYID, new SensorYparser(&pub)));
 	
 	ROS_INFO("started UARTparser");
 }

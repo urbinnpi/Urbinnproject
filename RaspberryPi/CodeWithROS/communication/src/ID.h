@@ -4,7 +4,7 @@
 // enum of all the sensors and the corrosponding ID
 typedef enum ID {
 	SensorXID = 0x631,
-	sensorYID = 0x623
+	SensorYID = 0x632
 };
 
 

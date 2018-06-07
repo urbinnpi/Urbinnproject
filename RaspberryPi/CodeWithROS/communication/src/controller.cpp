@@ -47,7 +47,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 			
 			// exit the function
 			return;
-			break
+			break;
 	}
 	
 	this->transmitMsg(msg);
