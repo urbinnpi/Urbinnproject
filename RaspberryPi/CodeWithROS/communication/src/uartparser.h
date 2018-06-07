@@ -21,12 +21,12 @@ class UARTparser : public Parser
 public:
 	UARTparser();
 	~UARTparser();
-	void parseData(const communication::msgStruct msg); // Wordt aangeroepen door receiveMsg()
-	void receiveMsg(const communication::msgStruct& msg); // Callback van topic DriverParser1
+	void parseData(const communication::msgStruct msg); // Called by receiveMsg()
+	void receiveMsg(const communication::msgStruct& msg); // Callback of topic driverparser1
 	void addPair(uint32_t, Parser*);
 	void removePair(uint32_t);
 private:
-	void transmitInfo(communication::infoStruct info); // Publisht op topic ParserController1
+	void transmitInfo(communication::infoStruct info); // Publisher of topic parsercontroller1
 	std::map<uint32_t, Parser*> IDmap;
 	ros::NodeHandle nh;
 	ros::Publisher pub;

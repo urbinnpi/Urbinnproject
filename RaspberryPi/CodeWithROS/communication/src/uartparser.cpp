@@ -2,16 +2,15 @@
 #include "controller.h"
 #include "sensorxparser.h"
 #include "sensoryparser.h"
-#include "ID.h"
+//#include "ID.h"
 
 UARTparser::UARTparser() {
 	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
 	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
 	
 	ROS_INFO("inserting subparsers in map");
-	// insert subparser
-	IDmap.insert(std::pair<uint32_t,Parser*>(SensorXID, new SensorXparser(&pub)));
-	IDmap.insert(std::pair<uint32_t,Parser*>(SensorYID, new SensorYparser(&pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(&pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(0x100, new SensorYparser(&pub)));
 	
 	ROS_INFO("started UARTparser");
 }
@@ -25,7 +24,7 @@ UARTparser::~UARTparser() {
 
 void UARTparser::parseData(const communication::msgStruct msg) {	
 	// Search for sensor in IDmap that belongs to id of msg and parse data in specified function
-	std::map<uint32_t, Parser*>::iterator temp = IDmap.find((uint32_t)msg.id);
+	std::map<uint32_t, Parser*>::iterator temp = IDmap.find(msg.id);
 	
 	ROS_INFO("Parsing data, ID: 0x%X", msg.id);
 	

@@ -85,8 +85,7 @@ int main(int argc, char **argv) {
 		ud1.readInput();
 
 		ros::spinOnce(); // Execute callbacks if something is received on subscribed topics
-		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)
-		
+		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)	
 	}
 	
 	ROS_INFO("End of driver node");
