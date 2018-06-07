@@ -74,7 +74,7 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	/* 
 	*	size of the ID (uint32, 4) + size of the dl (uint8, 1) + size of data (uint8)
 	*/
-	write(s, &frame2, (size_t)(5 + i) );
+	write(s, &frame2, sizeof(frame2) );
 	
 	ROS_INFO("CAN frame send");
 }
