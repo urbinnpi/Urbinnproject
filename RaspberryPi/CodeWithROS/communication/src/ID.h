@@ -2,7 +2,7 @@
 #define ID_H
 
 // enum of all the sensors and the corrosponding ID
-typedef enum ID {
+enum ID { // typedef?
 	SensorXID = 0x631,
 	SensorYID = 0x632
 };

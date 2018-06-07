@@ -24,7 +24,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// could be optimized
 	switch (info.id) {
 		case SensorXID:
-			msg.id = 0x010;
+			msg.id = (uint32_t)0x010;
 			
 			// change the data
 			for(uint8_t i = 0; msg.dl > i; i++) {

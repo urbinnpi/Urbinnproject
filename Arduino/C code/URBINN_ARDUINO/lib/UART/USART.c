@@ -63,6 +63,7 @@ ISR(USART_RX_vect) {
 	}
 }
 
+// really fast, but a bit sloppy
 static uint8_t getLengthInt(uint64_t x) {
 	if(x>=0x1000) return 6;
 	if(x>=0x100) return 5;
