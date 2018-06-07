@@ -88,14 +88,15 @@ void UARTReceiveMessage() {
 
 	print_string("Received data: ");
 	print_string_new_line((char*)UARTReceiveBuffer);
+	print_new_line();
 
 	// get the ID
 	frame.id = strtol(UARTReceiveBuffer, NULL, 16);
 
 	// find the first databyte
 	dataStart = getLengthInt(frame.id) + 1; // +1 for the space
-	print_string("datastart:  ");
-	print_int_new_line(dataStart);
+	//print_string("datastart:  ");
+	//print_int_new_line(dataStart);
 
 	// loop for every full message and set the data into the message
 	uint8_t i = dataStart;
@@ -115,25 +116,25 @@ void UARTReceiveMessage() {
 	// clean the dataframe
 	memset(frame.data, 0, (size_t)CAN_MAX_LENGTH);
 
-	print_string("buffer counter:  ");
-	print_int_new_line(UARTReceiveBufferCounter);
-	print_string("i:  ");
-	print_int_new_line(i);
+	//print_string("buffer counter:  ");
+	//print_int_new_line(UARTReceiveBufferCounter);
+	//print_string("i:  ");
+	//print_int_new_line(i);
 
 	// put the leftovers in the last frame
 	uint8_t j = 0;
 	uint8_t delta = UARTReceiveBufferCounter-i;
-	print_int_new_line(delta);
+	//print_int_new_line(delta);
 	while(j <= delta) {
 		if (UARTReceiveBuffer[i] == '\r') {
-			print_string_new_line("breaking from loop.");
+			//print_string_new_line("breaking from loop.");
 			break;
 		}
 
 		frame.data[j] = UARTReceiveBuffer[i];
 		j++;
 		i++;
-		print_int_new_line(j);
+		//print_int_new_line(j);
 	}
 
 	// only send if there is something to send

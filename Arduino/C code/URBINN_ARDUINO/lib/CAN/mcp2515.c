@@ -192,20 +192,17 @@ uint8_t mcp2515_get_message(tCAN *message) {
 	// clear interrupt flag
 	if (bit_is_set(status, 6)) {
 		mcp2515_bit_modify(CANINTF, (1<<RX0IF), 0);
-	}
-	else {
+	} else {
 		mcp2515_bit_modify(CANINTF, (1<<RX1IF), 0);
 	}
 
 	if (bit_is_set(status,6)) {
 		// message in buffer 0
 		addr = SPI_READ_RX;
-	}
-	else if (bit_is_set(status,7)) {
+	} else if (bit_is_set(status,7)) {
 		// message in buffer 1
 		addr = SPI_READ_RX | 0x04;
-	}
-	else {
+	} else {
 		// Error: no message available
 		return 0;
 	}

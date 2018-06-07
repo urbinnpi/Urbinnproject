@@ -1,5 +1,6 @@
 #include "controller.h"
 #include "uartdriver.h"
+#include "ID.h"
 
 Controller::Controller() {
 	pub = nh.advertise<communication::msgStruct>("controllerdriver1", 1000);
@@ -11,24 +12,44 @@ Controller::Controller() {
 void Controller::receiveInfo(const communication::infoStruct& info) { // Callback of topic parsercontroller1
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
-
-	/*if(info.id == 0x631) {
-		// Voer bijv. functie steer() uit en geef frame mee of zet in buffer
-
-	}*/
 	
+	// print some info about the received data
 	ROS_INFO("Controller Got info, sending the data back");
-	ROS_INFO("Controller old ID: %x", info.id);
-	ROS_INFO("Controller new ID: %x", info.id+1);
-	ROS_INFO("Controller Data %s", (char*)&info.data);
+	ROS_INFO("Controller old ID: %x", info.id);	
 	
-	
+	// create a struct to set the command in
 	communication::msgStruct msg;
-	msg.id = info.id + 1; // increment the id with 1
-	msg.dl = info.dl;
-	for(uint8_t i = 0; msg.dl > i; i++) {
-		msg.data[i] = info.data[i];
+	
+	// see if there is anythin to do
+	// could be optimized
+	
+	switch (info.id) {
+		case SensorXID:
+			msg.id = 0x10;
+			
+			// change the data
+			for(uint8_t i = 0; msg.dl > i; i++) {
+				msg.data[i] = info.data[i] + (uint8_t)0x1;
+			}
+			
+			msg.dl = info.dl; // data length
+			
+			break;
+			
+		case SensorYID:
+			msg.id = 0x20;
+			msg.data[1] = 0xFF; // maximum POWER
+			msg.dl = 1;
+			break;
+			
+		default:
+			ROS_INFO("ID %X not found in the controller", info.id);
+			
+			// exit the function
+			return;
+			break
 	}
+	
 	this->transmitMsg(msg);
 }
 

@@ -48,20 +48,22 @@ void CANReceiveMessage() {
 
 	// print all the messages in the buffer
 	for (; CANUARTReceiveBufferCounter > 0; CANUARTReceiveBufferCounter--) {
+		print_string("CAN frame received: ");
+
 		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
 
 		char hexbuffer[4];		// temp buffer for converting to string
 
 		// print to ID, convert the uint16 to string in HEX format
 		print_string("ID: ");
-		snprintf(hexbuffer,4,"%02X"PRIu16,message.id);
+		snprintf(hexbuffer,6,"0x%02X"PRIu16,message.id);
 		print_string(hexbuffer);
 
 		print_string(", ");
 
 		// print the datalength, convert the uint16 to string in HEX format
 		print_string("Datalength: ");
-		snprintf(hexbuffer,2,"%02X"PRIu16,message.id);
+		snprintf(hexbuffer,2,"%X"PRIu16,message.id);
 		print_string(hexbuffer);
 
 		// loop and print all the data
