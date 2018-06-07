@@ -21,7 +21,6 @@ class SensorYparser : public Parser
 public:
 	SensorYparser(ros::Publisher* pub);
 	void parseData(const communication::msgStruct msg);
-	}
 private:
 	void transmitInfo(communication::infoStruct info);
 	ros::Publisher* pub;
