@@ -1,6 +1,7 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 #include <iostream>
+#include <thread>
 
 int UARTdriver::s;
 struct can_frame frame;
@@ -34,20 +35,22 @@ UARTdriver::UARTdriver() {
 }
 
 void UARTdriver::readInput() {
-	ROS_INFO("Getting CAN frame");
-	int recvbytes = read(s, &frame, sizeof(struct can_frame));
+	while(1) {
+		ROS_INFO("Getting CAN frame");
+		int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
-	if(recvbytes) {
-		ROS_INFO("Got can frame");
+		if(recvbytes) {
+			ROS_INFO("Got can frame");
 
-		communication::msgStruct msg;
-		msg.id = frame.can_id;
-		msg.dl = frame.can_dlc;
-		for(uint8_t i = 0; msg.dl > i; i++) {
-			msg.data[i] = frame.data[i];
-		}
+			communication::msgStruct msg;
+			msg.id = frame.can_id;
+			msg.dl = frame.can_dlc;
+			for(uint8_t i = 0; msg.dl > i; i++) {
+				msg.data[i] = frame.data[i];
+			}
 		
-		pub.publish(msg);
+			pub.publish(msg);
+		}
 	}
 }
 
@@ -77,13 +80,16 @@ int main(int argc, char **argv) {
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 
 	ROS_INFO("Starting loop");
-	
-	while(ros::ok()) {		
+
+	std::thread t1(ud1.readInput);
+	ros::spin();
+	/*while(ros::ok()) {
 		ud1.readInput();
 
 		ros::spinOnce(); // Execute callbacks if something is received on subscribed topics
 		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)	
-	}
+	}*/
+	t1.join;
 	
 	ROS_INFO("End of driver node");
 
