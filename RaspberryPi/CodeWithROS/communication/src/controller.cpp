@@ -24,22 +24,23 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// could be optimized
 	switch (info.id) {
 		case SensorXID:
-			msg.id = (uint32_t)0x010;
+			//msg.id = (uint32_t)0x010;
+			msg.id = info.id;
 			
 			// change the data
 			for(uint8_t i = 0; msg.dl > i; i++) {
-				msg.data[i] = info.data[i] + (uint8_t)0x1;
+				msg.data[i] = info.data[i];
 			}
 			
 			msg.dl = info.dl; // data length
 			
 			break;
 			
-		case SensorYID:
+		/*case SensorYID:
 			msg.id = 0x020;
 			msg.data[1] = 0xFF; // maximum POWER
 			msg.dl = 1;
-			break;
+			break;*/
 			
 		default:
 			ROS_WARN("ID %X not found in the controller", info.id);
