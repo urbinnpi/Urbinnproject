@@ -20,12 +20,11 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// create a struct to set the command in
 	communication::msgStruct msg;
 	
-	// see if there is anythin to do
+	// see if there is anything to do
 	// could be optimized
-	
 	switch (info.id) {
 		case SensorXID:
-			msg.id = 0x10;
+			msg.id = 0x010;
 			
 			// change the data
 			for(uint8_t i = 0; msg.dl > i; i++) {
@@ -37,13 +36,13 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 			break;
 			
 		case SensorYID:
-			msg.id = 0x20;
+			msg.id = 0x020;
 			msg.data[1] = 0xFF; // maximum POWER
 			msg.dl = 1;
 			break;
 			
 		default:
-			ROS_INFO("ID %X not found in the controller", info.id);
+			ROS_WARN("ID %X not found in the controller", info.id);
 			
 			// exit the function
 			return;

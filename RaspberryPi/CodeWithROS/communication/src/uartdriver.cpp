@@ -58,8 +58,7 @@ void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback o
 }
 
 void UARTdriver::transmit(const communication::msgStruct msg) {
-	ROS_INFO("Transmitting CAN frame");
-	ROS_INFO("ID: %x", msg.id);
+	ROS_INFO("Transmitting CAN frame with ID: %X" msg.id);
 	struct can_frame frame2;
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
