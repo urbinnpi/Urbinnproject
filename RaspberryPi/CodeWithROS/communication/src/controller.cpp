@@ -24,7 +24,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	}
 	msg.dl = info.dl;
 	
-	/*switch (info.id) {
+	switch (info.id) {
 		case SensorXID:
 			//msg.id = (uint32_t)0x010;
 			for(uint8_t i = 0; msg.dl > i; i++) {
@@ -46,7 +46,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 			// exit the function
 			return;
 			break;
-	}*/
+	}
 	
 	this->transmitMsg(msg);
 }
