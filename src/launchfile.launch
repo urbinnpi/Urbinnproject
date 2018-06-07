@@ -1,5 +1,0 @@
-<launch>
-  <node pkg="communication" name="controller" type="controller"/>
-  <node pkg="communication" name="parser" type="parser"/>
-  <node pkg="communication" name="driver" type="driver"/>
-</launch>

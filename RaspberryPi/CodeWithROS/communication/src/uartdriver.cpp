@@ -36,11 +36,13 @@ UARTdriver::UARTdriver() {
 
 void UARTdriver::readInput() {
 	ROS_INFO("Getting CAN frame");
+	std::cout << "Getting CAN frame" << std::endl;
 	int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
 
 	if(recvbytes) {
 		ROS_INFO("Got can frame");
+		std::cout << "Got can frame" << std::endl;
 		communication::msgStruct msg;
 		msg.id = frame.can_id;
 		msg.dl = frame.can_dlc;
@@ -63,19 +65,28 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 		frame2.data[i] = msg.data[i];
 	}
 	write(s, &frame2, sizeof(struct can_frame));
+	ROS_INFO("CAN frame send");
+	std::cout << "CAN frame send" << std::endl;
 }
 
 int main(int argc, char **argv) {
 	ros::init(argc, argv, "driver"); // Initialize ROS node with name parser
 	UARTdriver ud1;
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
+
+	ROS_INFO("Starting loop");
+	std::cout << "Starting loop" << std::endl;
 	
 	while(ros::ok()) {		
 		ud1.readInput();
 
 		ros::spinOnce(); // Execute callbacks if something is received on subscribed topics
 		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)
+		
 	}
+	
+	ROS_INFO("End of driver");
+	std::cout << "End of driver" << std::endl;
 
 	return 0;
 }
