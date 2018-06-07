@@ -29,7 +29,7 @@ public:
 			info.data[i] = msg.data[i];
 		}
 		ROS_INFO("SensorXparser sending info to controller");
-		pub->publish(info);
+		transmitInfo(info);
 	}
 private:
 	void transmitInfo(communication::infoStruct info) { pub->publish(info); }

@@ -1,7 +1,6 @@
 #include "uartdriver.h"
 #include "uartparser.h"
 #include <iostream>
-#include "message.cpp"
 
 int UARTdriver::s;
 struct can_frame frame;
@@ -48,6 +47,7 @@ void UARTdriver::readInput() {
 		for(uint8_t i = 0; msg.dl > i; i++) {
 			msg.data[i] = frame.data[i];
 		}
+		
 		pub.publish(msg);
 	}
 }
