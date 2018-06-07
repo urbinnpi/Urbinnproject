@@ -1,5 +1,4 @@
 #include "sensorxparser.h"
-//#include "uartparser.h"
 
 SensorXparser::SensorXparser(ros::Publisher* pub) : pub(pub) {
 	ROS_INFO("started SensorXparser");

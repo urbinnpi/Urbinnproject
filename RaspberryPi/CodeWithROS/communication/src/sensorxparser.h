@@ -14,8 +14,6 @@
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
-class Controller;
-
 class SensorXparser : public Parser
 {
 public:

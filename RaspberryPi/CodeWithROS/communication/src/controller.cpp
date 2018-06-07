@@ -13,8 +13,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 	
-	ROS_INFO("Controller got info, sending commandos");
-	//ROS_INFO("Controller old ID: %x", info.id);	
+	ROS_INFO("Controller got info, sending commandos");	
 	
 	communication::msgStruct msg;
 	msg.id = info.id;
@@ -22,30 +21,6 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		msg.data[i] = info.data[i];
 	}
 	msg.dl = info.dl;
-	
-	/*switch (info.id) {
-		case SensorXID:
-			//msg.id = (uint32_t)0x010;
-			for(uint8_t i = 0; msg.dl > i; i++) {
-				msg.data[i] = info.data[i];
-			}
-			msg.dl = info.dl; // data length
-			
-			break;
-			
-		case SensorYID:
-			msg.id = 0x020;
-			msg.data[1] = 0xFF; // maximum POWER
-			msg.dl = 1;
-			break;
-			
-		default:
-			ROS_WARN("ID %X not found in the controller", info.id);
-			
-			// exit the function
-			return;
-			break;
-	}*/
 	
 	this->transmitMsg(msg);
 }

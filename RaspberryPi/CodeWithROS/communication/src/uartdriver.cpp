@@ -37,7 +37,6 @@ void UARTdriver::readInput() {
 	ROS_INFO("Getting CAN frame");
 	int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
-
 	if(recvbytes) {
 		ROS_INFO("Got can frame");
 
@@ -61,10 +60,8 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	ROS_INFO("Transmitting CAN frame with ID: 0x%X", msg.id);
 	
 	struct can_frame frame2;
-
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
-	
 	for(uint8_t i = 0; frame2.can_dlc > i; i++) {
 		frame2.data[i] = msg.data[i];
  	}

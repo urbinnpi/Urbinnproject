@@ -1,5 +1,4 @@
 #include "sensoryparser.h"
-//#include "uartparser.h"
 
 SensorYparser::SensorYparser(ros::Publisher* pub) : pub(pub) {
 	ROS_INFO("started SensorYparser");
