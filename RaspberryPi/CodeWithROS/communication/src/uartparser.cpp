@@ -6,8 +6,11 @@ UARTparser::UARTparser() {
 	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
 	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
 	
+	ROS_INFO("inserting subparsers in map");
 	// insert subparser
 	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(&pub)));
+	
+	ROS_INFO("started UARTparser");
 }
 
 UARTparser::~UARTparser() {
@@ -17,25 +20,22 @@ UARTparser::~UARTparser() {
 		IDmap.erase(i);
 }
 
-void UARTparser::parseData(const communication::msgStruct msg) {
+void UARTparser::parseData(const communication::msgStruct msg) {	
 	// Search for sensor in IDmap that belongs to id of msg and parse data in specified function
 	std::map<uint32_t, Parser*>::iterator temp = IDmap.find((uint32_t)msg.id);
 	
-	ROS_INFO("Parsing data, ID: %d", msg.id);
+	ROS_INFO("Parsing data, ID: %x", msg.id);
 	
 	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
 		ROS_INFO("ID gevonden in map");
 	} else {
-		//std::cout << "ERROR! No ID found" << std::endl;
 		ROS_INFO("ERROR - ID niet gevonden");
 	}
-	
-
-	// Info over de UART kan ook naar controller worden gestuurd door transmitInfo() van deze klasse uit te voeren
 }
 
 void UARTparser::receiveMsg(const communication::msgStruct& msg) { // Callback van topic driverparser1
+	ROS_INFO("Got frame to parse");
 	parseData(msg);
 }
 
@@ -48,6 +48,7 @@ void UARTparser::removePair(uint32_t n) {
 }
 
 void UARTparser::transmitInfo(communication::infoStruct info) {
+	ROS_INFO("Transmitting info to controller");
 	pub.publish(info);
 }
 

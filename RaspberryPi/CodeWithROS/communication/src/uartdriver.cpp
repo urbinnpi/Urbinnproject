@@ -16,6 +16,7 @@ UARTdriver::UARTdriver() {
 	// Open socket
 	if((s = socket(PF_CAN, SOCK_RAW, CAN_RAW)) < 0) {
 		perror("Error while opening socket");
+		ROS_ERROR("Error while opening socket");
 	}
 	
 	// Copy the interface
@@ -30,19 +31,17 @@ UARTdriver::UARTdriver() {
 	if(bind(s, (struct sockaddr *)&addr, sizeof(addr)) < 0) {
 		perror("Error in socket bind");
 	}
-	ROS_INFO("Started CAN driver");
-	std::cout << "Started CAN driver" << std::endl;
+	ROS_INFO("Started UARTdriver");
 }
 
 void UARTdriver::readInput() {
 	ROS_INFO("Getting CAN frame");
-	std::cout << "Getting CAN frame" << std::endl;
 	int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
 
 	if(recvbytes) {
 		ROS_INFO("Got can frame");
-		std::cout << "Got can frame" << std::endl;
+
 		communication::msgStruct msg;
 		msg.id = frame.can_id;
 		msg.dl = frame.can_dlc;
@@ -54,10 +53,13 @@ void UARTdriver::readInput() {
 }
 
 void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback of topic controllerdriver1
+	ROS_INFO("Received commando from controller");
 	this->transmit(msg);
 }
 
 void UARTdriver::transmit(const communication::msgStruct msg) {
+	ROS_INFO("Transmitting CAN frame");
+	ROS_INFO("ID: %d", msg.id);
 	struct can_frame frame2;
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
@@ -66,7 +68,6 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	}
 	write(s, &frame2, sizeof(struct can_frame));
 	ROS_INFO("CAN frame send");
-	std::cout << "CAN frame send" << std::endl;
 }
 
 int main(int argc, char **argv) {
@@ -75,7 +76,6 @@ int main(int argc, char **argv) {
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 
 	ROS_INFO("Starting loop");
-	std::cout << "Starting loop" << std::endl;
 	
 	while(ros::ok()) {		
 		ud1.readInput();
@@ -85,8 +85,7 @@ int main(int argc, char **argv) {
 		
 	}
 	
-	ROS_INFO("End of driver");
-	std::cout << "End of driver" << std::endl;
+	ROS_INFO("End of driver node");
 
 	return 0;
 }
