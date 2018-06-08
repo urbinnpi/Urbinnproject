@@ -1,6 +1,11 @@
+//#include <iostream>
+//#include <string>
 #include "controller.h"
 #include "uartdriver.h"
 #include "idlist.h"
+
+//std::hex decToHex(int dec);
+//std::hex strToHex(std::string str);
 
 Controller::Controller() {
 	pub = nh.advertise<communication::msgStruct>("controllerdriver1", 1000);
@@ -15,19 +20,59 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	
 	ROS_INFO("Controller got info, sending commandos");	
 	
-	communication::msgStruct msg;
+	// ----- WERKEND - ZELFDE TERUGSTUREN ALS ONTVANGEN ----- //
+	/*communication::msgStruct msg;
 	msg.id = info.id;
+	msg.dl = info.dl;
 	for(uint8_t i = 0; msg.dl > i; i++) {
 		msg.data[i] = info.data[i];
 		ROS_INFO("Commando data: %X", msg.data[i]);
-	}
-	msg.dl = info.dl;
-
-	/*if(info.id == SensorXid) {
-
 	}*/
-	
-	this->transmitMsg(msg);
+	// ------------------------------------------------------ //
+
+	if(info.id == SensorXid) {
+		if((info.data[0] == 0x61)
+			&& (info.data[1] == 0x61))
+		{
+			communication::msgStruct msg;
+			msg.id = 0x100;
+			msg.dl = 2;
+			for(uint8_t i = 0; msg.dl > i; i++) {
+				msg.data[0] = 0x61; // ASCII: a
+				msg.data[1] = 0x62; // ASCII: b
+			}
+		}
+		this->transmitMsg(msg);
+	}
+
+	// ---------- TEST - GEBRUIK TOHEX FUNCTIES ---------- //
+	/*if((info.id == SensorXid)
+		&& (info.data[0] == strToHex("a"))
+		&& (info.data[1] == strToHex("a")))
+	{
+		communication::msgStruct msg;
+		msg.id = 0x100;
+		msg.dl = 2;
+		for(uint8_t i = 0; msg.dl > i; i++) {
+			msg.data[0] = 0x61; // ASCII: a
+			msg.data[1] = 0x62; // ASCII: b
+		}
+	}*/
+	// --------------------------------------------------- //
+
+	// ---------- TEST - SENSORDATA VERGELIJKEN ---------- //
+	/*if((info.id == SensorXid)
+		&& (info.data[0] + info.data[1] == decToHex(100))
+	{
+		communication::msgStruct msg;
+		msg.id = 0x100;
+		msg.dl = 2;
+		for(uint8_t i = 0; msg.dl > i; i++) {
+			msg.data[0] = 0x61; // ASCII: a
+			msg.data[1] = 0x62; // ASCII: b
+		}
+	}*/
+	// --------------------------------------------------- //
 }
 
 void Controller::transmitMsg(communication::msgStruct msg) {
@@ -49,3 +94,22 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
+
+/*std::hex decToHex(int dec) {
+	std::hex value = std::hex << dec;
+	return value;
+}
+
+std::hex strToHex(std::string str) {
+	const char* const lut = "0123456789ABCDEF";
+    size_t len = str.length();
+
+    std::string output;
+    output.reserve(2 * len);
+    for (size_t i = 0; i < len; ++i) {
+        const unsigned char c = str[i];
+        output.push_back(lut[c >> 4]);
+        output.push_back(lut[c & 15]);
+    }
+    return output;
+}*/

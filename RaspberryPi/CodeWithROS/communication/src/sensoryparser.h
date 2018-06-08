@@ -26,7 +26,9 @@ public:
 		info.dl = msg.dl;
 		for(uint8_t i = 0; info.dl > i; i++) {
 			info.data[i] = msg.data[i];
+			ROS_INFO("Data of infostruct: %X", info.data[i]);
 		}
+		
 		ROS_INFO("SensorYparser sending info to controller");
 
 		this->transmitInfo(info);
