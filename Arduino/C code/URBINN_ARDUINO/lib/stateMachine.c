@@ -8,6 +8,7 @@
 #include "SPI/SPI.h"
 #include "UART/USART.h"
 #include "CAN/Canbus.h"
+#include "ADC/ADC.h"
 #include "stateMachine.h"
 #include <avr/interrupt.h>
 #include <string.h> // for memset
@@ -21,6 +22,9 @@ void init_system() {
 	// start the spi connection with the MCP2515
 	spi_init_master();
 
+	// start the adc
+	init_ADC();
+
 	// start the CAN connection
 	if (CAN_INIT(CANSPEED_500)){
 		DEBUG_USART("CAN init succes");
@@ -29,6 +33,8 @@ void init_system() {
 	}
 	// enable interrupts
 	sei();
+
+	print_string_new_line("System init done");
 }
 
 // done with the first state, move everything over one.

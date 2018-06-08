@@ -26,7 +26,6 @@ int main() {
 
 		// state machine off all the possible states
 		switch(current_state) {
-
 			case ST_READ_UART:
 				// received data from the UART
 				UARTReceiveMessage();
@@ -38,7 +37,7 @@ int main() {
 				CANReceiveMessage();
 				done();
 				break;
-				
+
 			case ST_ADC_DONE:
 				ADCSendMessage();
 				done();

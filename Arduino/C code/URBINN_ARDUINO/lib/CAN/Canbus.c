@@ -19,6 +19,7 @@
 #include "Canbus.h"
 #include "../UART/USART.h"
 #include "../stateMachine.h"
+#include "../ADC/ADC.h"
 
 volatile tCAN CANUARTReceiveBuffer[CAN_UART_RECEIVE_BUFFER_MAX_SIZE];
 volatile uint8_t CANUARTReceiveBufferCounter;
@@ -75,6 +76,12 @@ void CANReceiveMessage() {
 		}
 		// print a new line
 		print_string_new_line("");
+
+
+		// do adc stuff
+		if (message.id == 0x100) {
+			read_ADC(0);
+		}
 	}
 
 	sei();
@@ -82,9 +89,9 @@ void CANReceiveMessage() {
 
 void CANTransmitMessage(tCAN *message) {
 
-	mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
+	//mcp2515_bit_modify(CANCTRL, (1<<REQOP2)|(1<<REQOP1)|(1<<REQOP0), 0);
 
-	mcp2515_send_message(message);
+	//mcp2515_send_message(message);
 }
 
 uint8_t CAN_INIT(unsigned char speed) {

@@ -13,7 +13,7 @@
 #include <stdint.h>
 
 void init_ADC();
-uint16_t read_ADC(uint8_t);
+void read_ADC(uint8_t);
 void ADCSendMessage();
 
 

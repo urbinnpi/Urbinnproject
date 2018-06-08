@@ -10,6 +10,7 @@
 #include <avr/interrupt.h>
 #include <string.h> // for memset
 #include "../stateMachine.h"
+#include "../ADC/ADC.h"
 #include <stdlib.h>
 
 volatile char UARTReceiveBuffer[UART_RECEIVE_BUFFER_MAX_SIZE];		// receive buffer
@@ -88,11 +89,15 @@ void UARTReceiveMessage() {
 	frame.header.rtr = 0;
 
 	print_string("Received data: ");
-	print_string_new_line((char*)UARTReceiveBuffer);
+	print_string_new_line((char*)&UARTReceiveBuffer[0]);
 	print_new_line();
 
 	// get the ID
-	frame.id = strtol(UARTReceiveBuffer, NULL, 16);
+	frame.id = (uint16_t)strtoul(UARTReceiveBuffer, NULL, 16);
+
+	if (frame.id = 0x100) {
+		read_ADC(0); // read pin 0
+	}
 
 	// find the first databyte
 	dataStart = getLengthInt(frame.id) + 1; // +1 for the space
