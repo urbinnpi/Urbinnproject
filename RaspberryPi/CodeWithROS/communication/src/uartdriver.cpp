@@ -47,6 +47,7 @@ void UARTdriver::readInput() {
 			msg.dl = frame.can_dlc;
 			for(uint8_t i = 0; msg.dl > i; i++) {
 				msg.data[i] = frame.data[i];
+				ROS_INFO("Reading data: %X", msg.data[i]);
 			}
 		
 			pub.publish(msg);
@@ -67,6 +68,7 @@ void UARTdriver::transmit(const communication::msgStruct msg) {
 	frame2.can_dlc = msg.dl;
 	for(uint8_t i = 0; frame2.can_dlc > i; i++) {
 		frame2.data[i] = msg.data[i];
+		ROS_INFO("Transmitting data: %X", frame2.data[i]);
  	}
 	
  	write(s, &frame2, sizeof(struct can_frame));
@@ -89,7 +91,7 @@ int main(int argc, char **argv) {
 		ros::spinOnce(); // Execute callbacks if something is received on subscribed topics
 		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)	
 	}*/
-	t1.join;
+	t1.join();
 	
 	ROS_INFO("End of driver node");
 

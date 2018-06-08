@@ -19,6 +19,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	msg.id = info.id;
 	for(uint8_t i = 0; msg.dl > i; i++) {
 		msg.data[i] = info.data[i];
+		ROS_INFO("Commando data: %X", msg.data[i]);
 	}
 	msg.dl = info.dl;
 
