@@ -1,15 +1,15 @@
 #include "uartparser.h"
 #include "controller.h"
 #include "sensorxparser.h"
-//#include "sensoryparser.h"
-//#include "ID.h"
+#include "sensoryparser.h"
+#include "idlist.h"
 
 UARTparser::UARTparser() {
 	pub = nh.advertise<communication::infoStruct>("parsercontroller1", 1000);
 	sub = nh.subscribe("driverparser1", 1000, &UARTparser::receiveMsg, this);
 	
-	IDmap.insert(std::pair<uint32_t,Parser*>(0x631, new SensorXparser(&pub)));
-	//IDmap.insert(std::pair<uint32_t,Parser*>(0x100, new SensorYparser(&pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(SensorXid, new SensorXparser(&pub)));
+	IDmap.insert(std::pair<uint32_t,Parser*>(SensorYid, new SensorYparser(&pub)));
 }
 
 UARTparser::~UARTparser() {

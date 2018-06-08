@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
 	ROS_INFO("Starting loop");
 
-	std::thread t1(ud1.readInput);
+	std::thread t1(&UARTdriver::readInput, &ud1);
 	ros::spin();
 	/*while(ros::ok()) {
 		ud1.readInput();

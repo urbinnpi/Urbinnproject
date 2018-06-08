@@ -1,6 +1,6 @@
 #include "controller.h"
 #include "uartdriver.h"
-//#include "ID.h"
+#include "idlist.h"
 
 Controller::Controller() {
 	pub = nh.advertise<communication::msgStruct>("controllerdriver1", 1000);
@@ -21,6 +21,10 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		msg.data[i] = info.data[i];
 	}
 	msg.dl = info.dl;
+
+	/*if(info.id == SensorXid) {
+
+	}*/
 	
 	this->transmitMsg(msg);
 }
