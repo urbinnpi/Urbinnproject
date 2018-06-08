@@ -6,6 +6,12 @@
 */
 
 #include "ADC.h"
+#include "../UART/USART.h"
+#include "../CAN/Canbus.h"
+#include "../statemachine.h"
+
+
+volatile uint16_t ADCReading;
 
 
 /**
@@ -16,10 +22,12 @@
  */
 void init_ADC(){
 	// reference voltage is AREF
+	// should need and external capacitor at AREF
 	ADMUX |= (1 << REFS0);
 
 	// enable the ADC and set 128 prescaler
-	ADCSRA |= (1 << ADEN) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2);
+	// clould move aden to read_adc();
+	ADCSRA |= (1 << ADEN) | (1 << ADPS0) | (1 << ADPS1) | (1 << ADPS2); // (1 << ADIE); // enable interrupt
 
 	// disable all digital input on analog pins, this saves some power. And we won't use them. May also make the ADC more accurate
 	DIDR0 |= (1 << ADC5D)| (1 << ADC4D) | (1 << ADC3D) | (1 << ADC2D) | (1 << ADC1D) | (1 << ADC0D);
@@ -32,7 +40,7 @@ void init_ADC(){
  *
  * \return uint16_t ADC value
  */
-extern inline uint16_t read_ADC(uint8_t pin){
+uint16_t read_ADC(uint8_t pin){
 
 	// check if the pin is in the desired range
 	if(pin < 0 || pin > 6){
@@ -43,19 +51,56 @@ extern inline uint16_t read_ADC(uint8_t pin){
 
 	SMCR |= (1 << SM0); // reduce noise by putting the atmega328 in 'ADC reduce noise mode'
 
-	ADMUX |=  (pin & 7);  // select the correct pin (channel)
-
+	ADMUX |= (pin & 7);  // select the correct pin (channel)
+	
+	// add (1 <<  ADEN)
 	ADCSRA |= (1 << ADSC); // start the conversion
 
 	// ADSC is cleared when the conversion finishes
 	while (bit_is_set(ADCSRA, ADSC)); // wait for the conversation to finish
 
-	SMCR |= (0 << SM0); // return the 328 to normal operation
-
-	// read the data from the register
-	low  = ADCL;
-	high = ADCH;
+	SMCR &= ~(1 << SM0); // return the 328 to normal operation
 
 	// combine the two bytes and send them back
 	return (high << 8) | low;
 }
+
+static inline uint16_t ADCGetReading(){
+	
+	// read the data from the register
+	uint8_t low  = ADCL;
+	uint8_t high = ADCH;
+
+	// combine the two bytes and send them back
+	return (high << 8) | low; // (ADCH << 8) | ADCL;
+}
+
+// not sure if this is the correct vector
+ISR(ADC_vect) {
+	ADCReading = ADCGetReading();
+	addState(ST_ADC_DONE); // add adc to the queue
+}
+
+
+
+
+
+void ADCSendMessage() {	
+	tCAN frame;
+	frame.header.rtr = 0;
+	
+	print_int_new_line(ADCReading);
+
+	frame.id = 0x123; // set a random id
+	
+	// really dont know if this works....
+	(uint16_t)frame.data = ADCReading
+	
+	print_int_new_line(frame.data);
+	
+	// send the message
+	CANTransmitmessage(&frame);
+}
+	
+	
+	

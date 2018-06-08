@@ -14,7 +14,8 @@
 typedef enum {
 	ST_IDLE, // need to be first, 0 == nothing to do
 	ST_READ_UART,
-	ST_READ_CAN
+	ST_READ_CAN,
+	ST_ADC_DONE
 } state_t;
 
 extern volatile state_t state_queue[STATE_QUEUE_SIZE];

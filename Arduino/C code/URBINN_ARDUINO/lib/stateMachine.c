@@ -27,6 +27,8 @@ void init_system() {
 	} else {
 		DEBUG_USART("CAN init failed");
 	}
+	// enable interrupts
+	sei();
 }
 
 // done with the first state, move everything over one.

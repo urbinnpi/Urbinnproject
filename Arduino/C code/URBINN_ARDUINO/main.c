@@ -11,6 +11,7 @@
 #include "lib/CAN/Canbus.h"
 #include "lib/SPI/SPI.h"
 #include "lib/UART/USART.h"
+#include "lib/ADC/ADC.h"
 
 
 // declare the state_queue and make sure it's all zero
@@ -35,6 +36,11 @@ int main() {
 			case ST_READ_CAN:
 				// received data from the CAN
 				CANReceiveMessage();
+				done();
+				break;
+				
+			case ST_ADC_DONE:
+				ADCSendMessage();
 				done();
 				break;
 
