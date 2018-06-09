@@ -15,7 +15,11 @@
 #include <string.h> // for memset
 
 static volatile uint8_t state_index = 0;
+static void clearQueue();
 
+/**
+ *	 This function inits the system, put all init functions here
+ */
 void init_system() {
 	// start the serial connection with the PC
 	UART_init(UART_BAUDRATE);
@@ -30,18 +34,20 @@ void init_system() {
 	TIMER_init();
 
 	// start the CAN connection
-// 	if (CAN_INIT(CANSPEED_500)){
-// 		DEBUG_USART("CAN init succes");
-// 	} else {
-// 		DEBUG_USART("CAN init failed");
-// 	}
+	if (CAN_INIT(CANSPEED_500)){
+		DEBUG_USART("CAN init succes");
+	} else {
+		DEBUG_USART("CAN init failed");
+	}
 	// enable interrupts
 	sei();
 
 	print_string_new_line("System init done");
 }
 
-// done with the first state, move everything over one.
+/**
+ *	This function clears the active state, and sets the next one
+ */
 void done() {
 	// disable interrupts, so the array can't be changed during this function
 	cli();
@@ -63,7 +69,9 @@ void done() {
 	sei();
 }
 
-// add a state and increment the index
+/**
+ *	This function adds a state to the queue
+ */
 void addState(state_t s) {
 	cli();
 
@@ -80,6 +88,9 @@ void addState(state_t s) {
 	sei();
 }
 
+/**
+ * This function clears the queue
+ */
 void clearQueue() {
 	cli();
 

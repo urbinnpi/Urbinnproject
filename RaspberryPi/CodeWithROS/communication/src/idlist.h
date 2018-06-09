@@ -2,6 +2,7 @@
 #define ID_H
 
 // Enum of all the sensors and the corresponding IDs
+// Keep this list ascending!
 enum ID {
 	SensorXid = 0x631,
 	SensorYid = 0x632

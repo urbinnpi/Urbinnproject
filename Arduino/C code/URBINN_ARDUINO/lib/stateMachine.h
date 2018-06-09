@@ -19,13 +19,11 @@ typedef enum {
 	ST_POLL_SENSOR
 } state_t;
 
+
 extern volatile state_t state_queue[STATE_QUEUE_SIZE];
 
 void done();
 void addState(state_t s);
-void clearQueue();
-
-
 void init_system();
 
 
