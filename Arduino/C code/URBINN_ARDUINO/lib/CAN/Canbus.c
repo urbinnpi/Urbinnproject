@@ -53,32 +53,50 @@ void CANReceiveMessage() {
 
 		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
 
-		char hexbuffer[4];		// temp buffer for converting to string
 
-		// print to ID, convert the uint16 to string in HEX format
-		print_string("ID: ");
-		snprintf(hexbuffer,6,"0x%02X"PRIu16,message.id);
-		print_string(hexbuffer);
-
-		print_string(", ");
-
-		// print the datalength, convert the uint16 to string in HEX format
-		print_string("Datalength: ");
-		snprintf(hexbuffer,2,"%X"PRIu16,message.id);
-		print_string(hexbuffer);
-
-		// loop and print all the data
-		// convert uint8 to string in HEX format
-		print_string(", Data: ");
-		for(int i=0;i<message.header.length;i++) {
-			snprintf(hexbuffer,3,"%02X"PRIu8,message.data[i]);
-			print_string(hexbuffer);
+		// check for id's maybe we should do something with them.
+		if (message.id == 0x700) { // Test 1
+			CANPrintMessage(&message);
+			return;
+		} else if (message.id == 0x704) { // Test 4
+			CANPrintMessage(&message);
+			return;
+		} else if (message.id == 0x705) {
+			print_int_new_line(message.data[0] << 8 | message.data[1]);
+			return;
 		}
-		// print a new line
-		print_string_new_line("");
+
+		// print the message on the screen
+		CANPrintMessage(&message);
 	}
 
 	sei();
+}
+
+void CANPrintMessage(tCAN *message) {
+	char hexbuffer[4];		// temp buffer for converting to string
+
+	// print to ID, convert the uint16 to string in HEX format
+	print_string("ID: ");
+	snprintf(hexbuffer, 6, "0x%02X"PRIu16, message->id);
+	print_string(hexbuffer);
+
+	print_string(", ");
+
+	// print the datalength, convert the uint16 to string in HEX format
+	print_string("Datalength: ");
+	snprintf(hexbuffer, 2, "%X"PRIu16, message->id);
+	print_string(hexbuffer);
+
+	// loop and print all the data
+	// convert uint8 to string in HEX format
+	print_string(", Data: ");
+	for(int i=0;i<message.header.length;i++) {
+		snprintf(hexbuffer, 3, "%02X"PRIu8, message->data[i]);
+		print_string(hexbuffer);
+	}
+	// print a new line
+	print_string_new_line("");
 }
 
 void CANTransmitMessage(tCAN *message) {

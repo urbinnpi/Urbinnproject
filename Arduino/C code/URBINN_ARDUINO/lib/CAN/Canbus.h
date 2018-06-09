@@ -24,6 +24,7 @@
 uint8_t CAN_INIT(unsigned char);
 void CANTransmitMessage(tCAN*);
 void CANReceiveMessage();
+void CANPrintMessage(tCAN*);
 
 extern volatile tCAN CANUARTReceiveBuffer[CAN_UART_RECEIVE_BUFFER_MAX_SIZE];
 extern volatile uint8_t CANUARTReceiveBufferCounter;
