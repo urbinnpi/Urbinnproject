@@ -34,7 +34,6 @@ ISR(INT0_vect) {
 		CANUARTReceiveBufferCounter++;
 
 		// set the state to parse the message
-		//CANReceiveMessage();
 		addState(ST_READ_CAN);
 	} else {
 		// do nothing
@@ -61,7 +60,7 @@ void CANReceiveMessage() {
 		} else if (message.id == 0x704) { // Test 4
 			CANPrintMessage(&message);
 			return;
-		} else if (message.id == 0x705) {
+		} else if (message.id == 0x705) { // test 5
 			print_int_new_line(message.data[0] << 8 | message.data[1]);
 			return;
 		}
