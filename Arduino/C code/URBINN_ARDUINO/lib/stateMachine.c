@@ -10,6 +10,7 @@
 #include "CAN/Canbus.h"
 #include "ADC/ADC.h"
 #include "stateMachine.h"
+#include "TIMER/TIMER.h"
 #include <avr/interrupt.h>
 #include <string.h> // for memset
 
@@ -25,12 +26,15 @@ void init_system() {
 	// start the adc
 	init_ADC();
 
+	// start the timer
+	TIMER_init();
+
 	// start the CAN connection
-	if (CAN_INIT(CANSPEED_500)){
-		DEBUG_USART("CAN init succes");
-	} else {
-		DEBUG_USART("CAN init failed");
-	}
+// 	if (CAN_INIT(CANSPEED_500)){
+// 		DEBUG_USART("CAN init succes");
+// 	} else {
+// 		DEBUG_USART("CAN init failed");
+// 	}
 	// enable interrupts
 	sei();
 

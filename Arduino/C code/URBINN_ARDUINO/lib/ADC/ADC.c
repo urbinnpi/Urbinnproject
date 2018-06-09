@@ -72,7 +72,7 @@ static inline uint16_t ADCGetReading() {
 // not sure if this is the correct vector
 ISR(ADC_vect) {
 	ADCReading = ADCGetReading();
-	//addState(ST_ADC_DONE); // add adc to the queue
+	addState(ST_ADC_DONE); // add adc to the queue
 }
 
 
@@ -94,12 +94,11 @@ void ADCSendMessage() {
 	//print_int_new_line((uint16_t)frame.data);
 
 	// How to convert the data back:
-	//uint32_t result = frame.data[0] << 8 | frame.data[1];
-
-
+	uint32_t result = frame.data[0] << 8 | frame.data[1];
+	print_int_new_line(result);
 
 	// send the message
-	CANTransmitMessage(&frame);
+	//CANTransmitMessage(&frame);
 }
 
 

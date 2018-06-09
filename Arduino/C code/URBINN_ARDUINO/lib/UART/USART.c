@@ -95,10 +95,6 @@ void UARTReceiveMessage() {
 	// get the ID
 	frame.id = (uint16_t)strtoul(UARTReceiveBuffer, NULL, 16);
 
-	if (frame.id = 0x100) {
-		read_ADC(0); // read pin 0
-	}
-
 	// find the first databyte
 	dataStart = getLengthInt(frame.id) + 1; // +1 for the space
 	//print_string("datastart:  ");

@@ -12,6 +12,7 @@
 #include "lib/SPI/SPI.h"
 #include "lib/UART/USART.h"
 #include "lib/ADC/ADC.h"
+#include "lib/TIMER/TIMER.h"
 
 
 // declare the state_queue and make sure it's all zero
@@ -43,9 +44,17 @@ int main() {
 				done();
 				break;
 
+			case ST_POLL_SENSOR:
+				stopTimer();
+
+				read_ADC(0);
+				done();
+
+				TIMERReInit();
+				break;
+
 			default:
 				// Nothing to do!
-				// Maybe poll sensors that don't interrupt
 				break;
 		}
 	}

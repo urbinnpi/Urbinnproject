@@ -161,6 +161,12 @@
     <Compile Include="lib\SPI\SPI.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="lib\TIMER\TIMER.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="lib\TIMER\TIMER.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="lib\UART\USART.c">
       <SubType>compile</SubType>
     </Compile>
@@ -175,6 +181,7 @@
     <Folder Include="lib" />
     <Folder Include="lib\CAN" />
     <Folder Include="lib\ADC" />
+    <Folder Include="lib\TIMER" />
     <Folder Include="lib\SPI" />
     <Folder Include="lib\UART" />
   </ItemGroup>
