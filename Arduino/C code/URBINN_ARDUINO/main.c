@@ -22,11 +22,16 @@ int main() {
 	init_system();
 
 	while(1) {
+		WatchDog_reset();
+
 		// get the latest state
 		state_t current_state = state_queue[0];
 
 		// state machine off all the possible states
 		switch(current_state) {
+			case ST_IDLE:
+				// Do nothing
+				break;
 			case ST_READ_UART:
 				// received data from the UART
 				UARTReceiveMessage();

@@ -2,6 +2,7 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "../stateMachine.h"
+#include <avr/wdt.h>
 
 
 ISR(TIMER1_OVF_vect) {
@@ -20,8 +21,8 @@ void TIMER_init() {
 
 	TIMERReInit();
 
-	// 1 Hz
-	ICR1 = 6250;
+	// 20 Hz
+	ICR1 = 3125;
 
 	// overflow interrupt
 	TIMSK1 |= (1 << TOIE1);
@@ -41,4 +42,22 @@ void stopTimer() {
 	// clear the registers
 	TCCR1A = 0x00;
 	TCCR1B = 0x00;
+}
+
+void WatchDog_init() {
+	cli();
+
+	// Enable change in the register
+	WDTCSR |= (1<<WDCE) | (1<<WDE);
+	// 0.5s timeout
+	WDTCSR = (1<<WDE) | (1<<WDP0) | (1<<WDP2);
+
+	// enable watchdog reset
+	//MCUSR |= (1<<WDRF);
+
+	sei();
+}
+
+void WatchDog_reset() {
+	wdt_reset();
 }

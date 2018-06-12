@@ -33,6 +33,9 @@ void init_system() {
 	// start the timer
 	TIMER_init();
 
+	// start the watchdog
+	WatchDog_init();
+
 	// start the CAN connection
 	if (CAN_INIT(CANSPEED_500)){
 		DEBUG_USART("CAN init succes");
@@ -49,53 +52,45 @@ void init_system() {
  *	This function clears the active state, and sets the next one
  */
 void done() {
-	// disable interrupts, so the array can't be changed during this function
-	cli();
 
-	// go through the array and move everything over one
-	uint8_t i;
-	for (i = 0; i < STATE_QUEUE_SIZE-1; i++) {
-		state_queue[i] = state_queue[i+1];
-	}
-	// set the last state manually back to 0
-	state_queue[i+1] = 0;
+	memmove(&state_queue[0], &state_queue[1], STATE_QUEUE_SIZE-1);
+	state_queue[STATE_QUEUE_SIZE-1] = ST_IDLE;
 
 	// if the index is not 0, move it one back
 	if(state_index){
 		state_index--;
 	}
-
-	// enable interrupts again
-	sei();
 }
 
 /**
  *	This function adds a state to the queue
  */
 void addState(state_t s) {
-	cli();
-
 	// check if the queue is full
 	if(state_index >= STATE_QUEUE_SIZE) {
+		cli();
 		print_string_new_line("Queue full!!");
+
+		for (uint8_t i = 0; i < 10; i++) {
+			print_int(state_queue[i]);
+		}
+
+		print_string_new_line("");
+		clearQueue();
+		_delay_ms(1000);
+		sei();
 		return;
 	}
 
 	// add the state
 	state_queue[state_index] = s;
 	state_index++;
-
-	sei();
 }
 
 /**
  * This function clears the queue
  */
 void clearQueue() {
-	cli();
-
 	memset((state_t*)state_queue, ST_IDLE, STATE_QUEUE_SIZE); // clear the array
 	state_index = 0;	// reset the index
-
-	sei();
 }

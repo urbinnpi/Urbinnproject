@@ -12,4 +12,8 @@ void TIMER_init();
 void TIMERReInit();
 void stopTimer();
 
+void WatchDog_init();
+void WatchDog_reset();
+
+
 #endif /* TIMER_H_ */

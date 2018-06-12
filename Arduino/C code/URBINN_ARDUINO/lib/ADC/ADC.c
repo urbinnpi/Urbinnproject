@@ -44,7 +44,7 @@ void init_ADC(){
 void read_ADC(uint8_t pin){
 
 	// check if the pin is in the desired range
-	if(pin < 0 || pin > 6){
+	if(pin < 0 || pin > 5){
 		return 0;
 	}
 
@@ -84,7 +84,7 @@ void ADCSendMessage() {
 	//print_int_new_line(ADCReading);
 
 	frame.id = 0x123; // set a random id
-	
+
 	frame.header.length = 2;
 
 	// first byte
