@@ -71,11 +71,6 @@ void addState(state_t s) {
 		cli();
 		print_string_new_line("Queue full!!");
 
-		for (uint8_t i = 0; i < 10; i++) {
-			print_int(state_queue[i]);
-		}
-
-		print_string_new_line("");
 		clearQueue();
 		_delay_ms(1000);
 		sei();

@@ -9,7 +9,7 @@
 #ifndef stateMachine_H_
 #define stateMachine_H_
 
-#define STATE_QUEUE_SIZE 10 // size of the state queue
+#define STATE_QUEUE_SIZE 100 // size of the state queue
 
 typedef enum {
 	ST_IDLE, // need to be first, 0 == nothing to do

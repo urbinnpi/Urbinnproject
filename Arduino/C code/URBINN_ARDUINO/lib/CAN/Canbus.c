@@ -47,11 +47,12 @@ void CANReceiveMessage() {
 	tCAN message;
 
 	// print all the messages in the buffer
-	for (; CANUARTReceiveBufferCounter > 0; CANUARTReceiveBufferCounter--) {
+	while (CANUARTReceiveBufferCounter) {
+		CANUARTReceiveBufferCounter--;
 		//print_string("CAN frame received: ");
 
 		// Get the message
-		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
+		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter];
 
 		// print the message on the screen
 		//CANPrintMessage(&message);
@@ -70,6 +71,8 @@ void CANReceiveMessage() {
 
 			print_string_new_line(buffer);
 		}
+
+
 	}
 
 	sei();
