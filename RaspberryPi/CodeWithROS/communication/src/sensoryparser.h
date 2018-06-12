@@ -14,6 +14,8 @@
 #include "communication/msgStruct.h"
 #include "communication/infoStruct.h"
 
+#define ADC_TO_DEGREES_SLOPE 1.0 * (180.0 / 1023.0)
+
 class SensorYparser : public Parser
 {
 public:
@@ -23,11 +25,18 @@ public:
 		ROS_INFO("SensorYparser got frame to parse");
 		communication::infoStruct info;
 		info.id = msg.id;
-		info.dl = msg.dl;
-		for(uint8_t i = 0; info.dl > i; i++) {
-			info.data[i] = msg.data[i];
-			ROS_INFO("Data of infostruct: %X", info.data[i]);
-		}
+		
+		uint16_t adcReading = msg.data[0] << 8 | msg.data[1];
+		
+		// set to degrees 0 180
+		uint8_t degrees = ADC_TO_DEGREES_SLOPE * adcReading;
+		
+		ROS_INFO("ADC value potmeter: %i", adcReading);
+		
+		// set the degrees into the data array
+		msg.data[0] = degrees
+		info.dl = 1; // length is one
+		
 		
 		ROS_INFO("SensorYparser sending info to controller");
 

@@ -62,6 +62,8 @@ void CANReceiveMessage() {
 		} else if (message.id == 0x705) { // test 5
 			print_int_new_line(message.data[0] << 8 | message.data[1]);
 			return;
+		} else if (message.id == 0x100) { // potmeter reply
+			print_int_new_line((uint32_t)(message.data[0] << 8 | message.data[1]));
 		}
 
 		// print the message on the screen
