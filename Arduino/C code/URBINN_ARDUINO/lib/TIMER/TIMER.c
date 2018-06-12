@@ -18,16 +18,13 @@ void TIMER_init() {
 	TCCR1A = 0x00;
 	TCCR1B = 0x00;
 
-	// 16 bit fast PWM
-	// ICR1 is top /8 prescaler
-	TCCR1A |= (1<<WGM11);
-	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11);
+	TIMERReInit();
+
+	// 1 Hz
+	ICR1 = 62500;
 
 	// overflow interrupt
 	TIMSK1 |= (1 << TOIE1);
-
-	// Top is 40K => 50Hz or 20ms period
-	ICR1 = 40000;
 
 	sei();
 }
@@ -35,9 +32,9 @@ void TIMER_init() {
 
 void TIMERReInit() {
 	// 16 bit fast PWM
-	// ICR1 is top /8 prescaler
+	// ICR1 is top /256 prescaler
 	TCCR1A |= (1<<WGM11);
-	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS11);
+	TCCR1B |= (1<<WGM13) | (1<<WGM12) | (1<<CS12);
 }
 
 void stopTimer() {

@@ -52,7 +52,6 @@ void CANReceiveMessage() {
 
 		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
 
-
 		// check for id's maybe we should do something with them.
 		if (message.id == 0x700) { // Test 1
 			CANPrintMessage(&message);
@@ -90,7 +89,7 @@ void CANPrintMessage(tCAN *message) {
 	// loop and print all the data
 	// convert uint8 to string in HEX format
 	print_string(", Data: ");
-	for(int i=0;i<message.header.length;i++) {
+	for(int i=0;i<message->header.length;i++) {
 		snprintf(hexbuffer, 3, "%02X"PRIu8, message->data[i]);
 		print_string(hexbuffer);
 	}

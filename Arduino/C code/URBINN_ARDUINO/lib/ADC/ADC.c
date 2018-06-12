@@ -84,6 +84,8 @@ void ADCSendMessage() {
 	//print_int_new_line(ADCReading);
 
 	frame.id = 0x123; // set a random id
+	
+	frame.header.length = 2;
 
 	// first byte
 	frame.data[0] = (ADCReading >> 8); // msb
@@ -94,11 +96,11 @@ void ADCSendMessage() {
 	//print_int_new_line((uint16_t)frame.data);
 
 	// How to convert the data back:
-	uint32_t result = frame.data[0] << 8 | frame.data[1];
-	print_int_new_line(result);
+	//uint32_t result = frame.data[0] << 8 | frame.data[1];
+	//print_int_new_line(result);
 
 	// send the message
-	//CANTransmitMessage(&frame);
+	CANTransmitMessage(&frame);
 }
 
 
