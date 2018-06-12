@@ -54,7 +54,7 @@ void done() {
 
 	// go through the array and move everything over one
 	uint8_t i;
-	for (i = 0; i < STATE_QUEUE_SIZE; i++) {
+	for (i = 0; i < STATE_QUEUE_SIZE-1; i++) {
 		state_queue[i] = state_queue[i+1];
 	}
 	// set the last state manually back to 0

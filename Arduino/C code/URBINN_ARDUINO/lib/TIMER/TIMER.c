@@ -21,7 +21,7 @@ void TIMER_init() {
 	TIMERReInit();
 
 	// 1 Hz
-	ICR1 = 62500;
+	ICR1 = 6250;
 
 	// overflow interrupt
 	TIMSK1 |= (1 << TOIE1);
