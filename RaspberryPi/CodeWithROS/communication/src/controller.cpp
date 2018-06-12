@@ -1,11 +1,6 @@
-//#include <iostream>
-//#include <string>
 #include "controller.h"
 #include "uartdriver.h"
 #include "idlist.h"
-
-//std::hex decToHex(int dec);
-//std::hex strToHex(std::string str);
 
 Controller::Controller() {
 	pub = nh.advertise<communication::msgStruct>("controllerdriver1", 1000);
@@ -29,7 +24,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		ROS_INFO("Commando data: %X", msg.data[i]);
 	}*/
 	// ------------------------------------------------------ //
-
+	// --- WERKEND - AB TERUGSTUREN BIJ AA VAN SENSORXID ---- //
 	if(info.id == SensorXid) {
 		if((info.data[0] == 0x61)
 			&& (info.data[1] == 0x61))
@@ -41,14 +36,29 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 				msg.data[0] = 0x61; // ASCII: a
 				msg.data[1] = 0x62; // ASCII: b
 			}
+			this->transmitMsg(msg);
 		}
-		this->transmitMsg(msg);
 	}
-
+	// ------------------------------------------------------ //
+	// ------------------- TEST - POTMETER ------------------ //
+	if(info.id == SensorYid) {
+		uint16_t value = (data[0] << 8) | (data[1]);
+		if(value > 10) {
+			communication::msgStruct msg;
+			msg.id = 0x100;
+			msg.dl = 2;
+			for(uint8_t i = 0; msg.dl > i; i++) {
+				msg.data[0] = 0x61; // ASCII: a
+				msg.data[1] = 0x62; // ASCII: b
+			}
+			this->transmitMsg(msg);
+		}
+	}
+	// ------------------------------------------------------ //
 	// ---------- TEST - GEBRUIK TOHEX FUNCTIES ---------- //
 	/*if((info.id == SensorXid)
-		&& (info.data[0] == strToHex("a"))
-		&& (info.data[1] == strToHex("a")))
+		&& (info.data[0] == decToHex())
+		&& (info.data[1] == decToHex()))
 	{
 		communication::msgStruct msg;
 		msg.id = 0x100;
@@ -58,21 +68,6 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 			msg.data[1] = 0x62; // ASCII: b
 		}
 	}*/
-	// --------------------------------------------------- //
-
-	// ---------- TEST - SENSORDATA VERGELIJKEN ---------- //
-	/*if((info.id == SensorXid)
-		&& (info.data[0] + info.data[1] == decToHex(100))
-	{
-		communication::msgStruct msg;
-		msg.id = 0x100;
-		msg.dl = 2;
-		for(uint8_t i = 0; msg.dl > i; i++) {
-			msg.data[0] = 0x61; // ASCII: a
-			msg.data[1] = 0x62; // ASCII: b
-		}
-	}*/
-	// --------------------------------------------------- //
 }
 
 void Controller::transmitMsg(communication::msgStruct msg) {
@@ -86,7 +81,15 @@ int main(int argc, char **argv) {
 	ros::Rate loop_rate(10); // Set speed of while(ros::ok()) loop, 10 Hz at the moment
 
 	while(ros::ok()) {
-		// Ask user input to simulate signals from the Raspberry Pi to Arduino
+		// Transmit control signals (every 10 Hz)
+		communication::msgStruct msg; // TEST vv
+		msg.id = 0x100;
+		msg.dl = 2;
+		for(uint8_t i = 0; msg.dl > i; i++) {
+			msg.data[0] = 0x61; // ASCII: a
+			msg.data[1] = 0x62; // ASCII: b
+		}
+		c1.transmitMsg(msg); // TEST ^^
 
 		ros::spinOnce(); // Execute callbacks if something is received on subscribed topics
 		loop_rate.sleep(); // Make sure loop is running at given rate (10 Hz at the moment)
@@ -94,22 +97,3 @@ int main(int argc, char **argv) {
 
 	return 0;
 }
-
-/*std::hex decToHex(int dec) {
-	std::hex value = std::hex << dec;
-	return value;
-}
-
-std::hex strToHex(std::string str) {
-	const char* const lut = "0123456789ABCDEF";
-    size_t len = str.length();
-
-    std::string output;
-    output.reserve(2 * len);
-    for (size_t i = 0; i < len; ++i) {
-        const unsigned char c = str[i];
-        output.push_back(lut[c >> 4]);
-        output.push_back(lut[c & 15]);
-    }
-    return output;
-}*/

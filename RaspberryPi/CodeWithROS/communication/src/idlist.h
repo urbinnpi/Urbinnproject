@@ -4,8 +4,8 @@
 // Enum of all the sensors and the corresponding IDs
 // Keep this list ascending!
 enum ID {
-	SensorXid = 0x631,
-	SensorYid = 0x632
+	SensorYid = 0x123,
+	SensorXid = 0x631
 };
 
 #endif // ID_H
