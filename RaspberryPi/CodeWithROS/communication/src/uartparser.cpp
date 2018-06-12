@@ -14,9 +14,10 @@ UARTparser::UARTparser() {
 
 UARTparser::~UARTparser() {
 	std::map<uint32_t, Parser*>::iterator i;
-	for(i = IDmap.begin(); i != IDmap.end(); i++)
+	for(i = IDmap.begin(); i != IDmap.end(); i++) {
 		//delete i->second;
 		IDmap.erase(i);
+	}
 }
 
 void UARTparser::parseData(const communication::msgStruct msg) {	
@@ -25,8 +26,9 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 	
 	ROS_INFO("Parsing data, ID: 0x%X", msg.id);
 	
-	if(temp != IDmap.end())
+	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
+	}
 }
 
 void UARTparser::receiveMsg(const communication::msgStruct& msg) { // Callback van topic driverparser1

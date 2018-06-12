@@ -35,8 +35,12 @@ UARTdriver::UARTdriver() {
 }
 
 void UARTdriver::readInput() {
+	
+	// keep looping
 	while(1) {
 		ROS_INFO("Getting CAN frame");
+		
+		// this function blocks while waiting
 		int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
 		if(recvbytes) {
@@ -47,7 +51,7 @@ void UARTdriver::readInput() {
 			msg.dl = frame.can_dlc;
 			for(uint8_t i = 0; msg.dl > i; i++) {
 				msg.data[i] = frame.data[i];
-				ROS_INFO("Reading data: %X", msg.data[i]);
+				ROS_INFO("received data: %X", msg.data[i]);
 			}
 		
 			pub.publish(msg);

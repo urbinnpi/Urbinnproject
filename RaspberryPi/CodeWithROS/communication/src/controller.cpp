@@ -42,8 +42,13 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// ------------------------------------------------------ //
 	// ------------------- TEST - POTMETER ------------------ //
 	if(info.id == SensorYid) {
+		ROS_INFO("Potmeter detected");
+		
+		// get the value 0 - 1023
 		uint16_t value = (data[0] << 8) | (data[1]);
-		if(value > 10) {
+		
+		// if above threshold
+		if(value > 512) {
 			communication::msgStruct msg;
 			msg.id = 0x100;
 			msg.dl = 2;
