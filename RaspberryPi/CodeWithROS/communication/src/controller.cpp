@@ -56,13 +56,13 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		// check which direction
 		if(info.data[0] <= 80) { // Left
 			ROS_INFO("Potmeter going left");
-			msg.data[0] == 'L';
+			msg.data[0] = 'L';
 		} else if (info.data[0] > 80 && info.data[0] < 100) { // forward
 			ROS_INFO("Potmeter going forward");
-			msg.data[0] == 'F';
+			msg.data[0] = 'F';
 		} else if (info.data[0] >= 100) {	// Right
 			ROS_INFO("Potmeter going right");
-			msg.data[0] == 'R';
+			msg.data[0] = 'R';
 		}
 		
 		// Send the message
