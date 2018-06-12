@@ -51,6 +51,8 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		// copy the degrees
 		msg.data[0] = info.data[0];
 		
+		ROS_INFO("degrees: %i", info.data[0]);
+		
 		// check which direction
 		if(info.data[0] <= 80) { // Left
 			ROS_INFO("Potmeter going left");
