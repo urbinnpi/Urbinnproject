@@ -50,7 +50,11 @@ void CANReceiveMessage() {
 	for (; CANUARTReceiveBufferCounter > 0; CANUARTReceiveBufferCounter--) {
 		print_string("CAN frame received: ");
 
+		// Get the message
 		message = CANUARTReceiveBuffer[CANUARTReceiveBufferCounter-1];
+
+		// print the message on the screen
+		CANPrintMessage(&message);
 
 		// check for id's maybe we should do something with them.
 		if (message.id == 0x700) { // Test 1
@@ -63,11 +67,8 @@ void CANReceiveMessage() {
 			print_int_new_line(message.data[0] << 8 | message.data[1]);
 			return;
 		} else if (message.id == 0x100) { // potmeter reply
-			print_int_new_line((uint32_t)(message.data[0] << 8 | message.data[1]));
+			print_string_new_line(message.data[0]);
 		}
-
-		// print the message on the screen
-		CANPrintMessage(&message);
 	}
 
 	sei();
