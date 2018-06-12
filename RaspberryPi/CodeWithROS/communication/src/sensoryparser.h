@@ -28,13 +28,13 @@ public:
 		
 		uint16_t adcReading = msg.data[0] << 8 | msg.data[1];
 		
-		// set to degrees 0 180
+		// set to degrees 0 - 180
 		uint8_t degrees = ADC_TO_DEGREES_SLOPE * adcReading;
 		
 		ROS_INFO("ADC value potmeter: %i", adcReading);
 		
 		// set the degrees into the data array
-		msg.data[0] = degrees
+		info.data[0] = degrees;
 		info.dl = 1; // length is one
 		
 		
