@@ -24,7 +24,7 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 	// Search for sensor in IDmap that belongs to id of msg and parse data in specified function
 	std::map<uint32_t, Parser*>::iterator temp = IDmap.find((uint32_t)msg.id);
 	
-	ROS_INFO("Parsing data, ID: 0x%X", msg.id);
+	//ROS_INFO("Parsing data, ID: 0x%X", msg.id);
 	
 	if(temp != IDmap.end()) {
 		temp->second->parseData(msg);
@@ -32,7 +32,7 @@ void UARTparser::parseData(const communication::msgStruct msg) {
 }
 
 void UARTparser::receiveMsg(const communication::msgStruct& msg) { // Callback van topic driverparser1
-	ROS_INFO("Got frame to parse");
+	//ROS_INFO("Got frame to parse");
 	parseData(msg);
 }
 
@@ -45,7 +45,7 @@ void UARTparser::removePair(uint32_t n) {
 }
 
 void UARTparser::transmitInfo(communication::infoStruct info) {
-	ROS_INFO("Transmitting info to controller");
+	//ROS_INFO("Transmitting info to controller");
 	pub.publish(info);
 }
 

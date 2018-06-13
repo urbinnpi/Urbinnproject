@@ -22,7 +22,7 @@ public:
 	SensorYparser(ros::Publisher* pub) : pub(pub) { ROS_INFO("started SensorYparser"); }
 	void parseData(const communication::msgStruct msg) { 
 		// Translate data from msgStruct to usable data in an infoStruct
-		ROS_INFO("SensorYparser got frame to parse");
+		//ROS_INFO("SensorYparser got frame to parse");
 		communication::infoStruct info;
 		info.id = msg.id;
 		
@@ -32,13 +32,14 @@ public:
 		uint8_t degrees = ADC_TO_DEGREES_SLOPE * adcReading;
 		
 		ROS_INFO("ADC value potmeter: %i", adcReading);
+		ROS_INFO("Potmeter degrees: %i", degrees);
 		
 		// set the degrees into the data array
 		info.data[0] = degrees;
 		info.dl = 1; // length is one
 		
 		
-		ROS_INFO("SensorYparser sending info to controller");
+		//ROS_INFO("SensorYparser sending info to controller");
 
 		this->transmitInfo(info);
 	}

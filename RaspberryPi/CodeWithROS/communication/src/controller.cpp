@@ -13,7 +13,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// Lees infostruct uit en voer aan de hand daarvan functies zoals steer of brake uit
 	// Deze functies kunnen vervolgens messages sturen naar de driver met transmitMsg()
 	
-	ROS_INFO("Controller got info, sending commandos");	
+	//ROS_INFO("Controller got info, sending commandos");	
 	
 	// ----- WERKEND - ZELFDE TERUGSTUREN ALS ONTVANGEN ----- //
 	/*communication::msgStruct msg;
@@ -42,7 +42,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 	// ------------------------------------------------------ //
 	// ------------------- TEST - POTMETER ------------------ //
 	if(info.id == SensorYid) {
-		ROS_INFO("Potmeter detected");
+		//ROS_INFO("Potmeter detected");
 		
 		communication::msgStruct msg;
 		msg.id = 0x100;
@@ -51,7 +51,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 		// copy the degrees
 		msg.data[0] = info.data[0];
 		
-		ROS_INFO("degrees: %i", info.data[0]);
+		//ROS_INFO("degrees: %i", info.data[0]);
 		
 		// check which direction
 		if(info.data[0] <= 80) { // Left
@@ -85,7 +85,7 @@ void Controller::receiveInfo(const communication::infoStruct& info) { // Callbac
 }
 
 void Controller::transmitMsg(communication::msgStruct msg) {
-	ROS_INFO("Controller sending commando");
+	//ROS_INFO("Controller sending commando");
 	pub.publish(msg);
 }
 

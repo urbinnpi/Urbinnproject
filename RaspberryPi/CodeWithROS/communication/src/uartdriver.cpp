@@ -38,20 +38,20 @@ void UARTdriver::readInput() {
 	
 	// keep looping
 	while(1) {
-		ROS_INFO("Getting CAN frame");
+		//ROS_INFO("Getting CAN frame");
 		
 		// this function blocks while waiting
 		int recvbytes = read(s, &frame, sizeof(struct can_frame));
 	
 		if(recvbytes) {
-			ROS_INFO("Got can frame");
+			//ROS_INFO("Got can frame");
 
 			communication::msgStruct msg;
 			msg.id = frame.can_id;
 			msg.dl = frame.can_dlc;
 			for(uint8_t i = 0; msg.dl > i; i++) {
 				msg.data[i] = frame.data[i];
-				ROS_INFO("received data: %X", msg.data[i]);
+				//ROS_INFO("received data: %X", msg.data[i]);
 			}
 		
 			pub.publish(msg);
@@ -60,24 +60,24 @@ void UARTdriver::readInput() {
 }
 
 void UARTdriver::receiveMsg(const communication::msgStruct& msg) { // Callback of topic controllerdriver1
-	ROS_INFO("Received commando from controller");
+	//ROS_INFO("Received commando from controller");
 	this->transmit(msg);
 }
 
 void UARTdriver::transmit(const communication::msgStruct msg) {
-	ROS_INFO("Transmitting CAN frame with ID: 0x%X", msg.id);
+	//ROS_INFO("Transmitting CAN frame with ID: 0x%X", msg.id);
 	
 	struct can_frame frame2;
 	frame2.can_id = msg.id;
 	frame2.can_dlc = msg.dl;
 	for(uint8_t i = 0; frame2.can_dlc > i; i++) {
 		frame2.data[i] = msg.data[i];
-		ROS_INFO("Transmitting data: %X", frame2.data[i]);
+		//ROS_INFO("Transmitting data: %X", frame2.data[i]);
  	}
 	
  	write(s, &frame2, sizeof(struct can_frame));
 	
-	ROS_INFO("CAN frame send");
+	//ROS_INFO("CAN frame send");
 }
 
 int main(int argc, char **argv) {
