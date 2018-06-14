@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="communication" name="controller" type="controller" output="screen"/>
+  <node pkg="communication" name="parser" type="parser" output="screen"/>
+  <node pkg="communication" name="driver" type="driver" output="screen"/>
+</launch>
